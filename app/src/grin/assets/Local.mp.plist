@@ -4347,7 +4347,7 @@
 						<key>body</key>
 						<dict>
 							<key>en</key>
-							<string>Tap the number of stars you&apos;d give us.</string>
+							<string>Tap the number of stars you'd give us.</string>
 						</dict>
 						<key>title</key>
 						<dict>
@@ -4446,7 +4446,7 @@
 							<key>es</key>
 							<string>¿Te gusta nuestra aplicación? </string>
 							<key>fr</key>
-							<string>Vous aimez l&apos;application?</string>
+							<string>Vous aimez l'application?</string>
 							<key>hi</key>
 							<string>क्या  आप हमारी ऐप पसंद करते हो?</string>
 							<key>it</key>
@@ -4551,11 +4551,11 @@
 								<key>es</key>
 								<string>¡Nos alegra oírlo! ¡Danos 5 estrellas!</string>
 								<key>fr</key>
-								<string>Nous sommes heureux de l&apos;apprendre ! Donnez-lui 5 étoiles.</string>
+								<string>Nous sommes heureux de l'apprendre ! Donnez-lui 5 étoiles.</string>
 								<key>hi</key>
 								<string>यह जानकर खुशी हुई! इसे 5-स्टार का मूल्यांकन दें हमारे पास</string>
 								<key>it</key>
-								<string>Ci fa piacere saperlo! Valuta l&apos;app con 5 stelle.</string>
+								<string>Ci fa piacere saperlo! Valuta l'app con 5 stelle.</string>
 								<key>ja</key>
 								<string>それが聞けて何よりです。5つ星をぜひお願いします！</string>
 								<key>ko</key>
@@ -4620,7 +4620,7 @@
 								<key>es</key>
 								<string>Somos un equipo pequeño y nos esforzamos mucho para ofrecerte la mejor aplicación gratis. ¡Tu valoración de 5 estrellas es mejor que todo el dinero del mundo!</string>
 								<key>fr</key>
-								<string>Nous sommes une petite équipe qui travaille très dur pour vous apporter gratuitement la meilleure application. Vos 5 étoiles valent tout l&apos;argent du monde !</string>
+								<string>Nous sommes une petite équipe qui travaille très dur pour vous apporter gratuitement la meilleure application. Vos 5 étoiles valent tout l'argent du monde !</string>
 								<key>hi</key>
 								<string>एक छोटी टीम है जो आपको निशुल्क में बेहतर एप्स‍ देने के लिए कड़ी मेहनत करती है। आपका 5-स्टार विश्व की पूरी दौलत से भी अच्छा है!</string>
 								<key>it</key>
@@ -4650,7 +4650,7 @@
 							<key>es</key>
 							<string>¿Te gusta nuestra aplicación?</string>
 							<key>fr</key>
-							<string>Vous aimez l&apos;application ?</string>
+							<string>Vous aimez l'application ?</string>
 							<key>hi</key>
 							<string>क्या  आप हमारी ऐप पसंद करते हो?</string>
 							<key>it</key>
@@ -4806,7 +4806,7 @@
 								<key>es</key>
 								<string>¿Qué te parecería valorar el trabajo del equipo?</string>
 								<key>fr</key>
-								<string>Que diriez-vous d&apos;un avis pour des équipes qui travaillent dur ?</string>
+								<string>Que diriez-vous d'un avis pour des équipes qui travaillent dur ?</string>
 								<key>hi</key>
 								<string>तो कड़ी मेहनत वाली टीमों के लिए एक मूल्यांकन के बारे में क्या?</string>
 								<key>it</key>
@@ -4859,7 +4859,7 @@
 							<key>es</key>
 							<string>Tengo algunos comentarios</string>
 							<key>fr</key>
-							<string>J&apos;ai des commentaires</string>
+							<string>J'ai des commentaires</string>
 							<key>hi</key>
 							<string>मेरे पास कुछ प्रतिक्रिया है</string>
 							<key>it</key>
@@ -4886,15 +4886,15 @@
 							<key>de</key>
 							<string>Ich würde sie mit 5 Sternen bewerten</string>
 							<key>en</key>
-							<string>I&apos;d like to give it a 5-star rating.</string>
+							<string>I'd like to give it a 5-star rating.</string>
 							<key>es</key>
 							<string>Me gustaría darle una valoración de 5 estrellas.</string>
 							<key>fr</key>
-							<string>J&apos;aimerais lui donner 5 étoiles.</string>
+							<string>J'aimerais lui donner 5 étoiles.</string>
 							<key>hi</key>
 							<string>मैं इसे 5-स्टार मूल्‍यांकन देना चाहता/चाहती हूं।</string>
 							<key>it</key>
-							<string>Voglio valutare l&apos;app con 5 stelle.</string>
+							<string>Voglio valutare l'app con 5 stelle.</string>
 							<key>ja</key>
 							<string>私は5つ星の評価を与えたいと思います。</string>
 							<key>ko</key>
@@ -4928,17 +4928,8 @@
 			</dict>
 			<key>ScreenFlash</key>
 			<dict>
-				<key>SMSAssistant</key>
-				<dict>
-					<key>ShowSMSFunction</key>
-					<false/>
-					<key>Enable</key>
-					<false/>
-				</dict>
 				<key>CallAssistant</key>
 				<dict>
-					<key>Enable</key>
-					<false/>
 					<key>AutoRefresh</key>
 					<dict>
 						<key>enable</key>
@@ -4946,6 +4937,8 @@
 						<key>interval</key>
 						<integer>10</integer>
 					</dict>
+					<key>Enable</key>
+					<false/>
 					<key>OpenWhenScreenFlashTurnOn</key>
 					<true/>
 					<key>ShowAds</key>
@@ -4959,6 +4952,13 @@
 				</dict>
 				<key>DefaultTheme</key>
 				<string>1</string>
+				<key>SMSAssistant</key>
+				<dict>
+					<key>Enable</key>
+					<false/>
+					<key>ShowSMSFunction</key>
+					<false/>
+				</dict>
 				<key>Themes</key>
 				<array>
 					<dict>
@@ -5374,6 +5374,12 @@
 					</array>
 					<key>StickerGroupList</key>
 					<array>
+						<dict>
+							<key>name</key>
+							<string>FootballPlayer</string>
+							<key>showName</key>
+							<string>Football Player</string>
+						</dict>
 						<dict>
 							<key>name</key>
 							<string>Coolbuddy</string>
@@ -6316,32 +6322,6 @@
 				<array>
 					<dict>
 						<key>adType</key>
-						<string>Facebooknative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>17</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>322577018217162_322615714879959</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-							<string>AU</string>
-							<string>CA</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
 						<string>Adxinterstitial</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
@@ -6369,6 +6349,19 @@
 					<dict>
 						<key>adType</key>
 						<string>Facebooknative</string>
+						<key>clickableViews</key>
+						<dict>
+							<key>body</key>
+							<false/>
+							<key>callToAction</key>
+							<true/>
+							<key>icon</key>
+							<false/>
+							<key>image</key>
+							<false/>
+							<key>title</key>
+							<false/>
+						</dict>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -6385,6 +6378,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -6395,136 +6390,19 @@
 					<dict>
 						<key>adType</key>
 						<string>Facebooknative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
+						<key>clickableViews</key>
 						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>11</integer>
-							</dict>
+							<key>body</key>
+							<false/>
+							<key>callToAction</key>
+							<true/>
+							<key>icon</key>
+							<false/>
+							<key>image</key>
+							<false/>
+							<key>title</key>
+							<false/>
 						</dict>
-						<key>ids</key>
-						<array>
-							<string>322577018217162_322617368213127</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-							<string>AU</string>
-							<string>CA</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>Adxinterstitial</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>9</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-mb-app-pub-7176948080084743/6863178453</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-							<string>AU</string>
-							<string>CA</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>Admobinterstitial</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>7</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-app-pub-6755533317593143/1409521572</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-							<string>AU</string>
-							<string>CA</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>Facebooknative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>5</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>322577018217162_322617681546429</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-							<string>AU</string>
-							<string>CA</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>Admobinterstitial</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>3</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-app-pub-6755533317593143/6386516086</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-							<string>AU</string>
-							<string>CA</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>Facebooknative</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -6541,6 +6419,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -6597,6 +6477,19 @@
 					<dict>
 						<key>adType</key>
 						<string>Facebooknative</string>
+						<key>clickableViews</key>
+						<dict>
+							<key>body</key>
+							<false/>
+							<key>callToAction</key>
+							<true/>
+							<key>icon</key>
+							<false/>
+							<key>image</key>
+							<false/>
+							<key>title</key>
+							<false/>
+						</dict>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -6613,6 +6506,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -6669,6 +6564,19 @@
 					<dict>
 						<key>adType</key>
 						<string>Facebooknative</string>
+						<key>clickableViews</key>
+						<dict>
+							<key>body</key>
+							<false/>
+							<key>callToAction</key>
+							<true/>
+							<key>icon</key>
+							<false/>
+							<key>image</key>
+							<false/>
+							<key>title</key>
+							<false/>
+						</dict>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -6685,6 +6593,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -6741,6 +6651,19 @@
 					<dict>
 						<key>adType</key>
 						<string>Facebooknative</string>
+						<key>clickableViews</key>
+						<dict>
+							<key>body</key>
+							<false/>
+							<key>callToAction</key>
+							<true/>
+							<key>icon</key>
+							<false/>
+							<key>image</key>
+							<false/>
+							<key>title</key>
+							<false/>
+						</dict>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -6757,6 +6680,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -6819,6 +6744,19 @@
 					<dict>
 						<key>adType</key>
 						<string>Facebooknative</string>
+						<key>clickableViews</key>
+						<dict>
+							<key>body</key>
+							<false/>
+							<key>callToAction</key>
+							<true/>
+							<key>icon</key>
+							<false/>
+							<key>image</key>
+							<false/>
+							<key>title</key>
+							<false/>
+						</dict>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -6835,6 +6773,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -6858,6 +6798,19 @@
 					<dict>
 						<key>adType</key>
 						<string>Facebooknative</string>
+						<key>clickableViews</key>
+						<dict>
+							<key>body</key>
+							<false/>
+							<key>callToAction</key>
+							<true/>
+							<key>icon</key>
+							<false/>
+							<key>image</key>
+							<false/>
+							<key>title</key>
+							<false/>
+						</dict>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -6874,6 +6827,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -7011,6 +6966,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -7037,6 +6994,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -7089,6 +7048,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -7141,6 +7102,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -7193,6 +7156,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -7265,6 +7230,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -7337,6 +7304,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -7409,6 +7378,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -7487,6 +7458,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -7526,6 +7499,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -7631,12 +7606,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-							<string>AU</string>
-							<string>CA</string>
-						</array>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -7657,6 +7628,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -7709,6 +7682,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -7761,6 +7736,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -7839,6 +7816,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -7911,6 +7890,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -7983,6 +7964,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -8055,6 +8038,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -8133,6 +8118,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -8172,6 +8159,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -8608,7 +8597,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>17</integer>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8617,6 +8606,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -8669,6 +8660,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -8695,6 +8688,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -8799,6 +8794,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -8871,6 +8868,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -8943,6 +8942,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -9015,6 +9016,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -9093,6 +9096,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -9132,6 +9137,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -9225,14 +9232,164 @@
 				<key>preload</key>
 				<dict>
 					<key>inventory</key>
-					<integer>0</integer>
+					<integer>1</integer>
 					<key>strategy</key>
-					<string>initiative</string>
+					<string>app</string>
 				</dict>
 				<key>preloadOnlyInWifi</key>
 				<false/>
 				<key>serialList</key>
 				<array>
+					<dict>
+						<key>adType</key>
+						<string>Mopubnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>16</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>a86c75509b9b4cefa2720ceefc00543b</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Mopubnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<real>14.5</real>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>85d62db4cbda4998a7fbb04d6bb4cdd2</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>11</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>322577018217162_322614371546760</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
+						<key>regionFilter</key>
+						<array>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Mopubnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>9</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>442e11ecc69347eab8af1030e51fe16e</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>14</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>322577018217162_355101878298009</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
 					<dict>
 						<key>adType</key>
 						<string>Facebooknative</string>
@@ -9252,6 +9409,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -9278,6 +9437,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -9304,6 +9465,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -9330,6 +9493,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -9356,6 +9521,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -9392,6 +9559,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -9428,6 +9597,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -9464,6 +9635,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -9503,6 +9676,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -9542,6 +9717,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -9604,6 +9781,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -9656,6 +9835,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -9682,6 +9863,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -9734,6 +9917,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>US</string>
@@ -9786,6 +9971,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -9858,6 +10045,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -9930,6 +10119,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionFilter</key>
 						<array>
 							<string>GB</string>
@@ -10002,6 +10193,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -10080,6 +10273,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -10119,6 +10314,8 @@
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>mediaView</string>
 						<key>regionException</key>
 						<array>
 							<string>US</string>
@@ -10182,6 +10379,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>MinimumUpdateInterval</key>
+	<integer>0</integer>
 	<key>UserLevel</key>
 	<dict>
 		<key>1-1</key>
@@ -10235,7 +10434,7 @@
 							<key>MinCountTriggerHour</key>
 							<integer>16</integer>
 							<key>MinIntervalByHour</key>
-							<integer>1</integer>
+							<real>0.20000000000000001</real>
 							<key>PackageNameExclude</key>
 							<array/>
 							<key>Show</key>
@@ -10262,6 +10461,453 @@
 							</dict>
 						</dict>
 					</dict>
+					<key>KeyboardTheme</key>
+					<dict>
+						<key>ThemeContents</key>
+						<dict>
+							<key>custom_theme_backgrounds</key>
+							<array>
+								<dict>
+									<key>name</key>
+									<string>Halloween</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Pumpkin</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Grave</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Green Nebula</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Tropical Forest</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Pink Leopard</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Giant Panda</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Rosy Galaxy</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Golden Wishes</string>
+									<key>shareToUnlock</key>
+									<false/>
+								</dict>
+								<dict>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fantasyland.jpg</string>
+									<key>name</key>
+									<string>Fantasyland</string>
+									<key>price</key>
+									<string>$0.99</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier31</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/immortal.jpg</string>
+									<key>name</key>
+									<string>Immortal</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier30</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/mysteriousuniverse.jpg</string>
+									<key>name</key>
+									<string>Mysterious Universe</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier29</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fieryguitar.jpg</string>
+									<key>name</key>
+									<string>Fiery Guitar</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier28</string>
+									<key>name</key>
+									<string>Bunny</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier27</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/flare.jpg</string>
+									<key>name</key>
+									<string>Flare</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fallingstars.jpg</string>
+									<key>name</key>
+									<string>Falling Stars</string>
+									<key>rateToUnlock</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background30</string>
+								</dict>
+								<dict>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/lightningfootball.jpg</string>
+									<key>name</key>
+									<string>Lightning Football</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background33</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background13</string>
+								</dict>
+								<dict>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/warmnight.jpg</string>
+									<key>name</key>
+									<string>Warm Night</string>
+								</dict>
+								<dict>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/autumnleaves.jpg</string>
+									<key>name</key>
+									<string>Autumn Leaves</string>
+								</dict>
+								<dict>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/moonlightride.jpg</string>
+									<key>name</key>
+									<string>Moonlight Ride</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier17</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/marshmallow.jpg</string>
+									<key>name</key>
+									<string>Marshmallow</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier12</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/kisses.jpg</string>
+									<key>name</key>
+									<string>Kisses</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier26</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/superhero.jpg</string>
+									<key>name</key>
+									<string>Superhero</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier24</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/donuts.jpg</string>
+									<key>name</key>
+									<string>Donuts</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier7</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/valentines.jpg</string>
+									<key>name</key>
+									<string>Valentines</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>2017NewYear</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier15</string>
+									<key>name</key>
+									<string>Burning Earth</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier2</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/rainbowswirl.jpg</string>
+									<key>name</key>
+									<string>Rainbow Swirl</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier10</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/diamond.jpg</string>
+									<key>name</key>
+									<string>Diamonds</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier6</string>
+									<key>name</key>
+									<string>Green Graffiti</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier21</string>
+									<key>name</key>
+									<string>Dolphins</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier5</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/lasers.jpg</string>
+									<key>name</key>
+									<string>Lasers</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier11</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/babybanana.jpg</string>
+									<key>name</key>
+									<string>Baby Banana</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier14</string>
+									<key>name</key>
+									<string>Popsicles</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier1</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/mountainbreeze.jpg</string>
+									<key>name</key>
+									<string>Mountain Breeze</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier3</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/rainyday.jpg</string>
+									<key>name</key>
+									<string>Rainy Day</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier22</string>
+									<key>name</key>
+									<string>Rainbow Beam</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier4</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/galaxy.jpg</string>
+									<key>name</key>
+									<string>Galaxy</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier16</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/crystalrainbow.jpg</string>
+									<key>name</key>
+									<string>Crystal Rainbow</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier13</string>
+									<key>name</key>
+									<string>Cherry Gelato</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier8</string>
+									<key>name</key>
+									<string>Comets</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier19</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/goldenpetal.jpg</string>
+									<key>name</key>
+									<string>Golden Petal</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier9</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/beachball.jpg</string>
+									<key>name</key>
+									<string>Beach Ball</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier20</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/desert.jpg</string>
+									<key>name</key>
+									<string>Desert</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background05</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background14</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background34</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background23</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background09</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background12</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background19</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background10</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background07</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background08</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background00</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background01</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background57</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background03</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background11</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background56</string>
+								</dict>
+							</array>
+						</dict>
+					</dict>
 					<key>NativeAds</key>
 					<dict>
 						<key>KeyboardBannerAd</key>
@@ -10274,19 +10920,15 @@
 							<true/>
 						</dict>
 					</dict>
+					<key>RateToUnlock</key>
+					<dict>
+						<key>Enabled</key>
+						<true/>
+					</dict>
 					<key>ScreenFlash</key>
 					<dict>
-						<key>SMSAssistant</key>
-						<dict>
-							<key>ShowSMSFunction</key>
-							<true/>
-							<key>Enable</key>
-							<true/>
-						</dict>
 						<key>CallAssistant</key>
 						<dict>
-							<key>Enable</key>
-							<true/>
 							<key>AutoRefresh</key>
 							<dict>
 								<key>enable</key>
@@ -10294,6 +10936,8 @@
 								<key>interval</key>
 								<integer>10</integer>
 							</dict>
+							<key>Enable</key>
+							<true/>
 							<key>OpenWhenScreenFlashTurnOn</key>
 							<true/>
 							<key>ShowAds</key>
@@ -10307,6 +10951,13 @@
 						</dict>
 						<key>DefaultTheme</key>
 						<string>1</string>
+						<key>SMSAssistant</key>
+						<dict>
+							<key>Enable</key>
+							<true/>
+							<key>ShowSMSFunction</key>
+							<true/>
+						</dict>
 						<key>Themes</key>
 						<array>
 							<dict>
@@ -10659,11 +11310,6 @@
 								<string>url</string>
 							</dict>
 						</array>
-					</dict>
-					<key>RateToUnlock</key>
-					<dict>
-						<key>Enabled</key>
-						<true/>
 					</dict>
 				</dict>
 			</dict>
@@ -10717,7 +11363,7 @@
 							<key>MinCountTriggerHour</key>
 							<integer>16</integer>
 							<key>MinIntervalByHour</key>
-							<integer>1</integer>
+							<real>0.20000000000000001</real>
 							<key>PackageNameExclude</key>
 							<array/>
 							<key>Show</key>
@@ -10744,6 +11390,453 @@
 							</dict>
 						</dict>
 					</dict>
+					<key>KeyboardTheme</key>
+					<dict>
+						<key>ThemeContents</key>
+						<dict>
+							<key>custom_theme_backgrounds</key>
+							<array>
+								<dict>
+									<key>name</key>
+									<string>Halloween</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Pumpkin</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Grave</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Green Nebula</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Tropical Forest</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Pink Leopard</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Giant Panda</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Rosy Galaxy</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>Golden Wishes</string>
+									<key>shareToUnlock</key>
+									<false/>
+								</dict>
+								<dict>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fantasyland.jpg</string>
+									<key>name</key>
+									<string>Fantasyland</string>
+									<key>price</key>
+									<string>$0.99</string>
+									<key>showNewMark</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier31</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/immortal.jpg</string>
+									<key>name</key>
+									<string>Immortal</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier30</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/mysteriousuniverse.jpg</string>
+									<key>name</key>
+									<string>Mysterious Universe</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier29</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fieryguitar.jpg</string>
+									<key>name</key>
+									<string>Fiery Guitar</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier28</string>
+									<key>name</key>
+									<string>Bunny</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier27</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/flare.jpg</string>
+									<key>name</key>
+									<string>Flare</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fallingstars.jpg</string>
+									<key>name</key>
+									<string>Falling Stars</string>
+									<key>rateToUnlock</key>
+									<true/>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background30</string>
+								</dict>
+								<dict>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/lightningfootball.jpg</string>
+									<key>name</key>
+									<string>Lightning Football</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background33</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background13</string>
+								</dict>
+								<dict>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/warmnight.jpg</string>
+									<key>name</key>
+									<string>Warm Night</string>
+								</dict>
+								<dict>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/autumnleaves.jpg</string>
+									<key>name</key>
+									<string>Autumn Leaves</string>
+								</dict>
+								<dict>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/moonlightride.jpg</string>
+									<key>name</key>
+									<string>Moonlight Ride</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier17</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/marshmallow.jpg</string>
+									<key>name</key>
+									<string>Marshmallow</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier12</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/kisses.jpg</string>
+									<key>name</key>
+									<string>Kisses</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier26</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/superhero.jpg</string>
+									<key>name</key>
+									<string>Superhero</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier24</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/donuts.jpg</string>
+									<key>name</key>
+									<string>Donuts</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier7</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/valentines.jpg</string>
+									<key>name</key>
+									<string>Valentines</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>2017NewYear</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier15</string>
+									<key>name</key>
+									<string>Burning Earth</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier2</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/rainbowswirl.jpg</string>
+									<key>name</key>
+									<string>Rainbow Swirl</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier10</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/diamond.jpg</string>
+									<key>name</key>
+									<string>Diamonds</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier6</string>
+									<key>name</key>
+									<string>Green Graffiti</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier21</string>
+									<key>name</key>
+									<string>Dolphins</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier5</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/lasers.jpg</string>
+									<key>name</key>
+									<string>Lasers</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier11</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/babybanana.jpg</string>
+									<key>name</key>
+									<string>Baby Banana</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier14</string>
+									<key>name</key>
+									<string>Popsicles</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier1</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/mountainbreeze.jpg</string>
+									<key>name</key>
+									<string>Mountain Breeze</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier3</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/rainyday.jpg</string>
+									<key>name</key>
+									<string>Rainy Day</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier22</string>
+									<key>name</key>
+									<string>Rainbow Beam</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier4</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/galaxy.jpg</string>
+									<key>name</key>
+									<string>Galaxy</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier16</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/crystalrainbow.jpg</string>
+									<key>name</key>
+									<string>Crystal Rainbow</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier13</string>
+									<key>name</key>
+									<string>Cherry Gelato</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier8</string>
+									<key>name</key>
+									<string>Comets</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier19</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/goldenpetal.jpg</string>
+									<key>name</key>
+									<string>Golden Petal</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier9</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/beachball.jpg</string>
+									<key>name</key>
+									<string>Beach Ball</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>iapID</key>
+									<string>com.keyboard.colorkeyboard.pid.background.tier20</string>
+									<key>lockerImgUrl</key>
+									<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/desert.jpg</string>
+									<key>name</key>
+									<string>Desert</string>
+									<key>price</key>
+									<string>$0.99</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background05</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background14</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background34</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background23</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background09</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background12</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background19</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background10</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background07</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background08</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background00</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background01</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background57</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background03</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background11</string>
+								</dict>
+								<dict>
+									<key>name</key>
+									<string>background56</string>
+								</dict>
+							</array>
+						</dict>
+					</dict>
 					<key>NativeAds</key>
 					<dict>
 						<key>KeyboardBannerAd</key>
@@ -10756,19 +11849,15 @@
 							<true/>
 						</dict>
 					</dict>
+					<key>RateToUnlock</key>
+					<dict>
+						<key>Enabled</key>
+						<true/>
+					</dict>
 					<key>ScreenFlash</key>
 					<dict>
-						<key>SMSAssistant</key>
-						<dict>
-							<key>ShowSMSFunction</key>
-							<true/>
-							<key>Enable</key>
-							<true/>
-						</dict>
 						<key>CallAssistant</key>
 						<dict>
-							<key>Enable</key>
-							<true/>
 							<key>AutoRefresh</key>
 							<dict>
 								<key>enable</key>
@@ -10776,6 +11865,8 @@
 								<key>interval</key>
 								<integer>10</integer>
 							</dict>
+							<key>Enable</key>
+							<true/>
 							<key>OpenWhenScreenFlashTurnOn</key>
 							<true/>
 							<key>ShowAds</key>
@@ -10789,6 +11880,13 @@
 						</dict>
 						<key>DefaultTheme</key>
 						<string>1</string>
+						<key>SMSAssistant</key>
+						<dict>
+							<key>Enable</key>
+							<true/>
+							<key>ShowSMSFunction</key>
+							<true/>
+						</dict>
 						<key>Themes</key>
 						<array>
 							<dict>
@@ -11142,18 +12240,11 @@
 							</dict>
 						</array>
 					</dict>
-					<key>RateToUnlock</key>
-					<dict>
-						<key>Enabled</key>
-						<true/>
-					</dict>
 				</dict>
 			</dict>
 		</dict>
 		<key>default</key>
 		<dict/>
 	</dict>
-	<key>MinimumUpdateInterval</key>
-	<integer>0</integer>
 </dict>
 </plist>
