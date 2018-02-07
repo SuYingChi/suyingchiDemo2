@@ -175,7 +175,7 @@ dependencies {
     //Golden eye
     smileyImplementation "net.appcloudbox.goldeneye:2:2018.01.22.002"
     colorImplementation "net.appcloudbox.goldeneye:72:2018.01.23.001"
-
+    grinImplementation "net.appcloudbox.goldeneye:243:2018.02.06.002"
     // Autopilot
     compile "net.appcloudbox.autopilot:libAutoPilot.gm:5.0.5.gm"
 
