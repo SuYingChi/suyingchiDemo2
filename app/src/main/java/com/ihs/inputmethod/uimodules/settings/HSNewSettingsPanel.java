@@ -1,20 +1,27 @@
 package com.ihs.inputmethod.uimodules.settings;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.location.HSLocationManager;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -105,6 +112,53 @@ public class HSNewSettingsPanel extends BasePanel {
                 KCAnalytics.logEvent("keyboard_setting_fonts_clicked");
             }
         }));
+        items.add(ViewItemBuilder.getFontsItem(new ViewItem.ViewItemListener() {
+            @Override
+            public void onItemClick(ViewItem item) {
+                HSLog.d("Location","click featch location");
+                if (!(ContextCompat.checkSelfPermission(HSApplication.getContext(),
+                        android.Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED)){
+                    Toast.makeText(HSApplication.getContext(),"please allow rainbowKey open location",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(networkState()){
+                    Toast.makeText(HSApplication.getContext(),"network is not available",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                HSLocationManager locationManager_device = new HSLocationManager(HSApplication.getContext());
+                //如有办法获取到colorkeyboard D/HSLocationListener: google reversing json即可获取到全地址
+                locationManager_device.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
+                    @Override
+                    public void onLocationFetched(boolean success, HSLocationManager locationManager1) {
+                    }
+//该接口失败概率高，但成功了可直接获取到最小到街道名的地址
+                    @Override
+                    public void onGeographyInfoFetched(boolean success, HSLocationManager locationManager) {
+                        String latitudeText = "failed";
+                        String longitudeText = "failed";
+                        if (success) {
+                            latitudeText = String.valueOf(locationManager.getLocation().getLatitude());
+                            longitudeText = String.valueOf(locationManager.getLocation().getLongitude());
+                            HSLog.d("Location","---GeographyInfoFetched---latitudeText-------"+latitudeText+"-------longitudeText-------"+longitudeText);
+                            //城市
+                            String city = String.valueOf(locationManager.getCity());
+                            HSLog.d("Location","---GeographyInfoFetched---city------"+city);
+                            //城市区
+                            String sublocality = locationManager.getSublocality();
+                            HSLog.d("Location","---GeographyInfoFetched---sublocality------"+sublocality);
+                            //街区
+                            String Neighborhood = locationManager.getNeighborhood();
+                            HSLog.d("Location","---GeographyInfoFetched---getNeighborhood------"+Neighborhood);
+                            String CountryCode = locationManager.getCountryCode();
+                            HSLog.d("Location","---GeographyInfoFetched--CountryCode-------"+CountryCode);
+                        }else {
+                            Toast.makeText(HSApplication.getContext(),"get location time out",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        }));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             items.add(ViewItemBuilder.getLuckyItem());
         }
@@ -154,6 +208,25 @@ public class HSNewSettingsPanel extends BasePanel {
 
         return items;
     }
+
+    private boolean networkState() {
+        ConnectivityManager manager = (ConnectivityManager) context
+                .getApplicationContext().getSystemService(
+                        Context.CONNECTIVITY_SERVICE);
+
+        if (manager == null) {
+            return false;
+        }
+
+        NetworkInfo networkinfo = manager.getActiveNetworkInfo();
+
+        if (networkinfo == null || !networkinfo.isAvailable()) {
+            return false;
+        }
+
+        return true;
+    }
+
 
     public static void setViewHeight(View v, int height) {
         if (v != null && v.getLayoutParams() != null) {
