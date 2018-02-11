@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.font;
 
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
@@ -19,9 +21,16 @@ import com.keyboard.core.themes.custom.elements.KCFontElement;
  */
 
 public class FontProvider extends BaseThemeItemProvider<KCFontElement, BaseThemeItemProvider.BaseItemHolder, FontFragment> {
+    private Drawable bgDrawable;
+    private Drawable chooseDrawable;
 
     public FontProvider(FontFragment fragment) {
         super(fragment);
+
+        bgDrawable = HSApplication.getContext().getResources().getDrawable(R.drawable.keyboard_custom_theme_font_chosed);
+        bgDrawable.setColorFilter(HSApplication.getContext().getResources().getColor(R.color.custom_theme_font_bg), PorterDuff.Mode.SRC_OUT);
+
+        chooseDrawable = KCElementResourseHelper.getFontChosedBackgroundDrawable();
     }
 
     @NonNull
@@ -29,8 +38,8 @@ public class FontProvider extends BaseThemeItemProvider<KCFontElement, BaseTheme
     protected BaseItemHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         BaseItemHolder holder = super.onCreateViewHolder(inflater, parent);
         DisplayMetrics displayMetrics = holder.itemView.getResources().getDisplayMetrics();
-        int width = Math.min(displayMetrics.widthPixels,displayMetrics.heightPixels) / fragment.SPAN_COUNT  -  holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin) *2;
-        int height = (int) (width *120.0f/160);
+        int width = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels) / fragment.SPAN_COUNT - holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin) * 2;
+        int height = (int) (width * 120.0f / 160);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
         layoutParams.gravity = Gravity.CENTER;
         holder.itemView.setLayoutParams(layoutParams);
@@ -47,7 +56,7 @@ public class FontProvider extends BaseThemeItemProvider<KCFontElement, BaseTheme
 
     @Override
     protected Drawable getChosedBackgroundDrawable() {
-        return KCElementResourseHelper.getFontChosedBackgroundDrawable();
+        return chooseDrawable;
     }
 
     @Override
@@ -62,11 +71,6 @@ public class FontProvider extends BaseThemeItemProvider<KCFontElement, BaseTheme
 
     @Override
     protected Drawable getBackgroundDrawable(Object item) {
-        return KCElementResourseHelper.getFontBackgroundDrawable();
-    }
-
-    @Override
-    protected Drawable getPlaceHolderDrawable() {
-        return KCElementResourseHelper.getFontPlaceHolderDrawable();
+        return bgDrawable;
     }
 }
