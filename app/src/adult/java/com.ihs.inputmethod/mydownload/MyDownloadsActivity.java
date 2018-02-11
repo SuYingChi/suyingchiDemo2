@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -45,7 +44,6 @@ public class MyDownloadsActivity extends HSAppCompatActivity implements View.OnC
     private Toolbar toolbar;
     private SlidingTabLayout slidingTabLayout;
     private ViewPager viewPager;
-    private FloatingActionButton createThemeButton;
     private ArrayList<Class> fragments;
     private TabFragmentPagerAdapter tabFragmentPagerAdapter;
 
@@ -86,18 +84,6 @@ public class MyDownloadsActivity extends HSAppCompatActivity implements View.OnC
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        int position = getIntent().getIntExtra(EXTRA_INITIAL_TAB_INDEX, 0);
-        createThemeButton = findViewById(R.id.home_create_theme_layout);
-        createThemeButton.setOnClickListener(this);
-        if (position == 0) {
-            createThemeButton.setVisibility(View.VISIBLE);
-        } else if (position == 1) { //my sticker
-            createThemeButton.setVisibility(View.GONE);
-        } else if (position == 2) { // my font
-            createThemeButton.setVisibility(View.GONE);
-        }
-
-        setTabListener();
     }
 
     public static void startThisActivity(Activity activity) {
@@ -152,29 +138,6 @@ public class MyDownloadsActivity extends HSAppCompatActivity implements View.OnC
         if (trialKeyboardDialog != null) {
             KCCommonUtils.dismissDialog(trialKeyboardDialog);
         }
-    }
-
-    private void setTabListener() {
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (position == 0) {
-                    createThemeButton.setVisibility(View.VISIBLE);
-                } else {
-                    createThemeButton.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     private void showTrialKeyboardDialog() {
