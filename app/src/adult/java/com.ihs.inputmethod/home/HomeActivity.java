@@ -380,7 +380,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         };
         homeModelList.add(homeModel);
 
-        List<StickerGroup> stickerGroupList = StickerDataManager.getInstance().getStickerGroupList();
+        List<StickerGroup> stickerGroupList = StickerDataManager.getInstance().getNeedDownloadStickerGroupList();
         for (StickerGroup stickerGroup : stickerGroupList) {
             if (!stickerGroup.isStickerGroupDownloaded()) {
                 homeModel = new HomeModel();

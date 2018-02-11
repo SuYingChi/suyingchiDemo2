@@ -212,8 +212,21 @@ public class StickerDataManager {
         if (!isReady) {
             return Collections.emptyList();
         } else {
-            return stickerGroups;
+            return new ArrayList<>(stickerGroups);
         }
+    }
+
+    public List<StickerGroup> getNeedDownloadStickerGroupList() {
+        List<StickerGroup> stickerGroupList = getStickerGroupList();
+        List<StickerGroup> needDownloadStickerGroupList = new ArrayList<>();
+        if (stickerGroupList.size() > 0) {
+            for (StickerGroup stickerGroup: stickerGroupList) {
+                if (!stickerGroup.isStickerGroupDownloaded()) {
+                    needDownloadStickerGroupList.add(stickerGroup);
+                }
+            }
+        }
+        return needDownloadStickerGroupList;
     }
 
     public List<StickerGroup> getStickerGroupsInKeyboardList() {

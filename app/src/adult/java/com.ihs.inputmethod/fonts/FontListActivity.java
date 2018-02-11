@@ -68,6 +68,8 @@ public class FontListActivity extends BaseListActivity implements FontAdapter.On
 
     @Override
     protected void initView() {
+        showDownloadIcon(true);
+
         initFontList();
         fontAdapter = new FontAdapter(this, this);
         fontAdapter.setDataList(fontModelList);

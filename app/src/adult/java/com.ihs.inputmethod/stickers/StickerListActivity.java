@@ -56,7 +56,7 @@ public class StickerListActivity extends BaseListActivity implements StickerAdap
     private List<StickerModel> getData() {
         List<StickerModel> stickerModelList = new ArrayList<>();
 
-        List<StickerGroup> stickerGroupList = StickerDataManager.getInstance().getStickerGroupList();
+        List<StickerGroup> stickerGroupList = StickerDataManager.getInstance().getNeedDownloadStickerGroupList();
         StickerModel stickerHomeModel;
         for (StickerGroup stickerGroup : stickerGroupList) {
             stickerHomeModel = new StickerModel();
