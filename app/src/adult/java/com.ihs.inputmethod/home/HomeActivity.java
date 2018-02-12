@@ -804,32 +804,34 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
     }
 
     @Override
-    public void onStickerClick(int position, HomeModel homeModel, Drawable thumbnailDrawable) {
-        final StickerGroup stickerGroup = (StickerGroup) homeModel.item;
-        final String stickerGroupName = stickerGroup.getStickerGroupName();
-        final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
+    public void onStickerClick(HomeModel homeModel, Drawable thumbnailDrawable) {
+        int position = homeModelList.indexOf(homeModel);
+        if (position > 0 && position < homeModelList.size()) {
+            final StickerGroup stickerGroup = (StickerGroup) homeModel.item;
+            final String stickerGroupName = stickerGroup.getStickerGroupName();
+            final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
+            // 移除点击过的new角标
+            StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
+            homeAdapter.notifyItemChanged(position);
 
-        // 移除点击过的new角标
-        StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
-        homeAdapter.notifyItemChanged(position);
+            DownloadUtils.getInstance().startForegroundDownloading(HomeActivity.this, stickerGroupName,
+                    stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
+                    new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
+                        @Override
+                        public void onDismiss(boolean success, boolean manually) {
+                            if (success) {
+                                KCAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
+                                StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
 
-        DownloadUtils.getInstance().startForegroundDownloading(HomeActivity.this, stickerGroupName,
-                stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
-                new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
-                    @Override
-                    public void onDismiss(boolean success, boolean manually) {
-                        if (success) {
-                            KCAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
-                            StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
-
-                            if (position > 0 && position < homeModelList.size()) {
-                                homeModelList.remove(position);
-                                homeAdapter.notifyItemRemoved(position);
+                                if (position > 0 && position < homeModelList.size()) {
+                                    homeModelList.remove(position);
+                                    homeAdapter.notifyItemRemoved(position);
+                                }
                             }
                         }
-                    }
 
-                });
+                    });
+        }
     }
 
 

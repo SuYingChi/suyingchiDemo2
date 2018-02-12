@@ -67,31 +67,31 @@ public class StickerListActivity extends BaseListActivity implements StickerAdap
     }
 
     @Override
-    public void onStickerClick(int position) {
-        StickerGroup stickerGroup = stickerModelList.get(position).stickerGroup;
-        final String stickerGroupName = stickerGroup.getStickerGroupName();
-        final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
+    public void onStickerClick(StickerModel stickerModel) {
+        int position = stickerModelList.indexOf(stickerModel);
+        if (position >= 0 && position < stickerModelList.size()) {
+            StickerGroup stickerGroup = stickerModelList.get(position).stickerGroup;
+            final String stickerGroupName = stickerGroup.getStickerGroupName();
+            final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
 
-        // 移除点击过的new角标
-        StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
-        stickerAdapter.notifyItemChanged(position);
+            // 移除点击过的new角标
+            StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
+            stickerAdapter.notifyItemChanged(position);
 
-        DownloadUtils.getInstance().startForegroundDownloading(this, stickerGroupName,
-                stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
-                new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
-                    @Override
-                    public void onDismiss(boolean success, boolean manually) {
-                        if (success) {
-                            KCAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
-                            StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
-
-                            if (position > 0 && position < stickerModelList.size()) {
+            DownloadUtils.getInstance().startForegroundDownloading(this, stickerGroupName,
+                    stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
+                    new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
+                        @Override
+                        public void onDismiss(boolean success, boolean manually) {
+                            if (success) {
+                                KCAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
+                                StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
                                 stickerModelList.remove(position);
                                 stickerAdapter.notifyItemRemoved(position);
                             }
                         }
-                    }
 
-                });
+                    });
+        }
     }
 }

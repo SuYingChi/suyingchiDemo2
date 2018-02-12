@@ -48,7 +48,7 @@ public class StickerAdapter extends BaseListAdapter<StickerModel> {
                 @Override
                 public void onClick(View v) {
                     if (onStickerClickListener != null) {
-                        onStickerClickListener.onStickerClick(position);
+                        onStickerClickListener.onStickerClick(stickerModel);
                     }
                 }
             });
@@ -70,6 +70,6 @@ public class StickerAdapter extends BaseListAdapter<StickerModel> {
     }
 
     public interface OnStickerClickListener {
-        void onStickerClick(int position);
+        void onStickerClick(StickerModel stickerModel);
     }
 }

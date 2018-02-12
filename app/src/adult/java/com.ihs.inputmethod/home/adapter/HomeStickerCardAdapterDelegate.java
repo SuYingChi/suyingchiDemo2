@@ -81,7 +81,7 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
             @Override
             public void onClick(View v) {
                 if (onStickerClickListener != null) {
-                    onStickerClickListener.onStickerClick(position, homeModel, stickerCardViewHolder.stickerRealImage.getDrawable());
+                    onStickerClickListener.onStickerClick(homeModel, stickerCardViewHolder.stickerRealImage.getDrawable());
                 }
             }
         });
@@ -124,6 +124,6 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
     }
 
     public interface OnStickerClickListener {
-        void onStickerClick(int position, HomeModel homeModel, Drawable thumbnailDrawable);
+        void onStickerClick( HomeModel homeModel, Drawable thumbnailDrawable);
     }
 }
