@@ -249,6 +249,7 @@
         <!-- ShowQuietly Config End -->
 
         <activity
+            android:theme="@style/AppTheme.NoActionBarFullScreen"
             android:name=".ui.sticker.StoreStickerDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />

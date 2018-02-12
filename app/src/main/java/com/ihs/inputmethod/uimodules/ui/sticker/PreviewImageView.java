@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
@@ -138,7 +139,9 @@ public class PreviewImageView
         if (vGif == null) {
             vGif = new ImageView(context);
             vGif.setPadding(0, 0, 0, DisplayUtils.dip2px(10));
-            vGif.setBackgroundResource(R.drawable.sticker_pop_preview_bg);
+            final VectorDrawableCompat vectorDrawableCompat = VectorDrawableCompat.create(context.getResources(), R.drawable.sticker_pop_preview_bg, null);
+            vGif.setBackgroundDrawable(vectorDrawableCompat);
+//            vGif.setBackgroundResource(R.drawable.sticker_pop_preview_bg);
         }
         updateLayoutParams(loc);
         if (vGif.getParent() != null) {

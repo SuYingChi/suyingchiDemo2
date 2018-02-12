@@ -5330,7 +5330,7 @@
 				<key>RemoteContentDownloadURL</key>
 				<string>https://s3.amazonaws.com/emojidevelop/AndroidResource/download/</string>
 				<key>StickerDownloadBaseURL</key>
-				<string>http://cdn.appcloudbox.net/keyboardarts/download/stickers</string>
+				<string>http://s3.amazonaws.com/emojidevelop/AndroidResource/download/stickers</string>
 				<key>StickerSuggestionBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/sticker_suggestion</string>
 				<key>ThemeZipDownloadBaseURL</key>
@@ -5388,9 +5388,9 @@
 							<key>showCount</key>
 							<integer>20</integer>
 							<key>name</key>
-							<string>FootballPlayer</string>
+							<string>SuperBowl</string>
 							<key>showName</key>
-							<string>Football Player</string>
+							<string>SuperBowl</string>
 						</dict>
 						<dict>
 							<key>name</key>

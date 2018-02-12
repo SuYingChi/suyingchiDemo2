@@ -9,6 +9,7 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -83,6 +84,7 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         stickerGroup = getIntent().getParcelableExtra(STICKER_GROUP_BUNDLE);
         downloadItem = DownloadUtils.createStickerGroupDownloadItem(stickerGroup.getStickerGroupName());
@@ -150,7 +152,7 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
         int radius = getResources().getDimensionPixelSize(R.dimen.corner_radius);
         stickerDownloadButton.initState();
         if (stickerGroup.isStickerGroupDownloaded()) {
-            stickerDownloadButton.setText(getString(R.string.apply_btn));
+            stickerDownloadButton.setText(getString(R.string.my_theme_downloaded_theme_title));
             stickerDownloadButton.setBackgroundColor(color);
             stickerDownloadButton.setEnabled(false);
         } else {

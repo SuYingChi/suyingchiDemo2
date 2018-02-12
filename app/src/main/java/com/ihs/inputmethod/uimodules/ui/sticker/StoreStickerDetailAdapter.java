@@ -69,7 +69,7 @@ public class StoreStickerDetailAdapter extends RecyclerView.Adapter<StoreSticker
         @SuppressWarnings("StringBufferReplaceableByString") StringBuilder stringBuilder = new StringBuilder(HSConfigUtils.getRemoteContentDownloadURL()).append(StickerGroup.STICKER_REMOTE_ROOT_DIR_NAME)
                 .append("/").append(stickerGroupName).append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(stickerImageSerialNumber).append(stickerGroup.getPicFormat());
         String stickerImageUri = stringBuilder.toString();
-        Glide.with(stickerImageView).asGif().load(stickerImageUri).apply(new RequestOptions()
+        Glide.with(stickerImageView).load(stickerImageUri).apply(new RequestOptions()
                 .placeholder(R.drawable.sticker_store_image_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)).into(stickerImageView);
         if (mOnItemLongClickListener != null) {
