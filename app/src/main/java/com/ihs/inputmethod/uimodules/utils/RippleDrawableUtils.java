@@ -127,6 +127,8 @@ public class RippleDrawableUtils {
                     getShapeDrawable(pressedColor, radius));
             states.addState(new int[]{android.R.attr.state_activated},
                     getShapeDrawable(pressedColor, radius));
+            states.addState(new int[]{android.R.attr.state_hovered},
+                    getShapeDrawable(pressedColor, radius));
         }
         states.addState(new int[]{},
                 getShapeDrawable(normalColor, radius));

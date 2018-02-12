@@ -1,6 +1,5 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
@@ -19,14 +17,18 @@ import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.utils.CommonDownloadManager;
 import com.ihs.inputmethod.uimodules.utils.DownloadUtils;
-import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.ProgressButton;
+import com.kc.utils.KCAnalytics;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
+import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWNLOAD_ZIP_SUFFIX;
+
 public class StoreStickerDetailActivity extends HSAppCompatActivity {
+    public static final int RESULT_CODE_SUCCESS = 1;
+    public static final int RESULT_CODE_FAILED = 0;
     public static final String STICKER_GROUP_BUNDLE = "sticker";
 
     private static final int STICKER_SPAN_COUNT = 4;
@@ -88,7 +90,7 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
         setContentView(R.layout.activity_store_sticker_detail);
 
         stickerDetailImage = (ImageView) findViewById(R.id.sticker_detail_preview_iv);
-        ImageLoader.getInstance().displayImage(stickerGroup.getStickerGroupPreviewImageUri(),
+        ImageLoader.getInstance().displayImage(stickerGroup.getDetailPreviewUrl(),
                 new ImageViewAware(stickerDetailImage), displayImageOptions);
         stickerGroupName = (TextView) findViewById(R.id.sticker_group_name_tv);
         stickerGroupName.setText(stickerGroup.getDownloadDisplayName());
@@ -109,10 +111,10 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
                         stickerDownloadButton.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     }
                     CommonDownloadManager.getInstance().addOnDownloadUpdateListener(downloadItem, listener);
+
                 }
             }
         });
-        stickerDownloadButton.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.colorPrimary));
         setDownloadButton();
 
         backButton = (ImageView) findViewById(R.id.store_sticker_detail_back_btn);
@@ -133,29 +135,27 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.store_sticker_grid_item_spacing);
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels, STICKER_SPAN_COUNT));
         storeStickerDetailAdapter = new StoreStickerDetailAdapter(stickerGroup);
-//        recyclerView.setFocusable(false);
         recyclerView.setAdapter(storeStickerDetailAdapter);
 
-        PreviewImageView previewImageView = new PreviewImageView(this,stickerGroup);
+        PreviewImageView previewImageView = new PreviewImageView(this, stickerGroup);
         storeStickerDetailAdapter.setOnItemLongClickListener(previewImageView);
-        ScrollView scrollView = findViewById(R.id.display_content);
         recyclerView.setOnTouchListener(previewImageView);
 
         CameraNewMarkUtil.setElementVisited(CameraNewMarkUtil.TAG_STICKER, stickerGroup.getStickerGroupName());
+        setResult(RESULT_CODE_FAILED);
     }
 
     private void setDownloadButton() {
-        int color = getResources().getColor(R.color.colorPrimary);
+        int color = getResources().getColor(R.color.charging_screen_alert_negative_action);
         int radius = getResources().getDimensionPixelSize(R.dimen.corner_radius);
         stickerDownloadButton.initState();
         if (stickerGroup.isStickerGroupDownloaded()) {
-            stickerDownloadButton.setTextColor(Color.WHITE);
             stickerDownloadButton.setText(getString(R.string.apply_btn));
-            stickerDownloadButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(color, radius));
+            stickerDownloadButton.setBackgroundColor(color);
+            stickerDownloadButton.setEnabled(false);
         } else {
-            stickerDownloadButton.setTextColor(color);
             stickerDownloadButton.setText(getString(R.string.download_capital));
-            stickerDownloadButton.setBackgroundDrawable(RippleDrawableUtils.getTransparentButtonBackgroundDrawable(color, radius));
+//            stickerDownloadButton.setBackgroundDrawable(RippleDrawableUtils.getTransparentButtonBackgroundDrawable(color, radius));
         }
         stickerDownloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,27 +166,18 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
     }
 
     private void downloadStickerGroup() {
-        DownloadUtils.startDownloadForeground(StoreStickerDetailActivity.this,
-                DownloadUtils.createStickerGroupDownloadItem(stickerGroup.getStickerGroupName()),
-                stickerDetailImage != null ? stickerDetailImage.getDrawable() : null,
-                new DownloadUtils.OnDownloadAlertListener() {
-                    @Override
-                    public void onUnlockActionClicked() {
-                        if (unlockImage != null && unlockImage.getVisibility() == View.VISIBLE) {
-                            unlockImage.setVisibility(View.GONE);
-                        }
+        final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroup.getStickerGroupName()) + STICKER_DOWNLOAD_ZIP_SUFFIX;
+        KCAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroup.getStickerGroupName(), "form", "detail");
+        com.ihs.inputmethod.utils.DownloadUtils.getInstance().startForegroundDownloading(this, stickerGroup.getStickerGroupName(),
+                stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
+                stickerDetailImage != null ? stickerDetailImage.getDrawable() : null, (success, manually) -> {
+                    if (success) {
+                        KCAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroup.getStickerGroupName(), "from", "detail");
+                        StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
+                        setDownloadButton();
+                        setResult(RESULT_CODE_SUCCESS);
                     }
-
-                    @Override
-                    public void onAlertShow() {
-
-                    }
-
-                    @Override
-                    public void onDismiss(boolean success) {
-
-                    }
-                }, "details", true);
+                }, false);
     }
 
 

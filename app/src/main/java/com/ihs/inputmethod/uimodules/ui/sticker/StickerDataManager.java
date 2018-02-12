@@ -133,6 +133,9 @@ public class StickerDataManager {
             if (map.get("showCount") != null) {
                 stickerGroup.setShowCount((Integer) map.get("showCount"));
             }
+            if (map.get("format") != null) {
+                stickerGroup.setPicFormat("." + map.get("format"));
+            }
             if (showInKeyboard != null) {
                 stickerGroup.setShowInKeyboard(showInKeyboard);
             }

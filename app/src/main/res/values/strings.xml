@@ -255,5 +255,6 @@
     <string name="setting_sms_assistant_title">SMS assistant</string>
     <string name="circular_std_book" translatable="false">CircularStd-Book.otf</string>
     <string name="circular_std_medium" translatable="false">CircularStd-Medium.otf</string>
+    <string name="preview_sticker_hint">Press and hold to preview</string>
 
 </resources>

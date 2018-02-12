@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <ImageView
+        android:clickable="false"
         android:id="@+id/sticker_store_detail_iv"
         android:layout_gravity="center"
         android:gravity="center"

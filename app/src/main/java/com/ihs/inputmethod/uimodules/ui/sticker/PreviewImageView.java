@@ -17,8 +17,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.utils.HSConfigUtils;
 
@@ -31,12 +31,13 @@ import java.util.List;
 
 public class PreviewImageView
         implements View.OnTouchListener, StoreStickerDetailAdapter.OnItemLongClickListener {
-    private static final int VIEW_SIZE = DisplayUtils.dip2px(90);
-    private static final int TOP_MARGIN = DisplayUtils.dip2px(40);
+    private static final int VIEW_HEIGHT = DisplayUtils.dip2px(116);
+    private static final int VIEW_WIDTH = DisplayUtils.dip2px(106);
 
     private final Context context;
     private final int[] gvLoc = new int[2];
     private final List<Pair<String, Point>> gifInfos = new ArrayList<>();
+    private List<View> elementList = new ArrayList<>();
 
     private int parentWidth;
     private int childWidth;
@@ -59,14 +60,16 @@ public class PreviewImageView
         layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
         layoutParams.format = PixelFormat.TRANSLUCENT;
-        layoutParams.width = VIEW_SIZE;
-        layoutParams.height = VIEW_SIZE;
+        layoutParams.width = VIEW_WIDTH;
+        layoutParams.height = VIEW_HEIGHT;
         layoutParams.gravity = Gravity.START | Gravity.TOP;
         RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.sticker_store_image_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         requestManager = Glide.with(context).applyDefaultRequestOptions(requestOptions);
     }
+
+    private View touchedView = new View(HSApplication.getContext());
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -83,6 +86,7 @@ public class PreviewImageView
                 boolean findTarget = false;
                 for (int i = 0; i < size; i++) {
                     Pair<String, Point> info = gifInfos.get(i);
+                    touchedView = elementList.get(i);
                     Point loc = info.second;
                     if (rawX >= loc.x && rawX <= loc.x + childWidth
                             && rawY > loc.y && rawY < loc.y + childHeight) {
@@ -93,20 +97,22 @@ public class PreviewImageView
 
                         findTarget = true;
                         updateGif(info.first, new int[]{info.second.x, info.second.y});
+                        touchedView.setPressed(true);
                         break;
                     }
+                    touchedView.setPressed(false);
                 }
                 if (!findTarget) {
                     pauseGif();
                 }
-                HSLog.e("moeee");
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 v.getParent().getParent().requestDisallowInterceptTouchEvent(false);
                 hideGif();
+                touchedView.setPressed(false);
                 gifInfos.clear();
-                HSLog.e("canceeee");
+                elementList.clear();
                 break;
             default:
                 break;
@@ -124,16 +130,20 @@ public class PreviewImageView
             stickerImageSerialNumber = "-" + position;
         }
         @SuppressWarnings("StringBufferReplaceableByString") StringBuilder stringBuilder = new StringBuilder(HSConfigUtils.getRemoteContentDownloadURL()).append(StickerGroup.STICKER_REMOTE_ROOT_DIR_NAME)
-                .append("/").append(stickerGroupName).append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(stickerImageSerialNumber).append(".gif");
+                .append("/").append(stickerGroupName).append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(stickerImageSerialNumber).append(stickerGroup.getPicFormat());
         return stringBuilder.toString();
     }
 
     private void showGif(String picUrl, int[] loc) {
         if (vGif == null) {
             vGif = new ImageView(context);
+            vGif.setPadding(0, 0, 0, DisplayUtils.dip2px(10));
             vGif.setBackgroundResource(R.drawable.sticker_pop_preview_bg);
         }
         updateLayoutParams(loc);
+        if (vGif.getParent() != null) {
+            wm.removeView(vGif);
+        }
         wm.addView(vGif, layoutParams);
         vGif.setTag(null);
         requestManager.load(picUrl).into(vGif);
@@ -163,21 +173,22 @@ public class PreviewImageView
         if (vGif.getParent() != null) {
             wm.removeView(vGif);
         }
+        vGif.setTag(null);
         vGif = null;
         parentView = null;
     }
 
     private void updateLayoutParams(int[] location) {
-        layoutParams.y = location[1] - VIEW_SIZE;
-        layoutParams.x = location[0] + childWidth / 2 - VIEW_SIZE / 2;
+        layoutParams.y = location[1] - childWidth / 4 - VIEW_HEIGHT;
+        layoutParams.x = location[0] + childWidth / 2 - VIEW_WIDTH / 2;
         if (layoutParams.y < 0) {
             layoutParams.y = 0;
         }
         if (layoutParams.x < 0) {
             layoutParams.x = 0;
         }
-        if (layoutParams.x > parentWidth - VIEW_SIZE / 2) {
-            layoutParams.x = parentWidth - VIEW_SIZE / 2;
+        if (layoutParams.x > parentWidth - VIEW_WIDTH / 2) {
+            layoutParams.x = parentWidth - VIEW_WIDTH / 2;
         }
     }
 
@@ -187,7 +198,7 @@ public class PreviewImageView
         int[] loc = new int[2];
         view.getLocationOnScreen(loc);
 
-        parentView = view;
+        parentView = parent;
         parent.getLocationOnScreen(gvLoc);
         parentWidth = parent.getWidth();
         childWidth = view.getWidth();
@@ -210,6 +221,7 @@ public class PreviewImageView
             Point point = new Point(loc[0], loc[1]);
             Pair<String, Point> pair = new Pair<>(rid, point);
             gifInfos.add(pair);
+            elementList.add(v);
         }
     }
 }

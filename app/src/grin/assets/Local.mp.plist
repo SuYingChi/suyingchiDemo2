@@ -5375,6 +5375,8 @@
 					<key>StickerGroupList</key>
 					<array>
 						<dict>
+							<key>format</key>
+							<string>gif</string>
 							<key>showName</key>
 							<string>Violence</string>
 							<key>name</key>
@@ -5383,6 +5385,8 @@
 							<integer>10</integer>
 						</dict>
 						<dict>
+							<key>showCount</key>
+							<integer>20</integer>
 							<key>name</key>
 							<string>FootballPlayer</string>
 							<key>showName</key>

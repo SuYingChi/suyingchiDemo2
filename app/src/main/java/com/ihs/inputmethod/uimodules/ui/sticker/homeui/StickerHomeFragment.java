@@ -47,6 +47,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
     private RecyclerView recyclerView;
     private HomeStickerAdapter stickerCardAdapter;
     private List<StickerHomeModel> stickerModelList = new ArrayList<>();
+    private StickerHomeModel lastCheckedSticker;
 
     private INotificationObserver observer = new INotificationObserver() {
         @Override
@@ -118,8 +119,8 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
 
                         Intent intent = new Intent(getActivity(), StoreStickerDetailActivity.class);
                         intent.putExtra(StoreStickerDetailActivity.STICKER_GROUP_BUNDLE, stickerGroup);
-                        startActivity(intent);
-
+                        startActivityForResult(intent, 0);
+                        lastCheckedSticker = stickerHomeModel;
 
 //                        DownloadUtils.getInstance().startForegroundDownloading(getActivity(), stickerGroupName,
 //                                stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
@@ -328,6 +329,20 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
     public void onLockerInstallStatusChange() {
         if (stickerCardAdapter != null) {
             loadDatas();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == StoreStickerDetailActivity.RESULT_CODE_SUCCESS) {
+            if(lastCheckedSticker!=null){
+                int position = stickerModelList.indexOf(lastCheckedSticker);
+                if (position > 0 && position < stickerModelList.size()) {
+                    stickerModelList.remove(position);
+                    stickerCardAdapter.notifyItemRemoved(position);
+                }
+            }
         }
     }
 }

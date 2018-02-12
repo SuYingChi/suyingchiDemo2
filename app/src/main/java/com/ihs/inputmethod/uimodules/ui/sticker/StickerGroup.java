@@ -43,12 +43,13 @@ public class StickerGroup implements Parcelable {
     public static final String ASSETS_STICKER_FILE_NAME = "Stickers";
     private static final String STICKER_TAB_IMAGE_SUFFIX = "-tab.png";
     private static final String STICKER_DOWNLOAD_IMAGE_SUFFIX = "-preview.png";
+    private static final String STICKER_DETAIL_PREVIEW = "-detail.png";
     private static final String STICKER_DOWNLOAD_ZIP_SUFFIX = ".zip";
     // --Commented out by Inspection (18/1/11 下午2:41):private static final String STICKER_IMAGE_PNG_SUFFIX = ".png";
     private static final String STICKER_CONFIG_FILE_SUFFIX = "/contents.json";
     private boolean autoDownload = false;
     private int showCount = 0;
-
+    private String picFormat = ".png";
 
 
     public int getShowCount() {
@@ -59,6 +60,13 @@ public class StickerGroup implements Parcelable {
         this.showCount = showCount;
     }
 
+    public String getPicFormat() {
+        return picFormat;
+    }
+
+    public void setPicFormat(String picFormat) {
+        this.picFormat = picFormat;
+    }
 
     public boolean isAutoDownload() {
         return autoDownload;
@@ -317,12 +325,18 @@ public class StickerGroup implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.stickerGroupName);
         dest.writeString(this.downloadDisplayName);
+        dest.writeString(this.stickerGroupDownloadPreviewImageUri);
+        dest.writeString(this.stickerGroupDownloadUri);
+        dest.writeString(this.picFormat);
         dest.writeInt(this.showCount);
     }
 
     protected StickerGroup(Parcel in) {
         this.stickerGroupName = in.readString();
         this.downloadDisplayName = in.readString();
+        this.stickerGroupDownloadPreviewImageUri = in.readString();
+        this.stickerGroupDownloadUri = in.readString();
+        this.picFormat = in.readString();
         this.showCount = in.readInt();
     }
 
@@ -337,4 +351,9 @@ public class StickerGroup implements Parcelable {
             return new StickerGroup[size];
         }
     };
+
+    public String getDetailPreviewUrl() {
+        return new StringBuilder(getStickerDownloadBaseUrl())
+                .append(stickerGroupName).append("/").append(stickerGroupName).append(STICKER_DETAIL_PREVIEW).toString();
+    }
 }

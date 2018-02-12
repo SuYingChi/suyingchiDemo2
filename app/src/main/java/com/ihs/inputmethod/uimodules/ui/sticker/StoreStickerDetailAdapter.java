@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,7 +11,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.utils.HSConfigUtils;
 
 
@@ -64,20 +67,21 @@ public class StoreStickerDetailAdapter extends RecyclerView.Adapter<StoreSticker
             stickerImageSerialNumber = "-" + position;
         }
         @SuppressWarnings("StringBufferReplaceableByString") StringBuilder stringBuilder = new StringBuilder(HSConfigUtils.getRemoteContentDownloadURL()).append(StickerGroup.STICKER_REMOTE_ROOT_DIR_NAME)
-                .append("/").append(stickerGroupName).append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(stickerImageSerialNumber).append(".gif");
+                .append("/").append(stickerGroupName).append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(stickerImageSerialNumber).append(stickerGroup.getPicFormat());
         String stickerImageUri = stringBuilder.toString();
         Glide.with(stickerImageView).asGif().load(stickerImageUri).apply(new RequestOptions()
                 .placeholder(R.drawable.sticker_store_image_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)).into(stickerImageView);
         if (mOnItemLongClickListener != null) {
-            holder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            holder.itemView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
-                public boolean onLongClick(View v) {
-                    int position = holder.getLayoutPosition();
-                    mOnItemLongClickListener.onItemLongClick((RecyclerView) parent, holder.itemView, position);
-                    return true;
+                public boolean onTouch(View v, MotionEvent event) {
+                    mOnItemLongClickListener.onItemLongClick((RecyclerView) parent, v, position);
+                    holder.itemView.setPressed(true);
+                    return false;
                 }
             });
+            holder.itemView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.TRANSPARENT, Color.parseColor("#dfdfdf"), DisplayUtils.dip2px(6)));
         }
     }
 
@@ -91,7 +95,7 @@ public class StoreStickerDetailAdapter extends RecyclerView.Adapter<StoreSticker
 
         StoreStickerViewHolder(View view) {
             super(view);
-            imageView = (ImageView) view.findViewById(R.id.sticker_store_detail_iv);
+            imageView = view.findViewById(R.id.sticker_store_detail_iv);
         }
     }
 }
