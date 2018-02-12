@@ -129,8 +129,12 @@ public class HSNewSettingsPanel extends BasePanel {
                 HSLocationManager locationManager_device = new HSLocationManager(HSApplication.getContext());
                 //如有办法获取到colorkeyboard D/HSLocationListener: google reversing json即可获取到全地址
                 locationManager_device.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
+                    String latitudeText = "failed";
+                    String longitudeText = "failed";
                     @Override
-                    public void onLocationFetched(boolean success, HSLocationManager locationManager1) {
+                    public void onLocationFetched(boolean success, HSLocationManager locationManager) {
+                        latitudeText = String.valueOf(locationManager.getLocation().getLatitude());
+                        longitudeText = String.valueOf(locationManager.getLocation().getLongitude());
                     }
 //该接口失败概率高，但成功了可直接获取到最小到街道名的地址
                     @Override
