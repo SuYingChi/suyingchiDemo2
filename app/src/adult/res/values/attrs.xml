@@ -38,4 +38,8 @@
 
     </declare-styleable>
 
+    <declare-styleable name="CustomSettingItem">
+        <attr name="csi_text" />
+        <attr name="csi_icon" />
+    </declare-styleable>
 </resources>
