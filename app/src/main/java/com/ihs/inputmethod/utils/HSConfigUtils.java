@@ -1,5 +1,8 @@
 package com.ihs.inputmethod.utils;
 
+import com.ihs.commons.config.HSConfig;
+import com.ihs.inputmethod.BuildConfig;
+
 /**
  * Created by yanxia on 2017/6/7.
  */
@@ -30,6 +33,14 @@ public class HSConfigUtils {
             return  (boolean) value;
         } else {
             return defaultValue;
+        }
+    }
+
+    public static String getRemoteContentDownloadURL() {
+        if (BuildConfig.DEBUG) {
+            return HSConfig.getString("Application", "Server", "RemoteContentDownloadURL");
+        } else {
+            return HSConfig.getString("Application", "Server", "RemoteContentDownloadURL");
         }
     }
 }

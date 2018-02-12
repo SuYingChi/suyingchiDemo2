@@ -165,4 +165,67 @@ public class RippleDrawableUtils {
         shape.setColor(color);
         return shape;
     }
+    public static Drawable getCompatRippleDrawable(
+            int normalColor, int pressedColor, int normalStrokeColor, int pressedStrokeColor, int strokeWidth, float radius) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return new RippleDrawable(ColorStateList.valueOf(getRippleColor(normalColor)),
+                    getStateListDrawable(normalColor, pressedColor, -1, normalStrokeColor, pressedStrokeColor, -1, strokeWidth, radius), getRippleMask(getRippleMaskColor(pressedColor), radius));
+        } else {
+            return getStateListDrawable(normalColor, pressedColor, -1, normalStrokeColor, pressedStrokeColor, -1, strokeWidth, radius);
+        }
+    }
+
+    private static int getRippleMaskColor(int normalColor) {
+        int alpha = Color.alpha(normalColor);
+        int rippleMaskColor = normalColor;
+        if (alpha < 255) { //如果默认值有透明度，则ripple值设置为默认
+            rippleMaskColor = 0xfffea50b;
+        }
+        return rippleMaskColor;
+    }
+
+
+    private static int getRippleColor(int normalColor) {
+        int r = (int) (((normalColor >> 16) & 0xFF) * 0.8);
+        int g = (int) (((normalColor >> 8) & 0xFF) * 0.8);
+        int b = (int) (((normalColor) & 0xFF) * 0.8);
+        return Color.rgb(r, g, b);
+    }
+
+    public static StateListDrawable getStateListDrawable(
+            int normalColor, int pressedColor, int disableColor, int normalStrokeColor, int pressedStrokeColor, int disableStrokeColor, int strokeWidth, float radius) {
+        StateListDrawable states = new StateListDrawable();
+        if (disableColor != -1) {
+            states.addState(new int[]{-android.R.attr.state_enabled},
+                    getShapeDrawable(disableColor, disableStrokeColor, strokeWidth, radius));
+        }
+        if (pressedColor != -1) {
+            states.addState(new int[]{android.R.attr.state_pressed},
+                    getShapeDrawable(pressedColor, pressedStrokeColor, strokeWidth, radius));
+            states.addState(new int[]{android.R.attr.state_focused},
+                    getShapeDrawable(pressedColor, pressedStrokeColor, strokeWidth, radius));
+            states.addState(new int[]{android.R.attr.state_activated},
+                    getShapeDrawable(pressedColor, pressedStrokeColor, strokeWidth, radius));
+        }
+        states.addState(new int[]{},
+                getShapeDrawable(normalColor, normalStrokeColor, strokeWidth, radius));
+        return states;
+    }
+
+    public static GradientDrawable getShapeDrawable(int color, int strokeColor, int strokeWidth, float radius) {
+        GradientDrawable shape = new GradientDrawable();
+        shape.setCornerRadius(radius);
+        shape.setStroke(strokeWidth, strokeColor);
+        shape.setColor(color);
+        return shape;
+    }
+
+
+    public static Drawable getTransparentButtonBackgroundDrawable(int frameColor, int radius) {
+        return getCompatRippleDrawable(Color.TRANSPARENT, 0x1a000000, frameColor, frameColor, HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.transparent_button_frame_stoke_width), radius);
+    }
+
+    public static Drawable getHalfTransparentButtonBackgroundDrawable(int radius) {
+        return getCompatRippleDrawable(0x4c000000, 0x7f000000, radius);
+    }
 }

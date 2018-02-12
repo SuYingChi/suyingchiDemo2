@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -25,14 +24,12 @@ import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
-import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
+import com.ihs.inputmethod.uimodules.ui.sticker.StoreStickerDetailActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate.StickerFacemojiAdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
-import com.ihs.inputmethod.utils.DownloadUtils;
-import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,24 +115,30 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
                         StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
                         stickerCardAdapter.notifyItemChanged(stickerModelList.indexOf(stickerHomeModel));
 
-                        DownloadUtils.getInstance().startForegroundDownloading(getActivity(), stickerGroupName,
-                                stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
-                                drawable, new AdLoadingView.OnAdBufferingListener() {
-                                    @Override
-                                    public void onDismiss(boolean success, boolean manually) {
-                                        if (success) {
-                                            KCAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
-                                            StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
 
-                                            int position = stickerModelList.indexOf(stickerHomeModel);
-                                            if (position > 0 && position < stickerModelList.size()) {
-                                                stickerModelList.remove(position);
-                                                stickerCardAdapter.notifyItemRemoved(position);
-                                            }
-                                        }
-                                    }
+                        Intent intent = new Intent(getActivity(), StoreStickerDetailActivity.class);
+                        intent.putExtra(StoreStickerDetailActivity.STICKER_GROUP_BUNDLE, stickerGroup);
+                        startActivity(intent);
 
-                                });
+
+//                        DownloadUtils.getInstance().startForegroundDownloading(getActivity(), stickerGroupName,
+//                                stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
+//                                drawable, new AdLoadingView.OnAdBufferingListener() {
+//                                    @Override
+//                                    public void onDismiss(boolean success, boolean manually) {
+//                                        if (success) {
+//                                            KCAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
+//                                            StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
+//
+//                                            int position = stickerModelList.indexOf(stickerHomeModel);
+//                                            if (position > 0 && position < stickerModelList.size()) {
+//                                                stickerModelList.remove(position);
+//                                                stickerCardAdapter.notifyItemRemoved(position);
+//                                            }
+//                                        }
+//                                    }
+//
+//                                });
                     }
                 };
 

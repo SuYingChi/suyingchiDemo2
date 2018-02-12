@@ -1,5 +1,8 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.utils.GlideURIUtils;
 
@@ -7,7 +10,7 @@ import com.ihs.inputmethod.utils.GlideURIUtils;
  * Created by yanxia on 2017/6/8.
  */
 
-public class Sticker {
+public class Sticker implements Parcelable{
     public static final String STICKER_IMAGE_PNG_SUFFIX = ".png";
     public static final String STICKER_IMAGE_GIF_SUFFIX = ".gif";
 
@@ -41,6 +44,27 @@ public class Sticker {
         stickerRemoteUri = stringBuilder.toString();
     }
 
+
+    protected Sticker(Parcel in) {
+        stickerUri = in.readString();
+        stickerName = in.readString();
+        stickerGroupName = in.readString();
+        stickerRemoteUri = in.readString();
+        stickerFileSuffix = in.readString();
+        filePath = in.readString();
+    }
+
+    public static final Creator<Sticker> CREATOR = new Creator<Sticker>() {
+        @Override
+        public Sticker createFromParcel(Parcel in) {
+            return new Sticker(in);
+        }
+
+        @Override
+        public Sticker[] newArray(int size) {
+            return new Sticker[size];
+        }
+    };
 
     private String getStickerDownloadBaseUrl() {
         return HSConfig.getString("Application", "Server", "StickerDownloadBaseURL") + "/";
@@ -100,5 +124,17 @@ public class Sticker {
 
     public String getFilePath() {
         return filePath;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.stickerUri);
+        dest.writeString(this.stickerName);
+        dest.writeString(this.stickerGroupName);
     }
 }

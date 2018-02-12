@@ -5328,7 +5328,7 @@
 				<key>LanguageBaseURL</key>
 				<string>http://cdn.api-alliance.com/keyboardarts/adaptxt/3.1.1</string>
 				<key>RemoteContentDownloadURL</key>
-				<string>http://cdn.appcloudbox.net/keyboardarts/download</string>
+				<string>https://s3.amazonaws.com/emojidevelop/AndroidResource/download/</string>
 				<key>StickerDownloadBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/stickers</string>
 				<key>StickerSuggestionBaseURL</key>
@@ -5374,6 +5374,14 @@
 					</array>
 					<key>StickerGroupList</key>
 					<array>
+						<dict>
+							<key>showName</key>
+							<string>Violence</string>
+							<key>name</key>
+							<string>Violence</string>
+							<key>showCount</key>
+							<integer>10</integer>
+						</dict>
 						<dict>
 							<key>name</key>
 							<string>FootballPlayer</string>

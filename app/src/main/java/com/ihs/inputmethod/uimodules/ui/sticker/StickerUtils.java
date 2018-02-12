@@ -26,8 +26,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,7 +115,7 @@ public class StickerUtils {
 
     private static Map<String, StickerGroup> cachedStickerGroupContents = new HashMap<>();
 
-    static StickerGroup getStickerGroupByName(String stickerGroupName) {
+    public static StickerGroup getStickerGroupByName(String stickerGroupName) {
         StickerGroup stickerGroupTemp = null;
         if (cachedStickerGroupContents.containsKey(stickerGroupName)) {
             stickerGroupTemp = cachedStickerGroupContents.get(stickerGroupName);

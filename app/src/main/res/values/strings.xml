@@ -253,4 +253,7 @@
     <string name="custom_share_alert_button_text">Unlock for Free</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="setting_sms_assistant_title">SMS assistant</string>
+    <string name="circular_std_book" translatable="false">CircularStd-Book.otf</string>
+    <string name="circular_std_medium" translatable="false">CircularStd-Medium.otf</string>
+
 </resources>
