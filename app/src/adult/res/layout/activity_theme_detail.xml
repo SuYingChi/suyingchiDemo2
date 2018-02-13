@@ -101,7 +101,6 @@
                 <com.ihs.feature.common.TypefacedTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:lineSpacingExtra="-12.7sp"
                     android:text="@string/theme_detail_recommend_title"
                     android:textColor="#111111"
                     android:textSize="18sp"
