@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.home.model.HomeModel;
 import com.ihs.inputmethod.uimodules.R;
@@ -17,10 +19,7 @@ import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import java.util.List;
 
@@ -28,8 +27,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 
 public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<HomeModel>> {
-    private int imageWidth;
-    private int imageHeight;
+    private RequestOptions requestOptions;
 
     private DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build();
     private OnStickerClickListener onStickerClickListener;
@@ -38,8 +36,9 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
         this.onStickerClickListener = onStickerClickListener;
 
         Resources resources = HSApplication.getContext().getResources();
-        imageWidth = (int) (resources.getDisplayMetrics().widthPixels / 2 - resources.getDimension(R.dimen.theme_card_recycler_view_card_margin) * 2);
-        imageHeight = (int) (imageWidth / 1.6f);
+        int imageWidth = (int) (resources.getDisplayMetrics().widthPixels / 2 - resources.getDimension(R.dimen.theme_card_recycler_view_card_margin) * 2);
+        int imageHeight = (int) (imageWidth / 1.6f);
+        requestOptions = new RequestOptions().override(imageWidth, imageHeight);
     }
 
     @Override
@@ -71,8 +70,7 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
         final String realImageUrl = stickerGroup.getStickerGroupDownloadPreviewImageUri();
         if (realImageUrl != null) {
             stickerCardViewHolder.stickerRealImage.setImageDrawable(null);
-            ImageSize imageSize = new ImageSize(imageWidth, imageHeight);
-            ImageLoader.getInstance().displayImage(realImageUrl, new ImageViewAware(stickerCardViewHolder.stickerRealImage), options, imageSize, null, null);
+            Glide.with(HSApplication.getContext()).asBitmap().apply(requestOptions).load(realImageUrl).into(stickerCardViewHolder.stickerRealImage);
         } else {
             stickerCardViewHolder.stickerRealImage.setImageDrawable(null);
         }
