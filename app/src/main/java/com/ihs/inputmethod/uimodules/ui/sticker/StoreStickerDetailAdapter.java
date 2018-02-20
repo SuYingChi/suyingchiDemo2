@@ -77,7 +77,16 @@ public class StoreStickerDetailAdapter extends RecyclerView.Adapter<StoreSticker
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     mOnItemLongClickListener.onItemLongClick((RecyclerView) parent, v, position);
-                    holder.itemView.setPressed(true);
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            holder.itemView.setPressed(true);
+                            break;
+
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL:
+                            holder.itemView.setPressed(false);
+                            break;
+                    }
                     return false;
                 }
             });

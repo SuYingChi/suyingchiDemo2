@@ -51,6 +51,8 @@ public class PreviewImageView
     private View parentView;
     private StickerGroup stickerGroup;
     private RequestManager requestManager;
+    private View lastPressedItem = null;
+
 
     public PreviewImageView(Context context, StickerGroup stickerGroup) {
         this.context = context;
@@ -99,6 +101,10 @@ public class PreviewImageView
                         findTarget = true;
                         updateGif(info.first, new int[]{info.second.x, info.second.y});
                         touchedView.setPressed(true);
+                        if (lastPressedItem != null) {
+                            lastPressedItem.setPressed(false);
+                        }
+                        lastPressedItem = touchedView;
                         break;
                     }
                     touchedView.setPressed(false);
