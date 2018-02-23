@@ -14,8 +14,11 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.EditorInfo;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.location.HSLocationManager;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -23,6 +26,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSUIInputMethod;
+import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
@@ -32,14 +36,17 @@ import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSSelectorPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSThemeSelectPanel;
+import com.ihs.inputmethod.uimodules.widget.MdProgressBar;
 import com.ihs.inputmethod.uimodules.widget.ViewPagerIndicator;
 import com.ihs.panelcontainer.BasePanel;
+import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.widget.RelativeLayout.CENTER_IN_PARENT;
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 import static com.ihs.panelcontainer.KeyboardPanelSwitchContainer.MODE_BACK_PARENT;
 
@@ -112,55 +119,44 @@ public class HSNewSettingsPanel extends BasePanel {
                 KCAnalytics.logEvent("keyboard_setting_fonts_clicked");
             }
         }));
-        items.add(ViewItemBuilder.getFontsItem(new ViewItem.ViewItemListener() {
+        items.add(ViewItemBuilder.getLocationItem(new ViewItem.ViewItemListener() {
             @Override
             public void onItemClick(ViewItem item) {
-                HSLog.d("Location","click featch location");
+                HSAnalytics.logEvent("keyboard_location_clicked ");
                 if (!(ContextCompat.checkSelfPermission(HSApplication.getContext(),
                         android.Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED)){
-                    Toast.makeText(HSApplication.getContext(),"please allow rainbowKey open location",Toast.LENGTH_LONG).show();
+                    Toast.makeText(HSApplication.getContext(), R.string.send_location_enable_location_feature,Toast.LENGTH_LONG).show();
+                    HSAnalytics.logEvent("keyboard_location_sendFailed","unable  location feature ");
                     return;
                 }
-                if(networkState()){
-                    Toast.makeText(HSApplication.getContext(),"network is not available",Toast.LENGTH_LONG).show();
+                if(!networkState()){
+                    Toast.makeText(HSApplication.getContext(), R.string.send_location_network_not_available,Toast.LENGTH_LONG).show();
+                    HSAnalytics.logEvent("keyboard_location_sendFailed"," network no available");
                     return;
                 }
-                //展示转圈圈画面
+                Toast.makeText(HSApplication.getContext(),"Loading....",Toast.LENGTH_SHORT).show();
+                EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
                 HSLocationManager locationManager_device = new HSLocationManager(HSApplication.getContext());
+                locationManager_device.setDeviceLocationTimeout(50000);
                 locationManager_device.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
-                    String latitudeText = "failed";
-                    String longitudeText = "failed";
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
-                        latitudeText = String.valueOf(locationManager.getLocation().getLatitude());
-                        longitudeText = String.valueOf(locationManager.getLocation().getLongitude());
                     }
-//该接口失败概率高，但成功了可直接获取到最小到街道名的地址
                     @Override
                     public void onGeographyInfoFetched(boolean success, HSLocationManager locationManager) {
-                        String latitudeText = "failed";
-                        String longitudeText = "failed";
-                        //隐藏转圈圈
                         if (success) {
-                            latitudeText = String.valueOf(locationManager.getLocation().getLatitude());
-                            longitudeText = String.valueOf(locationManager.getLocation().getLongitude());
-                            HSLog.d("Location","---GeographyInfoFetched---latitudeText-------"+latitudeText+"-------longitudeText-------"+longitudeText);
-                            //城市
                             String city = String.valueOf(locationManager.getCity());
-                            HSLog.d("Location","---GeographyInfoFetched---city------"+city);
-                            //城市区
-                            String sublocality = locationManager.getSublocality();
-                            HSLog.d("Location","---GeographyInfoFetched---sublocality------"+sublocality);
-                            //街区
+                            String subLocality = locationManager.getSublocality();
                             String Neighborhood = locationManager.getNeighborhood();
-                            HSLog.d("Location","---GeographyInfoFetched---getNeighborhood------"+Neighborhood);
-                            String CountryCode = locationManager.getCountryCode();
-                            HSLog.d("Location","---GeographyInfoFetched--CountryCode-------"+CountryCode);
                             String country = locationManager.getCountry();
-                            HSInputMethod.inputText(CountryCode+","+sublocality+","+city+","+country);
+                            if(editorInfo!=null&&editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())){
+                                HSInputMethod.inputText(Neighborhood+","+subLocality+","+city+","+country);
+                            }
+                            HSAnalytics.logEvent("keyboard_location_sendSucess");
                         }else {
-                            Toast.makeText(HSApplication.getContext(),"get location time out",Toast.LENGTH_LONG).show();
+                            Toast.makeText(HSApplication.getContext(), R.string.send_location_request_timeout,Toast.LENGTH_LONG).show();
+                            HSAnalytics.logEvent("keyboard_location_sendFailed","request timeout");
                         }
                     }
                 });
