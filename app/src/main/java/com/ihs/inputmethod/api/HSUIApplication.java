@@ -66,6 +66,7 @@ import com.ihs.keyboardutils.notification.NotificationBean;
 import com.kc.utils.KCAnalytics;
 import com.keyboard.common.ActivityLifecycleMonitor;
 import com.keyboard.common.MainActivity;
+import com.keyboard.core.analytics.KeyboardAnalytics;
 import com.launcher.FloatWindowCompat;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -302,6 +303,8 @@ public class HSUIApplication extends HSInputMethodApplication {
                 false,
                 screenShotContentObserver
         );
+
+        KeyboardAnalytics.setExternalAnalytics(KCAnalytics::logFabricEvent);
     }
     MediaFileObserver screenShotContentObserver = new MediaFileObserver(new Handler()) {
     };
