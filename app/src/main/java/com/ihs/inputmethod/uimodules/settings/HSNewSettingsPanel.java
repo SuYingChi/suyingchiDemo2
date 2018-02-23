@@ -126,8 +126,8 @@ public class HSNewSettingsPanel extends BasePanel {
                     Toast.makeText(HSApplication.getContext(),"network is not available",Toast.LENGTH_LONG).show();
                     return;
                 }
+                //展示转圈圈画面
                 HSLocationManager locationManager_device = new HSLocationManager(HSApplication.getContext());
-                //如有办法获取到colorkeyboard D/HSLocationListener: google reversing json即可获取到全地址
                 locationManager_device.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
                     String latitudeText = "failed";
                     String longitudeText = "failed";
@@ -141,6 +141,7 @@ public class HSNewSettingsPanel extends BasePanel {
                     public void onGeographyInfoFetched(boolean success, HSLocationManager locationManager) {
                         String latitudeText = "failed";
                         String longitudeText = "failed";
+                        //隐藏转圈圈
                         if (success) {
                             latitudeText = String.valueOf(locationManager.getLocation().getLatitude());
                             longitudeText = String.valueOf(locationManager.getLocation().getLongitude());
@@ -156,6 +157,8 @@ public class HSNewSettingsPanel extends BasePanel {
                             HSLog.d("Location","---GeographyInfoFetched---getNeighborhood------"+Neighborhood);
                             String CountryCode = locationManager.getCountryCode();
                             HSLog.d("Location","---GeographyInfoFetched--CountryCode-------"+CountryCode);
+                            String country = locationManager.getCountry();
+                            HSInputMethod.inputText(CountryCode+","+sublocality+","+city+","+country);
                         }else {
                             Toast.makeText(HSApplication.getContext(),"get location time out",Toast.LENGTH_LONG).show();
                         }
