@@ -14,7 +14,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
-import com.ihs.inputmethod.utils.HSConfigUtils;
 
 
 /**
@@ -66,8 +65,7 @@ public class StoreStickerDetailAdapter extends RecyclerView.Adapter<StoreSticker
         } else {
             stickerImageSerialNumber = "-" + position;
         }
-        @SuppressWarnings("StringBufferReplaceableByString") StringBuilder stringBuilder = new StringBuilder(HSConfigUtils.getRemoteContentDownloadURL()).append(StickerGroup.STICKER_REMOTE_ROOT_DIR_NAME)
-                .append("/").append(stickerGroupName).append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(stickerImageSerialNumber).append(stickerGroup.getPicFormat());
+        @SuppressWarnings("StringBufferReplaceableByString") StringBuilder stringBuilder = new StringBuilder(StickerUtils.getStickerDownloadBaseUrl()).append(stickerGroupName).append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(stickerImageSerialNumber).append(stickerGroup.getPicFormat());
         String stickerImageUri = stringBuilder.toString();
         Glide.with(stickerImageView).load(stickerImageUri).apply(new RequestOptions()
                 .placeholder(R.drawable.sticker_store_image_placeholder)

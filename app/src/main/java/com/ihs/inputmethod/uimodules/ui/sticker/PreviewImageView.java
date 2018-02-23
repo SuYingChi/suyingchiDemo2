@@ -63,8 +63,7 @@ public class PreviewImageView
         layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
         layoutParams.format = PixelFormat.TRANSLUCENT;
-        layoutParams.width = VIEW_WIDTH;
-        layoutParams.height = VIEW_HEIGHT;
+
         layoutParams.gravity = Gravity.START | Gravity.TOP;
         RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.sticker_store_image_placeholder)
@@ -80,6 +79,10 @@ public class PreviewImageView
             return false;
         }
         switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+
+                break;
+
             case MotionEvent.ACTION_MOVE:
                 v.getParent().getParent().requestDisallowInterceptTouchEvent(true);
                 float rawX = event.getRawX();
@@ -188,8 +191,8 @@ public class PreviewImageView
     }
 
     private void updateLayoutParams(int[] location) {
-        layoutParams.y = location[1] - childWidth / 4 - VIEW_HEIGHT;
-        layoutParams.x = location[0] + childWidth / 2 - VIEW_WIDTH / 2;
+        layoutParams.y = location[1] - layoutParams.height;
+        layoutParams.x = location[0];
         if (layoutParams.y < 0) {
             layoutParams.y = 0;
         }
@@ -212,6 +215,8 @@ public class PreviewImageView
         parentWidth = parent.getWidth();
         childWidth = view.getWidth();
         childHeight = view.getHeight();
+        layoutParams.width = childWidth;
+        layoutParams.height = childHeight + DisplayUtils.dip2px(10);
 
         String stickerImageUri = getImageUrl(position);
 

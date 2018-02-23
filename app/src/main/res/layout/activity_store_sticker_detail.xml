@@ -11,6 +11,8 @@
         android:scrollbars="vertical">
 
         <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -73,7 +75,8 @@
 
                 <com.ihs.inputmethod.uimodules.widget.ProgressButton
                     android:id="@+id/store_sticker_download_btn"
-                    android:layout_height="wrap_content"
+                    android:layout_width="108dp"
+                    android:layout_height="49dp"
                     android:layout_gravity="end|center_vertical"
                     android:layout_marginEnd="24dp"
                     android:layout_marginRight="24dp"
@@ -85,7 +88,7 @@
                     android:textSize="14sp"
                     android:background="@drawable/acb_alert_ad_card_button_bg_selector"
                     app:layout_marginEndPercent="5%"
-                    app:layout_widthPercent="28%" />
+                    />
             </android.support.percent.PercentFrameLayout>
 
 
@@ -100,9 +103,9 @@
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="0.3dp"
+                    android:layout_height="1dp"
                     android:layout_weight="1"
-                    android:background="@color/acb_phone_out_alert_sub_text_color" />
+                    android:background="#aeaeae" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -119,9 +122,9 @@
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="0.3dp"
+                    android:layout_height="1dp"
                     android:layout_weight="1"
-                    android:background="@color/acb_phone_out_alert_sub_text_color" />
+                    android:background="#aeaeae" />
 
             </LinearLayout>
 
