@@ -18,7 +18,7 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
         return new MessageCenterUtils.Config() {
             @Override
             public String getAdPlacement() {
-                return AdPlacements.NATIVE_THEME_TRY;
+                return AdPlacements.NATIVE_LUMEN;
             }
 
             @Override
@@ -56,7 +56,7 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
     private static class CPCallIdleConfig extends CallIdleAlert.PlistConfig {
         @Override
         public String getAdPlaceName() {
-            return AdPlacements.NATIVE_THEME_TRY;
+            return AdPlacements.NATIVE_LUMEN;
         }
 
         @Override
