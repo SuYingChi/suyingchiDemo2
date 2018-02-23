@@ -83,7 +83,7 @@
                     android:gravity="center"
                     android:paddingBottom="7dp"
                     android:paddingTop="7dp"
-                    android:text="@string/download_capital"
+                    android:text="@string/theme_card_menu_download"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
                     android:background="@drawable/acb_alert_ad_card_button_bg_selector"
@@ -132,8 +132,8 @@
                 android:id="@+id/store_sticker_detail_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
                 android:layout_marginTop="26dp"
                 android:descendantFocusability="beforeDescendants" />
 

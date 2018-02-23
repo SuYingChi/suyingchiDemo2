@@ -100,7 +100,7 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
             int size = (int) stickerGroupName.getTextSize() - 8;
             stickerGroupName.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
         }
-        String stickerCount = stickerGroup.getShowCount() + " Stickers";
+        String stickerCount = stickerGroup.getShowCount() + " " + getResources().getString(R.string.stickers);
         stickerGroupCount = (TextView) findViewById(R.id.sticker_group_count_tv);
         stickerGroupCount.setText(stickerCount);
 

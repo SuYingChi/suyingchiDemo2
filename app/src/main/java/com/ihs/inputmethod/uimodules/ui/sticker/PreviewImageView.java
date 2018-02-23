@@ -18,10 +18,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.utils.HSConfigUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,11 +66,9 @@ public class PreviewImageView
         layoutParams.gravity = Gravity.START | Gravity.TOP;
         RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.sticker_store_image_placeholder)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
         requestManager = Glide.with(context).applyDefaultRequestOptions(requestOptions);
     }
-
-    private View touchedView = new View(HSApplication.getContext());
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -92,7 +89,7 @@ public class PreviewImageView
                 boolean findTarget = false;
                 for (int i = 0; i < size; i++) {
                     Pair<String, Point> info = gifInfos.get(i);
-                    touchedView = elementList.get(i);
+                    View touchedView = elementList.get(i);
                     Point loc = info.second;
                     if (rawX >= loc.x && rawX <= loc.x + childWidth
                             && rawY > loc.y && rawY < loc.y + childHeight) {
@@ -110,7 +107,6 @@ public class PreviewImageView
                         lastPressedItem = touchedView;
                         break;
                     }
-                    touchedView.setPressed(false);
                 }
                 if (!findTarget) {
                     pauseGif();
@@ -120,9 +116,12 @@ public class PreviewImageView
             case MotionEvent.ACTION_CANCEL:
                 v.getParent().getParent().requestDisallowInterceptTouchEvent(false);
                 hideGif();
-                touchedView.setPressed(false);
+                if (lastPressedItem != null) {
+                    lastPressedItem.setPressed(false);
+                }
                 gifInfos.clear();
                 elementList.clear();
+                HSLog.e("cancel  cancelcancel");
                 break;
             default:
                 break;
@@ -139,15 +138,14 @@ public class PreviewImageView
         } else {
             stickerImageSerialNumber = "-" + position;
         }
-        @SuppressWarnings("StringBufferReplaceableByString") StringBuilder stringBuilder = new StringBuilder(HSConfigUtils.getRemoteContentDownloadURL()).append(StickerGroup.STICKER_REMOTE_ROOT_DIR_NAME)
-                .append("/").append(stickerGroupName).append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(stickerImageSerialNumber).append(stickerGroup.getPicFormat());
+        @SuppressWarnings("StringBufferReplaceableByString") StringBuilder stringBuilder = new StringBuilder(StickerUtils.getStickerDownloadBaseUrl()).append(stickerGroupName).append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(stickerImageSerialNumber).append(stickerGroup.getPicFormat());
         return stringBuilder.toString();
     }
 
     private void showGif(String picUrl, int[] loc) {
         if (vGif == null) {
             vGif = new ImageView(context);
-            vGif.setPadding(0, 0, 0, DisplayUtils.dip2px(10));
+            vGif.setPadding(DisplayUtils.dip2px(10), DisplayUtils.dip2px(10), DisplayUtils.dip2px(10), DisplayUtils.dip2px(20));
             final VectorDrawableCompat vectorDrawableCompat = VectorDrawableCompat.create(context.getResources(), R.drawable.sticker_pop_preview_bg, null);
             vGif.setBackgroundDrawable(vectorDrawableCompat);
 //            vGif.setBackgroundResource(R.drawable.sticker_pop_preview_bg);
@@ -192,7 +190,7 @@ public class PreviewImageView
 
     private void updateLayoutParams(int[] location) {
         layoutParams.y = location[1] - layoutParams.height;
-        layoutParams.x = location[0];
+        layoutParams.x = location[0] - (layoutParams.width / 2 - childWidth / 2);
         if (layoutParams.y < 0) {
             layoutParams.y = 0;
         }
@@ -206,7 +204,7 @@ public class PreviewImageView
 
     @Override
     public void onItemLongClick(RecyclerView parent, View view, int position) {
-
+        lastPressedItem = view;
         int[] loc = new int[2];
         view.getLocationOnScreen(loc);
 
@@ -215,8 +213,8 @@ public class PreviewImageView
         parentWidth = parent.getWidth();
         childWidth = view.getWidth();
         childHeight = view.getHeight();
-        layoutParams.width = childWidth;
-        layoutParams.height = childHeight + DisplayUtils.dip2px(10);
+        layoutParams.width = (int) (childWidth * 1.2);
+        layoutParams.height = (int) (childHeight * 1.2 + DisplayUtils.dip2px(10));
 
         String stickerImageUri = getImageUrl(position);
 

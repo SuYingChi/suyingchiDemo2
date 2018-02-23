@@ -23,4 +23,7 @@
     <string name="disable_app_suggestion_msg">You can quickly open your recent apps here. Are you sure to disable it?</string>
 
     <string name="item_sticker_more_coming">More stickers are coming soon</string>
+
+    <string name="preview_sticker_hint">Press and hold to preview</string>
+    <string name="stickers">Stickers</string>
 </resources>

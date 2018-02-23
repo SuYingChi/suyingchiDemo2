@@ -69,7 +69,7 @@ public class StoreStickerDetailAdapter extends RecyclerView.Adapter<StoreSticker
         String stickerImageUri = stringBuilder.toString();
         Glide.with(stickerImageView).load(stickerImageUri).apply(new RequestOptions()
                 .placeholder(R.drawable.sticker_store_image_placeholder)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)).into(stickerImageView);
+                .diskCacheStrategy(DiskCacheStrategy.ALL)).into(stickerImageView);
         if (mOnItemLongClickListener != null) {
             holder.itemView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
