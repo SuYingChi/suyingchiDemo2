@@ -3,14 +3,4 @@
     <color name="colorPrimary">#f44336</color>
     <color name="colorPrimaryDark">#c3362b</color>
     <color name="colorAccent">#f44336</color>
-
-    <color name="font_selection_listview_background">#ff181818</color>
-    <color name="settings_panel_background">#ff181818</color>
-    <color name="font_item_text_color">#ffffffff</color>
-    <color name="settings_item_text_color">#ffffffff</color>
-    <color name="font_divider_color">#33ffffff</color>
-    <color name="bg_translucent_black">#B2000000</color>
-
-    <color name="white_text_color_press">#888888</color>
-
 </resources>

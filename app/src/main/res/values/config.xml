@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <bool name="config_super_emoji_enabled">false</bool>
+    <bool name="config_sticker_enabled">false</bool>
+    <bool name="config_image_enabled">true</bool>
+    <bool name="config_slots_unlimited">false</bool>
+    <bool name="config_locker_drawer_visiable_enable">false</bool>
+    <bool name="config_ask_for_usage_permission">false</bool>
+
     <!-- Animation keyboard -->
     <bool name="hideRemoveAds">false</bool>
     <!-- Lucky -->

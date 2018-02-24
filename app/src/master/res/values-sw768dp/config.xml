@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <dimen name="config_key_popup_hint_letter_padding_right">8dp</dimen>
-    <dimen name="config_key_popup_hint_letter_padding_top">0dp</dimen>
-
-</resources>

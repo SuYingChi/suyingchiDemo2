@@ -39,14 +39,31 @@
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="theme_activity_horizontal_margin">8dp</dimen>
+    <dimen name="theme_activity_vertical_margin">16dp</dimen>
+
+    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
 
     <dimen name="common_round_corner">2dp</dimen>
 
     <!-- preview -->
     <dimen name="config_key_preview_offset_electric">-5dp</dimen>
     <!-- space key -->
+    <dimen name="config_key_language_on_space_padding_right_pop">6dp</dimen>
+    <dimen name="config_key_language_on_space_padding_top_pop">-3dp</dimen>
+    <dimen name="config_key_language_on_space_padding_right_electric">6dp</dimen>
+    <dimen name="config_key_language_on_space_padding_top_electric">0dp</dimen>
+    <dimen name="config_space_key_offesty_pop">2dp</dimen>
 
     <!-- pop up hint -->
+    <dimen name="config_key_popup_hint_letter_padding_right_pop">4dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_top_pop">-3dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_right_electric">4dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_top_electric">0dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_right_grey">3dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_top_grey">-2dp</dimen>
+
+    <dimen name="config_key_hint_letter_padding_right_pop">5dp</dimen>
 
     <!-- font selection panel dimensions -->
     <dimen name="font_item_padding_left">10dp</dimen>
@@ -56,28 +73,61 @@
     <dimen name="font_item_text_size">18sp</dimen>
 
     <!-- theme selection panel dimensions -->
+    <dimen name="theme_item_view_height">110dp</dimen>
+    <dimen name="theme_item_imageview_height">90dp</dimen>
+    <dimen name="theme_item_imageview_picked_height">99dp</dimen>
 
 
     <!-- gif -->
     <dimen name="config_gif_tag_text_size">10sp</dimen>
+    <dimen name="config_gif_tag_padding_horizontal">2dp</dimen>
     <dimen name="config_gif_grid_spacing">1dp</dimen>
     <dimen name="config_gif_emoji_search_page_id_view_height">2dp</dimen>
+    <dimen name="control_button_strip_button_margin_left">3.3dp</dimen>
+    <dimen name="control_button_strip_margin_left">10dp</dimen>
 
+    <dimen name="main_activity_button_height">68dp</dimen>
+    <dimen name="main_activity_two_buttons_height">136dp</dimen>
     <dimen name="button_guide_textsize">17sp</dimen>
     <dimen name="guide_bg_radius">28dp</dimen>
     <dimen name="guide_bg_padding_top">12dp</dimen>
+    
+    <dimen name="upload_activity_gif_size">160dp</dimen>
+    <dimen name="upload_activity_upload_pic_height">120dp</dimen>
+    <dimen name="upload_history_upload_pic_horizontal_spacing">3dp</dimen>
+    <dimen name="upload_history_upload_pic_vertical_spacing">3dp</dimen>
+
+    <dimen name="gif_search_button_margin_left">10dp</dimen>
+    <dimen name="gif_search_button_margin_right">5dp</dimen>
+    <dimen name="gif_search_button_margin_top">5dp</dimen>
+    <dimen name="gif_search_button_margin_bottom">9dp</dimen>
 
     <!-- gif tab button view -->
-    `
+    <dimen name="gif_tab_button_gif_view_width">49dp</dimen>
+    <dimen name="gif_tab_button_gif_view_height">35dp</dimen>
+    <dimen name="gif_tab_button_gif_view_pic_width">44dp</dimen>
+    <dimen name="gif_tab_button_gif_view_pic_height">31dp</dimen>
+    <dimen name="gif_tab_button_gif_view_pic_margin_left">2dp</dimen>
+    <dimen name="gif_tab_button_gif_view_pic_margin_right">3dp</dimen>
+    <dimen name="gif_tab_button_gif_view_pic_margin_top">3dp</dimen>
+    <dimen name="gif_tab_button_gif_view_pic_margin_bottom">1dp</dimen>
+    <dimen name="gif_tab_button_margin_vertical">1dp</dimen>`
+    <dimen name="gif_primary_tab_button_width">55dp</dimen>
+    <dimen name="gif_primary_tab_button_tag_margin_right">3dp</dimen>
+    <dimen name="gif_primary_tab_button_tag_max_width">44dp</dimen>
+    <dimen name="gif_primary_tab_button_tag_min_width">15dp</dimen>
 
     <!-- gif search widget -->
+    <dimen name="gif_primary_tab_search_widget_bg_stroke_width">1dp</dimen>
 
     <!--facemoji-->
     <dimen name="facemoji_category_bar_height">40dp</dimen>
     <dimen name="facemoji_category_bar_icon_margin">3dp</dimen>
+    <dimen name="facemoji_main_page_button_margin">20dp</dimen>
     <dimen name="facemoji_face_list_picker_size">30dp</dimen>
     <dimen name="facemoji_face_list_picker_margin">10dp</dimen>
     <dimen name="facemoji_myfacemoji_grid_gap">30dp</dimen>
+    <dimen name="facemoji_top_left_icon_padding_value">2dp</dimen>
     <dimen name="facemoji_face_list_left_margin">13dp</dimen>
     <dimen name="facemoji_face_list_bottom_margin">10dp</dimen>
     <dimen name="facemoji_face_list_scroll_view_height">58dp</dimen>
@@ -94,14 +144,23 @@
     <dimen name="facemoji_share_alert_share_app_recycler_vertical_space">16dp</dimen>
 
     <dimen name="common_card_view_max_elevation">2dp</dimen>
+    <dimen name="custom_theme_background_item_corners_radius">3dp</dimen>
     <dimen name="custom_theme_item_margin">4dp</dimen>
 
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="theme_store_viewpager_margin_top">10dp</dimen>
     <dimen name="theme_store_viewpager_padding_left">20dp</dimen>
     <dimen name="theme_store_viewpager_padding_right">20dp</dimen>
     <dimen name="theme_store_viewpager_page_margin">8dp</dimen>
 
+    <dimen name="theme_store_recycler_view_padding_top">2dp</dimen>
+    <dimen name="theme_store_recycler_view_padding_bottom">2dp</dimen>
+    <dimen name="theme_store_recycler_view_padding_left">8dp</dimen>
+    <dimen name="theme_store_recycler_view_padding_right">8dp</dimen>
     <dimen name="theme_store_background_recycler_view_column_gap">8dp</dimen>
     <dimen name="theme_store_background_recycler_view_row_gap">8dp</dimen>
+    <dimen name="theme_card_recycler_view_column_gap">0dp</dimen>
+    <dimen name="theme_card_recycler_view_row_gap">0dp</dimen>
     <dimen name="theme_card_recycler_view_padding_left">4dp</dimen>
     <dimen name="theme_card_recycler_view_padding_right">4dp</dimen>
     <dimen name="theme_card_recycler_view_card_margin">4dp</dimen>
@@ -112,9 +171,14 @@
     <dimen name="theme_new_tip_text">18sp</dimen>
 
     <dimen name="emoticon_panel_actionbar_height">46dp</dimen>
+    <dimen name="emoticon_panel_ad_margin_top">5dp</dimen>
 
     <dimen name="setting_panel_item_margin_top">5dp</dimen>
     <dimen name="setting_panel_item_text_margin_top">3dp</dimen>
+
+    <dimen name="purchase_slot_dialog_width">330dp</dimen>
+    <dimen name="purchase_slot_dialog_height">400dp</dimen>
+    <dimen name="purchase_slot_dialog_margin">15dp</dimen>
 
     <dimen name="sticker_image_width">60dp</dimen>
 
@@ -126,10 +190,14 @@
     <dimen name="app_bar_elevation">4dp</dimen>
     <dimen name="card_elevation">1dp</dimen>
 
+    <dimen name="theme_bottom_btn_height">50dp</dimen>
+
     <dimen name="customize_spacing_large">8dp</dimen>
     <dimen name="customize_spacing_small">4dp</dimen>
+    <dimen name="customize_spacing_tiny">2dp</dimen>
     <dimen name="tab_padding_start">12dp</dimen>
     <dimen name="bottom_bar_default_height">56dp</dimen>
+    <dimen name="create_theme_button_margin_bottom">61dp</dimen>
 
 
     <!-- Dialog -->
@@ -155,15 +223,14 @@
 
     <!-- Overview panel param -->
     <dimen name="overview_panel_wallpaper_theme_horizontal_padding">20dp</dimen>
+    <dimen name="overview_panel_effects_drawable_padding">0dp</dimen>
+    <dimen name="overview_panel_widgets_drawable_padding">4dp</dimen>
+    <dimen name="overview_panel_total_height">253dp</dimen>
 
     <dimen name="online_category_title_view_translationY">-20dp</dimen>
 
     <dimen name="camera_capture_view_width">48dp</dimen>
     <dimen name="camera_capture_view_padding">5dp</dimen>
 
-    <!-- space key -->
-
-    <!-- pop up hint -->
-
-    <!-- hint letter -->
+    <dimen name="main_logo_title_textsize">24sp</dimen>
 </resources>

@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="button_settings_textsize">24sp</dimen>
+    <dimen name="button_guide_textsize">22sp</dimen>
+</resources>
