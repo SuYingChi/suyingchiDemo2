@@ -638,6 +638,23 @@
 					<key>Show</key>
 					<false/>
 				</dict>
+				<key>AppOpen</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>0</integer>
+					<key>MaxCountPerDay</key>
+					<integer>6</integer>
+					<key>MinIntervalByHour</key>
+					<integer>0</integer>
+					<key>PackageNameExclude</key>
+					<array>
+						<string>com.facebook.orca</string>
+						<string>com.facebook.katana</string>
+						<string>com.whatsapp</string>
+					</array>
+					<key>Show</key>
+					<false/>
+				</dict>
 				<key>KeyboardAds</key>
 				<dict>
 					<key>KeyboardClose</key>
@@ -4917,9 +4934,9 @@
 				<key>Enable</key>
 				<false/>
 				<key>RemindInterval</key>
-				<integer>3</integer>
+				<integer>1</integer>
 				<key>RemindWhenNotActive</key>
-				<integer>3</integer>
+				<real>0</real>
 			</dict>
 			<key>RemoteConfig</key>
 			<dict>
