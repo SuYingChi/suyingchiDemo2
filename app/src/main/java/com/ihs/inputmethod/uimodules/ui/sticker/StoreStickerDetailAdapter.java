@@ -37,15 +37,7 @@ public class StoreStickerDetailAdapter extends RecyclerView.Adapter<StoreSticker
     @Override
     public void onBindViewHolder(StoreStickerViewHolder holder, int position) {
         final ImageView stickerImageView = holder.imageView;
-        String stickerGroupName = stickerGroup.getStickerGroupName();
-        String stickerImageSerialNumber;
-        if (position < 10) {
-            stickerImageSerialNumber = "-0" + position; // -00, -01, -02...
-        } else {
-            stickerImageSerialNumber = "-" + position;
-        }
-        @SuppressWarnings("StringBufferReplaceableByString") StringBuilder stringBuilder = new StringBuilder(StickerUtils.getStickerDownloadBaseUrl()).append(stickerGroupName).append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(stickerImageSerialNumber).append(stickerGroup.getPicFormat());
-        String stickerImageUri = stringBuilder.toString();
+        String stickerImageUri = StickerGroup.getSingleImageUrl(position, stickerGroup.getStickerGroupName(), stickerGroup.getPicFormat());
         Glide.with(stickerImageView).load(stickerImageUri).apply(new RequestOptions()
                 .placeholder(R.drawable.sticker_store_image_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)).into(stickerImageView);

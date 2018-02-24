@@ -34,14 +34,8 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
 
     private static final int STICKER_SPAN_COUNT = 4;
     private StickerGroup stickerGroup;
-    private RecyclerView recyclerView;
-    private StoreStickerDetailAdapter storeStickerDetailAdapter;
     private ImageView stickerDetailImage;
-    private TextView stickerGroupName;
-    private TextView stickerGroupCount;
     private ProgressButton stickerDownloadButton;
-    private ImageView backButton;
-    private ImageView unlockImage;
 
     private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
             .cacheInMemory(true)
@@ -94,14 +88,14 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
         stickerDetailImage = (ImageView) findViewById(R.id.sticker_detail_preview_iv);
         ImageLoader.getInstance().displayImage(stickerGroup.getDetailPreviewUrl(),
                 new ImageViewAware(stickerDetailImage), displayImageOptions);
-        stickerGroupName = (TextView) findViewById(R.id.sticker_group_name_tv);
+        TextView stickerGroupName = (TextView) findViewById(R.id.sticker_group_name_tv);
         stickerGroupName.setText(stickerGroup.getDownloadDisplayName());
         if (stickerGroupName.length() > 11) { // 超过一定字数 减少字体大小防止和下载按钮冲突
             int size = (int) stickerGroupName.getTextSize() - 8;
             stickerGroupName.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
         }
         String stickerCount = stickerGroup.getShowCount() + " " + getResources().getString(R.string.stickers);
-        stickerGroupCount = (TextView) findViewById(R.id.sticker_group_count_tv);
+        TextView stickerGroupCount = (TextView) findViewById(R.id.sticker_group_count_tv);
         stickerGroupCount.setText(stickerCount);
 
         stickerDownloadButton = findViewById(R.id.store_sticker_download_btn);
@@ -119,7 +113,7 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
         });
         setDownloadButton();
 
-        backButton = (ImageView) findViewById(R.id.store_sticker_detail_back_btn);
+        ImageView backButton = (ImageView) findViewById(R.id.store_sticker_detail_back_btn);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,16 +121,16 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
             }
         });
 
-        unlockImage = findViewById(R.id.sticker_detail_unlock_iv);
+        ImageView unlockImage = findViewById(R.id.sticker_detail_unlock_iv);
 
         unlockImage.setVisibility(View.GONE);
 
-        recyclerView = (RecyclerView) findViewById(R.id.store_sticker_detail_rv);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.store_sticker_detail_rv);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getBaseContext(), STICKER_SPAN_COUNT);
         recyclerView.setLayoutManager(gridLayoutManager); //这样做 Lollipop系统及以上 ScrollView才有惯性滑动效果
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.store_sticker_grid_item_spacing);
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels, STICKER_SPAN_COUNT));
-        storeStickerDetailAdapter = new StoreStickerDetailAdapter(stickerGroup);
+        StoreStickerDetailAdapter storeStickerDetailAdapter = new StoreStickerDetailAdapter(stickerGroup);
         recyclerView.setAdapter(storeStickerDetailAdapter);
 
         PreviewImageView previewImageView = new PreviewImageView(this, recyclerView, stickerGroup);
@@ -148,7 +142,6 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
 
     private void setDownloadButton() {
         int color = getResources().getColor(R.color.charging_screen_alert_negative_action);
-        int radius = getResources().getDimensionPixelSize(R.dimen.corner_radius);
         stickerDownloadButton.initState();
         if (stickerGroup.isStickerGroupDownloaded()) {
             stickerDownloadButton.setText(getString(R.string.my_theme_downloaded_theme_title));

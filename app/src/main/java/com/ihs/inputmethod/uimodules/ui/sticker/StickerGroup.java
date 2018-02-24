@@ -356,4 +356,16 @@ public class StickerGroup implements Parcelable {
         return new StringBuilder(getStickerDownloadBaseUrl())
                 .append(stickerGroupName).append("/").append(stickerGroupName).append(STICKER_DETAIL_PREVIEW).toString();
     }
+
+    public static String getSingleImageUrl(int position, String stickerGroupName, String fileFormat){
+        String stickerImageSerialNumber;
+        if (position < 10) {
+            stickerImageSerialNumber = "-0" + position; // -00, -01, -02...
+        } else {
+            stickerImageSerialNumber = "-" + position;
+        }
+        StringBuilder stringBuilder = new StringBuilder(StickerUtils.getStickerDownloadBaseUrl()).append(stickerGroupName).append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(stickerImageSerialNumber).append(fileFormat);
+        return stringBuilder.toString();
+
+    }
 }

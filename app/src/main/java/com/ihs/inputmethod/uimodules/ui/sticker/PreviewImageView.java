@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,9 +35,8 @@ public class PreviewImageView
     private final List<Pair<String, Point>> gifInfos = new ArrayList<>();
     private List<View> elementList = new ArrayList<>();
 
-    private int parentWidth;
-    private int childWidth;
-    private int childHeight;
+    private int itemWidth;
+    private int itemHeight;
 
     private final WindowManager wm;
     private final WindowManager.LayoutParams layoutParams;
@@ -48,17 +46,24 @@ public class PreviewImageView
     private RequestManager requestManager;
     private View lastPressedItem = null;
     private RecyclerView recyclerView;
+    private boolean isLongPressTriggered = false;
+    private static final int LONG_PRESS_DELAY_MILLIS = 500;
+
+    private float firstDownX;
+    private float firstDownY;
+    private Runnable longClickRunnable;
+    private Handler handler = new Handler();
+
+
 
     public PreviewImageView(Context context, RecyclerView recyclerView, StickerGroup stickerGroup) {
         this.context = context;
         this.stickerGroup = stickerGroup;
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-
         layoutParams = new WindowManager.LayoutParams();
         layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
         layoutParams.format = PixelFormat.TRANSLUCENT;
-
         layoutParams.gravity = Gravity.START | Gravity.TOP;
         RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.sticker_store_image_placeholder)
@@ -66,11 +71,6 @@ public class PreviewImageView
         requestManager = Glide.with(context).applyDefaultRequestOptions(requestOptions);
         this.recyclerView = recyclerView;
     }
-
-    private float firstDownX;
-    private float firstDownY;
-    private Runnable longClickRunnable;
-    private Handler handler = new Handler();
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -85,10 +85,10 @@ public class PreviewImageView
                         onItemLongClick(childViewUnder, recyclerView.getChildAdapterPosition(childViewUnder));
                     }
                 };
-                handler.postDelayed(longClickRunnable, 500);
+                handler.postDelayed(longClickRunnable, LONG_PRESS_DELAY_MILLIS);
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (isLongPressTrigged) {
+                if (isLongPressTriggered) {
                     v.getParent().getParent().requestDisallowInterceptTouchEvent(true);
                     float rawX = event.getRawX();
                     float rawY = event.getRawY();
@@ -99,8 +99,8 @@ public class PreviewImageView
                         Pair<String, Point> info = gifInfos.get(i);
                         View touchedView = elementList.get(i);
                         Point loc = info.second;
-                        if (rawX >= loc.x && rawX <= loc.x + childWidth
-                                && rawY > loc.y && rawY < loc.y + childHeight) {
+                        if (rawX >= loc.x && rawX <= loc.x + itemWidth
+                                && rawY > loc.y && rawY < loc.y + itemHeight) {
                             if (info.first.equals(vGif.getTag())) {
                                 // 如果是正在播放的gif则返回
                                 return true;
@@ -128,7 +128,7 @@ public class PreviewImageView
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                if (isLongPressTrigged) {
+                if (isLongPressTriggered) {
                     v.getParent().getParent().requestDisallowInterceptTouchEvent(false);
                     hideGif();
                     if (lastPressedItem != null) {
@@ -136,7 +136,7 @@ public class PreviewImageView
                     }
                     gifInfos.clear();
                     elementList.clear();
-                    isLongPressTrigged = false;
+                    isLongPressTriggered = false;
                     return true;
                 } else {
                     handler.removeCallbacks(longClickRunnable);
@@ -146,19 +146,6 @@ public class PreviewImageView
                 break;
         }
         return false;
-    }
-
-    @NonNull
-    private String getImageUrl(int position) {
-        String stickerGroupName = stickerGroup.getStickerGroupName();
-        String stickerImageSerialNumber;
-        if (position < 10) {
-            stickerImageSerialNumber = "-0" + position; // -00, -01, -02...
-        } else {
-            stickerImageSerialNumber = "-" + position;
-        }
-        @SuppressWarnings("StringBufferReplaceableByString") StringBuilder stringBuilder = new StringBuilder(StickerUtils.getStickerDownloadBaseUrl()).append(stickerGroupName).append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(stickerImageSerialNumber).append(stickerGroup.getPicFormat());
-        return stringBuilder.toString();
     }
 
     private void showGif(String picUrl, int[] loc) {
@@ -208,35 +195,33 @@ public class PreviewImageView
 
     private void updateLayoutParams(int[] location) {
         layoutParams.y = location[1] - layoutParams.height;
-        layoutParams.x = location[0] - (layoutParams.width / 2 - childWidth / 2);
+        layoutParams.x = location[0] - (layoutParams.width / 2 - itemWidth / 2);
         if (layoutParams.y < 0) {
             layoutParams.y = 0;
         }
         if (layoutParams.x < 0) {
             layoutParams.x = 0;
         }
-        if (layoutParams.x > parentWidth - layoutParams.width / 2) {
-            layoutParams.x = parentWidth - layoutParams.width / 2;
+        if (layoutParams.x > recyclerView.getWidth() - layoutParams.width / 2) {
+            layoutParams.x = recyclerView.getWidth() - layoutParams.width / 2;
         }
     }
 
-    private boolean isLongPressTrigged = false;
 
-    public void onItemLongClick(View view, int position) {
-        isLongPressTrigged = true;
+    private void onItemLongClick(View view, int position) {
+        isLongPressTriggered = true;
         lastPressedItem = view;
         lastPressedItem.setPressed(true);
         int[] loc = new int[2];
         view.getLocationOnScreen(loc);
 
         recyclerView.getLocationOnScreen(gvLoc);
-        parentWidth = recyclerView.getWidth();
-        childWidth = view.getWidth();
-        childHeight = view.getHeight();
-        layoutParams.width = (int) (childWidth * 1.5);
-        layoutParams.height = (int) (childHeight * 1.5 + DisplayUtils.dip2px(10));
+        itemWidth = view.getWidth();
+        itemHeight = view.getHeight();
+        layoutParams.width = (int) (itemWidth * 1.5);
+        layoutParams.height = (int) (itemHeight * 1.5 + DisplayUtils.dip2px(10));
 
-        String stickerImageUri = getImageUrl(position);
+        String stickerImageUri = StickerGroup.getSingleImageUrl(position, stickerGroup.getStickerGroupName(), stickerGroup.getPicFormat());
 
         showGif(stickerImageUri, loc);
 
@@ -249,9 +234,8 @@ public class PreviewImageView
                 continue;
             }
             v.getLocationOnScreen(loc);
-            String rid = getImageUrl(i);
             Point point = new Point(loc[0], loc[1]);
-            Pair<String, Point> pair = new Pair<>(rid, point);
+            Pair<String, Point> pair = new Pair<>(stickerImageUri, point);
             gifInfos.add(pair);
             elementList.add(v);
         }
