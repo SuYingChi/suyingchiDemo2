@@ -3,6 +3,7 @@ package com.ihs.inputmethod.uimodules.ui.sticker;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,7 +20,6 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.ihs.chargingscreen.utils.DisplayUtils;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 
 import java.util.ArrayList;
@@ -30,10 +30,7 @@ import java.util.List;
  */
 
 public class PreviewImageView
-        implements View.OnTouchListener, StoreStickerDetailAdapter.OnItemLongClickListener {
-    private static final int VIEW_HEIGHT = DisplayUtils.dip2px(116);
-    private static final int VIEW_WIDTH = DisplayUtils.dip2px(106);
-
+        implements View.OnTouchListener {
     private final Context context;
     private final int[] gvLoc = new int[2];
     private final List<Pair<String, Point>> gifInfos = new ArrayList<>();
@@ -47,13 +44,12 @@ public class PreviewImageView
     private final WindowManager.LayoutParams layoutParams;
 
     private ImageView vGif;
-    private View parentView;
     private StickerGroup stickerGroup;
     private RequestManager requestManager;
     private View lastPressedItem = null;
+    private RecyclerView recyclerView;
 
-
-    public PreviewImageView(Context context, StickerGroup stickerGroup) {
+    public PreviewImageView(Context context, RecyclerView recyclerView, StickerGroup stickerGroup) {
         this.context = context;
         this.stickerGroup = stickerGroup;
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -68,65 +64,88 @@ public class PreviewImageView
                 .placeholder(R.drawable.sticker_store_image_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
         requestManager = Glide.with(context).applyDefaultRequestOptions(requestOptions);
+        this.recyclerView = recyclerView;
     }
+
+    private float firstDownX;
+    private float firstDownY;
+    private Runnable longClickRunnable;
+    private Handler handler = new Handler();
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (vGif == null) {
-            return false;
-        }
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-                v.getParent().getParent().requestDisallowInterceptTouchEvent(true);
-                float rawX = event.getRawX();
-                float rawY = event.getRawY();
-
-                int size = gifInfos.size();
-                boolean findTarget = false;
-                for (int i = 0; i < size; i++) {
-                    Pair<String, Point> info = gifInfos.get(i);
-                    View touchedView = elementList.get(i);
-                    Point loc = info.second;
-                    if (rawX >= loc.x && rawX <= loc.x + childWidth
-                            && rawY > loc.y && rawY < loc.y + childHeight) {
-                        if (info.first.equals(vGif.getTag())) {
-                            // 如果是正在播放的gif则返回
-                            return true;
-                        }
-
-                        findTarget = true;
-                        updateGif(info.first, new int[]{info.second.x, info.second.y});
-                        touchedView.setPressed(true);
-                        if (lastPressedItem != null) {
-                            lastPressedItem.setPressed(false);
-                        }
-                        lastPressedItem = touchedView;
-                        break;
+                firstDownX = event.getX();
+                firstDownY = event.getY();
+                final View childViewUnder = recyclerView.findChildViewUnder(event.getX(), event.getY());
+                longClickRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        onItemLongClick(childViewUnder, recyclerView.getChildAdapterPosition(childViewUnder));
                     }
-                }
-                if (!findTarget) {
-                    pauseGif();
+                };
+                handler.postDelayed(longClickRunnable, 500);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (isLongPressTrigged) {
+                    v.getParent().getParent().requestDisallowInterceptTouchEvent(true);
+                    float rawX = event.getRawX();
+                    float rawY = event.getRawY();
+
+                    int size = gifInfos.size();
+                    boolean findTarget = false;
+                    for (int i = 0; i < size; i++) {
+                        Pair<String, Point> info = gifInfos.get(i);
+                        View touchedView = elementList.get(i);
+                        Point loc = info.second;
+                        if (rawX >= loc.x && rawX <= loc.x + childWidth
+                                && rawY > loc.y && rawY < loc.y + childHeight) {
+                            if (info.first.equals(vGif.getTag())) {
+                                // 如果是正在播放的gif则返回
+                                return true;
+                            }
+
+                            findTarget = true;
+                            updateGif(info.first, new int[]{info.second.x, info.second.y});
+                            touchedView.setPressed(true);
+                            if (lastPressedItem != null) {
+                                lastPressedItem.setPressed(false);
+                            }
+                            lastPressedItem = touchedView;
+                            break;
+                        }
+                    }
+                    if (!findTarget) {
+                        pauseGif();
+                    }
+                    return true;
+                } else {
+                    if (event.getX() - firstDownX >= 5 || event.getY() - firstDownY >= 5) {
+                        handler.removeCallbacks(longClickRunnable);
+                    }
                 }
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                v.getParent().getParent().requestDisallowInterceptTouchEvent(false);
-                hideGif();
-                if (lastPressedItem != null) {
-                    lastPressedItem.setPressed(false);
+                if (isLongPressTrigged) {
+                    v.getParent().getParent().requestDisallowInterceptTouchEvent(false);
+                    hideGif();
+                    if (lastPressedItem != null) {
+                        lastPressedItem.setPressed(false);
+                    }
+                    gifInfos.clear();
+                    elementList.clear();
+                    isLongPressTrigged = false;
+                    return true;
+                } else {
+                    handler.removeCallbacks(longClickRunnable);
                 }
-                gifInfos.clear();
-                elementList.clear();
-                HSLog.e("cancel  cancelcancel");
                 break;
             default:
                 break;
         }
-        return true;
+        return false;
     }
 
     @NonNull
@@ -149,7 +168,6 @@ public class PreviewImageView
             vGif.setPadding(DisplayUtils.dip2px(5), DisplayUtils.dip2px(5), DisplayUtils.dip2px(5), DisplayUtils.dip2px(15));
             final VectorDrawableCompat vectorDrawableCompat = VectorDrawableCompat.create(context.getResources(), R.drawable.sticker_pop_preview_bg, null);
             vGif.setBackgroundDrawable(vectorDrawableCompat);
-//            vGif.setBackgroundResource(R.drawable.sticker_pop_preview_bg);
         }
         updateLayoutParams(loc);
         if (vGif.getParent() != null) {
@@ -186,7 +204,6 @@ public class PreviewImageView
         }
         vGif.setTag(null);
         vGif = null;
-        parentView = null;
     }
 
     private void updateLayoutParams(int[] location) {
@@ -198,34 +215,36 @@ public class PreviewImageView
         if (layoutParams.x < 0) {
             layoutParams.x = 0;
         }
-        if (layoutParams.x > parentWidth - VIEW_WIDTH / 2) {
-            layoutParams.x = parentWidth - VIEW_WIDTH / 2;
+        if (layoutParams.x > parentWidth - layoutParams.width / 2) {
+            layoutParams.x = parentWidth - layoutParams.width / 2;
         }
     }
 
-    @Override
-    public void onItemLongClick(RecyclerView parent, View view, int position) {
+    private boolean isLongPressTrigged = false;
+
+    public void onItemLongClick(View view, int position) {
+        isLongPressTrigged = true;
         lastPressedItem = view;
+        lastPressedItem.setPressed(true);
         int[] loc = new int[2];
         view.getLocationOnScreen(loc);
 
-        parentView = parent;
-        parent.getLocationOnScreen(gvLoc);
-        parentWidth = parent.getWidth();
+        recyclerView.getLocationOnScreen(gvLoc);
+        parentWidth = recyclerView.getWidth();
         childWidth = view.getWidth();
         childHeight = view.getHeight();
-        layoutParams.width = (int) (childWidth * 1.2);
-        layoutParams.height = (int) (childHeight * 1.2 + DisplayUtils.dip2px(10));
+        layoutParams.width = (int) (childWidth * 1.5);
+        layoutParams.height = (int) (childHeight * 1.5 + DisplayUtils.dip2px(10));
 
         String stickerImageUri = getImageUrl(position);
 
         showGif(stickerImageUri, loc);
 
-        GridLayoutManager layoutManager = (GridLayoutManager) parent.getLayoutManager();
+        GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
         int start = layoutManager.findFirstVisibleItemPosition();
         int end = layoutManager.findLastVisibleItemPosition();
         for (int i = 0; i <= end - start; i++) {
-            View v = parent.getChildAt(i);
+            View v = recyclerView.getChildAt(i);
             if (null == v) {
                 continue;
             }

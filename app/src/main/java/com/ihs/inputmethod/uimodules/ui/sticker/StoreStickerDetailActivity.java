@@ -139,8 +139,7 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
         storeStickerDetailAdapter = new StoreStickerDetailAdapter(stickerGroup);
         recyclerView.setAdapter(storeStickerDetailAdapter);
 
-        PreviewImageView previewImageView = new PreviewImageView(this, stickerGroup);
-        storeStickerDetailAdapter.setOnItemLongClickListener(previewImageView);
+        PreviewImageView previewImageView = new PreviewImageView(this, recyclerView, stickerGroup);
         recyclerView.setOnTouchListener(previewImageView);
 
         CameraNewMarkUtil.setElementVisited(CameraNewMarkUtil.TAG_STICKER, stickerGroup.getStickerGroupName());
@@ -157,7 +156,6 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
             stickerDownloadButton.setEnabled(false);
         } else {
             stickerDownloadButton.setText(getString(R.string.download_capital));
-//            stickerDownloadButton.setBackgroundDrawable(RippleDrawableUtils.getTransparentButtonBackgroundDrawable(color, radius));
         }
         stickerDownloadButton.setOnClickListener(new View.OnClickListener() {
             @Override

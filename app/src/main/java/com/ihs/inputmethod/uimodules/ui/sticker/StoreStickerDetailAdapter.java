@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -22,28 +21,9 @@ import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 
 public class StoreStickerDetailAdapter extends RecyclerView.Adapter<StoreStickerDetailAdapter.StoreStickerViewHolder> {
 
-    public interface OnItemLongClickListener {
-        void onItemLongClick(RecyclerView parent, View view, int position);
-    }
-
-    public interface OnTouchListener {
-        void onTouch(View v, MotionEvent event);
-    }
-
-    private OnItemLongClickListener mOnItemLongClickListener;
-    private OnTouchListener onTouchListener;
-
-    public void setOnItemLongClickListener(OnItemLongClickListener mOnItemLongClickListener) {
-        this.mOnItemLongClickListener = mOnItemLongClickListener;
-    }
-
-    public void setOnTouchListener(OnTouchListener onTouchListener) {
-        this.onTouchListener = onTouchListener;
-    }
 
     private StickerGroup stickerGroup;
 
-    private View parent;
 
     public StoreStickerDetailAdapter(StickerGroup stickerGroup) {
         this.stickerGroup = stickerGroup;
@@ -51,7 +31,6 @@ public class StoreStickerDetailAdapter extends RecyclerView.Adapter<StoreSticker
 
     @Override
     public StoreStickerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        this.parent = parent;
         return new StoreStickerViewHolder(View.inflate(HSApplication.getContext(), R.layout.sticker_store_detail_item, null));
     }
 
@@ -70,26 +49,7 @@ public class StoreStickerDetailAdapter extends RecyclerView.Adapter<StoreSticker
         Glide.with(stickerImageView).load(stickerImageUri).apply(new RequestOptions()
                 .placeholder(R.drawable.sticker_store_image_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)).into(stickerImageView);
-        if (mOnItemLongClickListener != null) {
-            holder.itemView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    mOnItemLongClickListener.onItemLongClick((RecyclerView) parent, v, position);
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            holder.itemView.setPressed(true);
-                            break;
-
-                        case MotionEvent.ACTION_UP:
-                        case MotionEvent.ACTION_CANCEL:
-                            holder.itemView.setPressed(false);
-                            break;
-                    }
-                    return false;
-                }
-            });
-            holder.itemView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.TRANSPARENT, Color.parseColor("#dfdfdf"), DisplayUtils.dip2px(6)));
-        }
+        holder.itemView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.TRANSPARENT, Color.parseColor("#dfdfdf"), DisplayUtils.dip2px(6)));
     }
 
     @Override

@@ -11,10 +11,10 @@
         android:scrollbars="vertical">
 
         <LinearLayout
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <android.support.percent.PercentFrameLayout
@@ -89,15 +89,16 @@
                     android:text="@string/theme_card_menu_download"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
+                    android:maxWidth="390px"
                     app:layout_marginEndPercent="5%" />
             </android.support.percent.PercentFrameLayout>
 
 
             <LinearLayout
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginTop="30dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -135,8 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="22dp"
                 android:layout_marginRight="22dp"
-                android:layout_marginTop="26dp"
-                android:descendantFocusability="beforeDescendants" />
+                android:layout_marginTop="26dp" />
 
             <android.support.v4.widget.Space
                 android:layout_width="match_parent"
