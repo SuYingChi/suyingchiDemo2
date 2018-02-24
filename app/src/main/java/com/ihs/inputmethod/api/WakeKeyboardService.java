@@ -4,21 +4,25 @@ import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodInfo;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.ihs.inputmethod.uimodules.utils.PreferenceUtils;
 import com.ihs.keyboardutils.alerts.KCAlert;
 
 import java.lang.reflect.Field;
@@ -35,7 +39,7 @@ import java.util.Timer;
 public class WakeKeyboardService extends Service {
     private static final int CHECKING_INTERVAL = 5 * 60 * 1000;
     Timer timer = new Timer();
-    HSPreferenceHelper preferenceHelper = HSPreferenceHelper.create(this, "keyboard");
+    SharedPreferences preferenceHelper;
     private static final String SP_KEY_LAST_KEYBOARD_CHANGE = "lastKeyboardChange";
     private static final String SP_KEY_LAST_KEYBOARD_AlERT_SHOW = "lastKeyboardAlertShow";
     long keyboardChangeRemindInterval = (long) (HSConfig.optFloat(Integer.MAX_VALUE, "Application", "RemindChangeKeyboard", "RemindWhenNotActive") * 24 * 3600 * 1000);
@@ -110,6 +114,7 @@ public class WakeKeyboardService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        preferenceHelper = getSharedPreferences("keyboard",MODE_PRIVATE);
         boolean enable = HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable");
         if (!enable) {
             stopSelf();
@@ -179,7 +184,7 @@ public class WakeKeyboardService extends Service {
 
     private void recordDefaultKeyboardChange() {
         HSLog.d("KeyboardService", "键盘切走时间:" + getDate());
-        preferenceHelper.putLong(SP_KEY_LAST_KEYBOARD_CHANGE, System.currentTimeMillis());
+        putLong(SP_KEY_LAST_KEYBOARD_CHANGE, System.currentTimeMillis());
     }
 
     private String getDate() {
@@ -188,8 +193,14 @@ public class WakeKeyboardService extends Service {
 
     private void recordKeyboardShow() {
         HSLog.d("KeyboardService", "键盘Alert时间:" + getDate());
-        preferenceHelper.putLong(SP_KEY_LAST_KEYBOARD_AlERT_SHOW, System.currentTimeMillis());
+        putLong(SP_KEY_LAST_KEYBOARD_AlERT_SHOW, System.currentTimeMillis());
     }
+
+    private void putLong(String key, long value){
+        preferenceHelper.edit().putLong(key,value).apply();
+    }
+
+
 
     KCAlert alertDialog;
     private ActivityManager.RunningServiceInfo runningServiceInfo;
