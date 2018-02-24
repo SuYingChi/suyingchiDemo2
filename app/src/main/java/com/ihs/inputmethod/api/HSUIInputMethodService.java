@@ -114,6 +114,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     public static KeyboardPanelManager getKeyboardPanelMananger() {
         return (KeyboardPanelManager) keyboardPanelSwitcher;
     }
+
     @Override
     public void onCreate() {
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateStart();
