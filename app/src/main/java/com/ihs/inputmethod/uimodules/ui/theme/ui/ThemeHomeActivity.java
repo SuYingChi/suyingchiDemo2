@@ -39,6 +39,8 @@ import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
+import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
@@ -349,6 +351,8 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     @Override
     protected void onResume() {
         super.onResume();
+
+
         if (splashJumpCode != -1) {
             Intent intent = new Intent();
             switch (splashJumpCode) {

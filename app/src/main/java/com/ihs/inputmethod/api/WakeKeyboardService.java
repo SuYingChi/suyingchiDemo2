@@ -11,6 +11,7 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.text.Spannable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodInfo;
@@ -24,6 +25,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.PreferenceUtils;
 import com.ihs.keyboardutils.alerts.KCAlert;
+import com.keyboard.common.SplashActivity;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -37,7 +39,7 @@ import java.util.Timer;
  */
 
 public class WakeKeyboardService extends Service {
-    private static final int CHECKING_INTERVAL = 5 * 60 * 1000;
+    private static final int CHECKING_INTERVAL = 5 * 1000;
     Timer timer = new Timer();
     SharedPreferences preferenceHelper;
     private static final String SP_KEY_LAST_KEYBOARD_CHANGE = "lastKeyboardChange";
@@ -213,11 +215,9 @@ public class WakeKeyboardService extends Service {
                     .setPositiveButton("OK", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Context context = WakeKeyboardService.this;
-                            Intent intent = new Intent(context, ThemeHomeActivity.class);
-                            intent.putExtra(ThemeHomeActivity.EXTRA_AUTO_ENABLE_KEYBOARD, true);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(intent);
+                            Intent startMain = new Intent(getApplication(), SplashActivity.class);
+                            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(startMain);
                         }
                     }).setNegativeButton("Later", new View.OnClickListener() {
                         @Override
