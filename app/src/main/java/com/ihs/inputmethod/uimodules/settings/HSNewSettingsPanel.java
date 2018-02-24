@@ -1,9 +1,7 @@
 package com.ihs.inputmethod.uimodules.settings;
 
-import android.annotation.SuppressLint;
 import android.app.AppOpsManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -13,14 +11,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.AppOpsManagerCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.EditorInfo;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ihs.app.analytics.HSAnalytics;
@@ -29,7 +25,6 @@ import com.ihs.commons.location.HSLocationManager;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -41,10 +36,8 @@ import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSSelectorPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSThemeSelectPanel;
-import com.ihs.inputmethod.uimodules.widget.MdProgressBar;
 import com.ihs.inputmethod.uimodules.widget.ViewPagerIndicator;
 import com.ihs.panelcontainer.BasePanel;
-import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 import com.kc.utils.KCAnalytics;
 
@@ -52,7 +45,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.widget.RelativeLayout.CENTER_IN_PARENT;
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 import static com.ihs.panelcontainer.KeyboardPanelSwitchContainer.MODE_BACK_PARENT;
 
@@ -130,13 +122,13 @@ public class HSNewSettingsPanel extends BasePanel {
             public void onItemClick(ViewItem item) {
                 HSAnalytics.logEvent("keyboard_location_clicked ");
                 if (!isLocServiceEnable(getContext())){
-                    Toast.makeText(HSApplication.getContext(), R.string.send_location_enable_location_feature,Toast.LENGTH_LONG).show();
-                    HSAnalytics.logEvent("keyboard_location_sendFailed","unable  location feature ");
+                    Toast.makeText(HSApplication.getContext(), R.string.no_location_permission,Toast.LENGTH_LONG).show();
+                    KCAnalytics.logEvent("keyboard_location_sendFailed","unable  location feature ");
                     return;
                 }
                 if(!networkState()){
-                    Toast.makeText(HSApplication.getContext(), R.string.send_location_network_not_available,Toast.LENGTH_LONG).show();
-                    HSAnalytics.logEvent("keyboard_location_sendFailed"," network no available");
+                    Toast.makeText(HSApplication.getContext(), R.string.network_not_available,Toast.LENGTH_LONG).show();
+                    KCAnalytics.logEvent("keyboard_location_sendFailed"," network no available");
                     return;
                 }
                 Toast.makeText(HSApplication.getContext(),"Loading....",Toast.LENGTH_SHORT).show();
@@ -158,10 +150,10 @@ public class HSNewSettingsPanel extends BasePanel {
                             if(editorInfo!=null&&editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())){
                                 HSInputMethod.inputText(Neighborhood+","+subLocality+","+city+","+country);
                             }
-                            HSAnalytics.logEvent("keyboard_location_sendSuccess");
+                            KCAnalytics.logEvent("keyboard_location_sendSuccess");
                         }else {
-                            Toast.makeText(HSApplication.getContext(), R.string.send_location_request_timeout,Toast.LENGTH_LONG).show();
-                            HSAnalytics.logEvent("keyboard_location_sendFailed","request timeout");
+                            Toast.makeText(HSApplication.getContext(), R.string.request_timeout,Toast.LENGTH_LONG).show();
+                            KCAnalytics.logEvent("keyboard_location_sendFailed","request timeout");
                         }
                     }
                 });
