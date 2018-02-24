@@ -144,8 +144,9 @@ public class PreviewImageView
 
     private void showGif(String picUrl, int[] loc) {
         if (vGif == null) {
+
             vGif = new ImageView(context);
-            vGif.setPadding(DisplayUtils.dip2px(10), DisplayUtils.dip2px(10), DisplayUtils.dip2px(10), DisplayUtils.dip2px(20));
+            vGif.setPadding(DisplayUtils.dip2px(5), DisplayUtils.dip2px(5), DisplayUtils.dip2px(5), DisplayUtils.dip2px(15));
             final VectorDrawableCompat vectorDrawableCompat = VectorDrawableCompat.create(context.getResources(), R.drawable.sticker_pop_preview_bg, null);
             vGif.setBackgroundDrawable(vectorDrawableCompat);
 //            vGif.setBackgroundResource(R.drawable.sticker_pop_preview_bg);

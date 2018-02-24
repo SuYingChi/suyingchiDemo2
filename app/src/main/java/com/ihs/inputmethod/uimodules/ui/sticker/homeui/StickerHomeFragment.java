@@ -25,16 +25,14 @@ import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
-import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.uimodules.ui.sticker.StoreStickerDetailActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate.StickerFacemojiAdapterDelegate;
+import com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate.StickerHomeCardAdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWNLOAD_ZIP_SUFFIX;
 
 /**
  * Created by guonan.lv on 17/8/10.
@@ -59,6 +57,12 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
                     || StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION.equals(s)
                     || (FacemojiManager.FACE_DELETED.equals(s) && FacemojiManager.getDefaultFacePicUri() == null) /** face被删除光了，才重新加载页面数据 */) {
                 loadDatas();
+            } else if (StickerHomeCardAdapterDelegate.NOTIFICATION_STICKER_DOWNLOADED.equals(s)) {
+                int position = hsBundle.getInt("position");
+                if (position > 0 && position < stickerModelList.size()) {
+                    stickerModelList.remove(position);
+                    stickerCardAdapter.notifyItemRemoved(position);
+                }
             }
         }
     };
@@ -88,11 +92,12 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
         HSGlobalNotificationCenter.addObserver(FacemojiDownloadManager.FACEMOJI_CATEGORY_DOWNLOADED, observer);
         HSGlobalNotificationCenter.addObserver(LockedCardActionUtils.UNLOCK_RATE_ALERT_SHOW, observer);
         HSGlobalNotificationCenter.addObserver(LockedCardActionUtils.UNLOCK_SHARE_ALERT_SHOW, observer);
+        HSGlobalNotificationCenter.addObserver(StickerHomeCardAdapterDelegate.NOTIFICATION_STICKER_DOWNLOADED, observer);
         return view;
     }
 
     private void initView() {
-        stickerCardAdapter = new HomeStickerAdapter(new CommonStickerAdapter.OnStickerItemClickListener() {
+        stickerCardAdapter = new HomeStickerAdapter(getActivity(), new CommonStickerAdapter.OnStickerItemClickListener() {
             @Override
             public void onFacemojiClick(FacemojiSticker facemojiSticker) {
                 goMyFacemojiActivity(facemojiSticker.getCategoryName());
@@ -109,37 +114,14 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
-                        final String stickerGroupName = stickerGroup.getStickerGroupName();
-                        final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
-
                         // 移除点击过的new角标
                         StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
                         stickerCardAdapter.notifyItemChanged(stickerModelList.indexOf(stickerHomeModel));
-
 
                         Intent intent = new Intent(getActivity(), StoreStickerDetailActivity.class);
                         intent.putExtra(StoreStickerDetailActivity.STICKER_GROUP_BUNDLE, stickerGroup);
                         startActivityForResult(intent, 0);
                         lastCheckedSticker = stickerHomeModel;
-
-//                        DownloadUtils.getInstance().startForegroundDownloading(getActivity(), stickerGroupName,
-//                                stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
-//                                drawable, new AdLoadingView.OnAdBufferingListener() {
-//                                    @Override
-//                                    public void onDismiss(boolean success, boolean manually) {
-//                                        if (success) {
-//                                            KCAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
-//                                            StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
-//
-//                                            int position = stickerModelList.indexOf(stickerHomeModel);
-//                                            if (position > 0 && position < stickerModelList.size()) {
-//                                                stickerModelList.remove(position);
-//                                                stickerCardAdapter.notifyItemRemoved(position);
-//                                            }
-//                                        }
-//                                    }
-//
-//                                });
                     }
                 };
 
@@ -336,7 +318,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == StoreStickerDetailActivity.RESULT_CODE_SUCCESS) {
-            if(lastCheckedSticker!=null){
+            if (lastCheckedSticker != null) {
                 int position = stickerModelList.indexOf(lastCheckedSticker);
                 if (position > 0 && position < stickerModelList.size()) {
                     stickerModelList.remove(position);
