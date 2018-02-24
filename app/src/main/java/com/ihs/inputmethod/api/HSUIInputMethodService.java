@@ -170,6 +170,48 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         return super.onKeyDown(keyCode, event);
     }
 
+    private boolean showAppOpenAdIfNeeded() {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            return false;
+        }
+
+        boolean enabled = HSConfig.optBoolean(false, "Application", "InterstitialAds", "AppOpen", "Show");
+
+        if (!enabled) {
+            return false;
+        }
+
+        int hours = HSConfig.optInteger(0, "Application", "InterstitialAds", "AppOpen", "HoursFromFirstUse");
+        if (!KCFeatureControlUtils.isFeatureReleased(this, "AppOpen", hours)) {
+            return false;
+        }
+
+        int maxCountPerDay = HSConfig.optInteger(0, "Application", "InterstitialAds", "AppOpen", "MaxCountPerDay");
+        if (KCFeatureControlUtils.isCountLimitReachedToday(this, "AppOpen", maxCountPerDay)) {
+            return false;
+        }
+
+        float minIntervalByHour = HSConfig.optFloat(0, "Application", "InterstitialAds", "AppOpen", "MinIntervalByHour");
+        if (!KCFeatureControlUtils.isIntervalReached(this, "AppOpen", (long)(minIntervalByHour * 3600 * 1000))) {
+            return false;
+        }
+
+        List<String> configBlackList = (List<String>) HSConfig.getList("Application", "InterstitialAds", "BackButton", "PackageNameExclude");
+        if (!isInRightApp(false, configBlackList)) {
+            return false;
+        }
+
+        boolean adShown = KCInterstitialAd.show(AdPlacements.INTERSTITIAL_APP_OPEN, null, null, true);
+
+        if (adShown) {
+            KCFeatureControlUtils.increaseCountToday(this, "AppOpen");
+        } else {
+            KCInterstitialAd.load(AdPlacements.INTERSTITIAL_APP_OPEN);
+        }
+
+        return adShown;
+    }
+
     private boolean showBackAdIfNeeded() {
         if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return false;
@@ -230,6 +272,11 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     }
 
     private boolean isInRightAppForBackAd(boolean isAggressive) {
+        List<String> configBlackList = (List<String>) HSConfig.getList("Application", "InterstitialAds", "BackButton", "PackageNameExclude");
+        return isInRightApp(isAggressive, configBlackList);
+    }
+
+    private boolean isInRightApp(boolean isAggressive, List<String> blackList) {
         if (isInOwnApp() || isInputViewShowing) {
             return false;
         }
@@ -242,9 +289,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         packageNameBlackList.add("android");
 
         if (!isAggressive) {
-            List<String> configBlackList = (List<String>) HSConfig.getList("Application", "InterstitialAds", "BackButton", "PackageNameExclude");
-            if (configBlackList != null) {
-                packageNameBlackList.addAll(configBlackList);
+            if (blackList != null) {
+                packageNameBlackList.addAll(blackList);
             }
         }
 
@@ -464,13 +510,21 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         adCaffeHelper.requestKeywordListIfConditionSatisfied(editorInfo.packageName);
         // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
         // 因为这个方法在键盘出来后，一直返回的是键盘曾经出现过的那个App，而这里的editorInfo则对应实际进入的App
-        currentAppPackageName = editorInfo.packageName;
+        boolean isAppOpen = false;
+        if (!TextUtils.equals(currentAppPackageName, editorInfo.packageName)) {
+            currentAppPackageName = editorInfo.packageName;
+            isAppOpen = true;
+        }
         isAppSupportSticker = true;
         AppSuggestionManager.getInstance().addNewRecentApp(currentAppPackageName);
         AppSuggestionManager.getInstance().setCurrentTopAppName(currentAppPackageName);
 //        if (!restarting) {
 //            isAppSupportSticker = StickerUtils.isEditTextSupportSticker(currentAppPackageName);
 //        }
+
+        if (isAppOpen) {
+            showAppOpenAdIfNeeded();
+        }
     }
 
     @Override
