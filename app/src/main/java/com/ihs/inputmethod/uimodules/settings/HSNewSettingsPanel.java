@@ -1,13 +1,18 @@
 package com.ihs.inputmethod.uimodules.settings;
 
+import android.annotation.SuppressLint;
+import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.AppOpsManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +48,7 @@ import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 import com.kc.utils.KCAnalytics;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,9 +129,7 @@ public class HSNewSettingsPanel extends BasePanel {
             @Override
             public void onItemClick(ViewItem item) {
                 HSAnalytics.logEvent("keyboard_location_clicked ");
-                if (!(ContextCompat.checkSelfPermission(HSApplication.getContext(),
-                        android.Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED)){
+                if (!isLocServiceEnable(getContext())){
                     Toast.makeText(HSApplication.getContext(), R.string.send_location_enable_location_feature,Toast.LENGTH_LONG).show();
                     HSAnalytics.logEvent("keyboard_location_sendFailed","unable  location feature ");
                     return;
@@ -138,7 +142,8 @@ public class HSNewSettingsPanel extends BasePanel {
                 Toast.makeText(HSApplication.getContext(),"Loading....",Toast.LENGTH_SHORT).show();
                 EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
                 HSLocationManager locationManager_device = new HSLocationManager(HSApplication.getContext());
-                locationManager_device.setDeviceLocationTimeout(50000);
+                final int LOCATION_TIMEOUT_IN_MS = 50000;
+                locationManager_device.setDeviceLocationTimeout(LOCATION_TIMEOUT_IN_MS);
                 locationManager_device.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
@@ -153,7 +158,7 @@ public class HSNewSettingsPanel extends BasePanel {
                             if(editorInfo!=null&&editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())){
                                 HSInputMethod.inputText(Neighborhood+","+subLocality+","+city+","+country);
                             }
-                            HSAnalytics.logEvent("keyboard_location_sendSucess");
+                            HSAnalytics.logEvent("keyboard_location_sendSuccess");
                         }else {
                             Toast.makeText(HSApplication.getContext(), R.string.send_location_request_timeout,Toast.LENGTH_LONG).show();
                             HSAnalytics.logEvent("keyboard_location_sendFailed","request timeout");
@@ -211,7 +216,19 @@ public class HSNewSettingsPanel extends BasePanel {
 
         return items;
     }
-
+    //判断定位服务与权限
+    private static boolean isLocServiceEnable(Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            final int AppOpsManager_OP_GPS = 2;
+            final int AppOpsManager_OP_FINE_LOCATION = 1;
+            int checkResult = checkOp(context, AppOpsManager_OP_GPS);
+            int checkResult2 = checkOp(context, AppOpsManager_OP_FINE_LOCATION);
+            return AppOpsManagerCompat.MODE_IGNORED != checkResult && AppOpsManagerCompat.MODE_IGNORED != checkResult2;
+        }
+        return false;
+    }
+    //判断网络状态
     private boolean networkState() {
         ConnectivityManager manager = (ConnectivityManager) context
                 .getApplicationContext().getSystemService(
@@ -222,14 +239,45 @@ public class HSNewSettingsPanel extends BasePanel {
         }
 
         NetworkInfo networkinfo = manager.getActiveNetworkInfo();
-
-        if (networkinfo == null || !networkinfo.isAvailable()) {
-            return false;
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        boolean network = false;
+        if (locationManager != null) {
+            network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         }
+        return networkinfo != null && networkinfo.isAvailable() && network;
 
-        return true;
     }
+    //检查权限列表
+    private static int checkOp(Context context, int op) {
+        final int version = Build.VERSION.SDK_INT;
+        if (version >= Build.VERSION_CODES.KITKAT) {
+            Object object = context.getSystemService(Context.APP_OPS_SERVICE);
+            Class c = null;
+            if (object != null) {
+                c = object.getClass();
+            }
+            try {
+                Class[] cArg = new Class[3];
+                cArg[0] = int.class;
+                cArg[1] = int.class;
+                cArg[2] = String.class;
+                Method lMethod = null;
+                if (c != null)
+                    lMethod = c.getDeclaredMethod("checkOp", cArg);
+                if (lMethod != null) {
+                    return (Integer) lMethod.invoke(object, op, Binder.getCallingUid(), context.getPackageName());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    return AppOpsManagerCompat.noteOp(context, AppOpsManager.OPSTR_FINE_LOCATION, context.getApplicationInfo().uid,
+                            context.getPackageName());
+                }
 
+            }
+        }
+        return -1;
+    }
 
     public static void setViewHeight(View v, int height) {
         if (v != null && v.getLayoutParams() != null) {
