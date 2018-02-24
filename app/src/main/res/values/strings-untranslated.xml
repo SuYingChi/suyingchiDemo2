@@ -25,6 +25,6 @@
     <string name="item_sticker_more_coming">More stickers are coming soon</string>
     <string name="network_not_available">No network detected</string>
     <string name="no_location_permission">No location permission</string>
-    <string name="request_timeout">Request time out</string>
+    <string name="request_timeout">Network failed. Please try again later.</string>
     <string name="setting_item_location">Location</string>
 </resources>

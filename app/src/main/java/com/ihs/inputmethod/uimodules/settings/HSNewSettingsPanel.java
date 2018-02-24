@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.AppOpsManagerCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -25,6 +26,7 @@ import com.ihs.commons.location.HSLocationManager;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -117,6 +119,10 @@ public class HSNewSettingsPanel extends BasePanel {
                 KCAnalytics.logEvent("keyboard_setting_fonts_clicked");
             }
         }));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            items.add(ViewItemBuilder.getLuckyItem());
+        }
+        items.add(ViewItemBuilder.getSoundsPositionItem());
         items.add(ViewItemBuilder.getLocationItem(new ViewItem.ViewItemListener() {
             @Override
             public void onItemClick(ViewItem item) {
@@ -134,8 +140,6 @@ public class HSNewSettingsPanel extends BasePanel {
                 Toast.makeText(HSApplication.getContext(),"Loading....",Toast.LENGTH_SHORT).show();
                 EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
                 HSLocationManager locationManager_device = new HSLocationManager(HSApplication.getContext());
-                final int LOCATION_TIMEOUT_IN_MS = 50000;
-                locationManager_device.setDeviceLocationTimeout(LOCATION_TIMEOUT_IN_MS);
                 locationManager_device.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
@@ -159,10 +163,6 @@ public class HSNewSettingsPanel extends BasePanel {
                 });
             }
         }));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            items.add(ViewItemBuilder.getLuckyItem());
-        }
-        items.add(ViewItemBuilder.getSoundsPositionItem());
         items.add(ViewItemBuilder.getAutoCorrectionItem());
         if (selectorItem == null) {
             selectorItem = ViewItemBuilder.getSelectorItem(new ViewItem.ViewItemListener() {
