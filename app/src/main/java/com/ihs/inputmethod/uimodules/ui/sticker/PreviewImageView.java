@@ -55,7 +55,6 @@ public class PreviewImageView
     private Handler handler = new Handler();
 
 
-
     public PreviewImageView(Context context, RecyclerView recyclerView, StickerGroup stickerGroup) {
         this.context = context;
         this.stickerGroup = stickerGroup;
@@ -234,8 +233,9 @@ public class PreviewImageView
                 continue;
             }
             v.getLocationOnScreen(loc);
+            String rid = StickerGroup.getSingleImageUrl(i, stickerGroup.getStickerGroupName(), stickerGroup.getPicFormat());
             Point point = new Point(loc[0], loc[1]);
-            Pair<String, Point> pair = new Pair<>(stickerImageUri, point);
+            Pair<String, Point> pair = new Pair<>(rid, point);
             gifInfos.add(pair);
             elementList.add(v);
         }
