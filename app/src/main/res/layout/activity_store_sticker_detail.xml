@@ -75,20 +75,21 @@
 
                 <com.ihs.inputmethod.uimodules.widget.ProgressButton
                     android:id="@+id/store_sticker_download_btn"
-                    android:layout_width="108dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="49dp"
                     android:layout_gravity="end|center_vertical"
                     android:layout_marginEnd="24dp"
                     android:layout_marginRight="24dp"
+                    android:background="@drawable/acb_alert_ad_card_button_bg_selector"
                     android:gravity="center"
                     android:paddingBottom="7dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
                     android:paddingTop="7dp"
                     android:text="@string/theme_card_menu_download"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
-                    android:background="@drawable/acb_alert_ad_card_button_bg_selector"
-                    app:layout_marginEndPercent="5%"
-                    />
+                    app:layout_marginEndPercent="5%" />
             </android.support.percent.PercentFrameLayout>
 
 
