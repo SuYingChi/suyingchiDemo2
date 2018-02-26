@@ -129,7 +129,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 boolean isLocServiceEnable= isLocServiceEnable();
                 boolean isLocationNetworkEnable = isLocationNetworkEnable();
                 if (!isLocServiceEnable&!isLocationNetworkEnable){
-                    Toast.makeText(HSApplication.getContext(), R.string.no_location_permission,Toast.LENGTH_LONG).show();
+                    Toast.makeText(HSApplication.getContext(), R.string.no_location_permission,Toast.LENGTH_SHORT).show();
                     KCAnalytics.logEvent("keyboard_location_sendFailed","unable  location feature ");
                     Toast.makeText(HSApplication.getContext(), R.string.network_not_available,Toast.LENGTH_LONG).show();
                     KCAnalytics.logEvent("keyboard_location_sendFailed"," network no available");
