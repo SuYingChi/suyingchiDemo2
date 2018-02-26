@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.AppOpsManagerCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -125,42 +126,82 @@ public class HSNewSettingsPanel extends BasePanel {
             @Override
             public void onItemClick(ViewItem item) {
                 HSAnalytics.logEvent("keyboard_location_clicked ");
-                Toast.makeText(HSApplication.getContext(),"Locating....",Toast.LENGTH_SHORT).show();
-                boolean isLocServiceEnable= isLocServiceEnable();
+                Toast.makeText(HSApplication.getContext(), "Locating....", Toast.LENGTH_SHORT).show();
+                boolean isLocServiceEnable = isLocServiceEnable();
                 boolean isLocationNetworkEnable = isLocationNetworkEnable();
-                if (!isLocServiceEnable&!isLocationNetworkEnable){
-                    Toast.makeText(HSApplication.getContext(), R.string.no_location_permission,Toast.LENGTH_SHORT).show();
-                    KCAnalytics.logEvent("keyboard_location_sendFailed","unable  location feature ");
-                    Toast.makeText(HSApplication.getContext(), R.string.network_not_available,Toast.LENGTH_LONG).show();
-                    KCAnalytics.logEvent("keyboard_location_sendFailed"," network no available");
-                    return ;
+                if (!isLocServiceEnable & !isLocationNetworkEnable) {
+                    Toast.makeText(HSApplication.getContext(), R.string.no_location_permission, Toast.LENGTH_SHORT).show();
+                    KCAnalytics.logEvent("keyboard_location_sendFailed", "unable  location feature ");
+                    Toast.makeText(HSApplication.getContext(), R.string.network_not_available, Toast.LENGTH_LONG).show();
+                    KCAnalytics.logEvent("keyboard_location_sendFailed", " network no available");
+                    return;
                 }
                 EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
                 HSLocationManager locationManager_device = new HSLocationManager(HSApplication.getContext());
-                long startTime=System.currentTimeMillis();
+                long startTime = System.currentTimeMillis();
                 locationManager_device.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
+                    public boolean isOnLocationFetchedSuccess = false;
+                    public String country;
+                    public String Neighborhood;
+                    public String subLocality;
+                    public String city;
+
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
+                        if (success) {
+                            city = String.valueOf(locationManager.getCity());
+                            subLocality = locationManager.getSublocality();
+                            Neighborhood = locationManager.getNeighborhood();
+                            country = locationManager.getCountry();
+                            if (TextUtils.isEmpty(city) || TextUtils.isEmpty(subLocality) || TextUtils.isEmpty(Neighborhood) || TextUtils.isEmpty(country)) {
+                                isOnLocationFetchedSuccess = false;
+                                return;
+                            }
+                            if (editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
+                                HSInputMethod.inputText(Neighborhood + "," + subLocality + "," + city + "," + country);
+                                KCAnalytics.logEvent("keyboard_location_sendSuccess");
+                                isOnLocationFetchedSuccess = true;
+                            }
+                        } else {
+                            isOnLocationFetchedSuccess = false;
+                            long endTime = System.currentTimeMillis();
+                            if (endTime - startTime >= 30000) {
+                                Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_LONG).show();
+                                KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
+                            } else {
+                                Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_LONG).show();
+                                KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
+                            }
+                        }
                     }
+
                     @Override
                     public void onGeographyInfoFetched(boolean success, HSLocationManager locationManager) {
+                        if (isOnLocationFetchedSuccess)
+                            return;
                         if (success) {
-                            String city = String.valueOf(locationManager.getCity());
-                            String subLocality = locationManager.getSublocality();
-                            String Neighborhood = locationManager.getNeighborhood();
-                            String country = locationManager.getCountry();
-                            if(editorInfo!=null&&editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())){
-                                HSInputMethod.inputText(Neighborhood+","+subLocality+","+city+","+country);
+                            city = String.valueOf(locationManager.getCity());
+                            subLocality = locationManager.getSublocality();
+                            Neighborhood = locationManager.getNeighborhood();
+                            country = locationManager.getCountry();
+                            if (TextUtils.isEmpty(city) || TextUtils.isEmpty(subLocality) || TextUtils.isEmpty(Neighborhood) || TextUtils.isEmpty(country)) {
+                                isOnLocationFetchedSuccess = false;
+                                return;
                             }
-                            KCAnalytics.logEvent("keyboard_location_sendSuccess");
-                        }else {
-                            long endTime=System.currentTimeMillis();
-                            if(endTime-startTime==30000){
-                                Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout,Toast.LENGTH_LONG).show();
-                                KCAnalytics.logEvent("keyboard_location_sendFailed","request timeout");
-                            }else {
-                                Toast.makeText(HSApplication.getContext(), R.string.request_location_fail,Toast.LENGTH_LONG).show();
-                                KCAnalytics.logEvent("keyboard_location_sendFailed","device nonsupport location");
+                            if (editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
+                                HSInputMethod.inputText(Neighborhood + "," + subLocality + "," + city + "," + country);
+                                KCAnalytics.logEvent("keyboard_location_sendSuccess");
+                                isOnLocationFetchedSuccess = true;
+                            }
+                        } else {
+                            isOnLocationFetchedSuccess = false;
+                            long endTime = System.currentTimeMillis();
+                            if (endTime - startTime >= 30000) {
+                                Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_LONG).show();
+                                KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
+                            } else {
+                                Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_LONG).show();
+                                KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
                             }
                         }
                     }
@@ -212,23 +253,25 @@ public class HSNewSettingsPanel extends BasePanel {
 
         return items;
     }
+
     //判断定位服务与权限
-    private  boolean isLocServiceEnable() {
+    private boolean isLocServiceEnable() {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             final int AppOpsManager_OP_GPS = 2;
             final int AppOpsManager_OP_FINE_LOCATION = 1;
             int checkResult = checkOp(context, AppOpsManager_OP_GPS);
             int checkResult2 = checkOp(context, AppOpsManager_OP_FINE_LOCATION);
-            if((AppOpsManagerCompat.MODE_IGNORED != checkResult && AppOpsManagerCompat.MODE_IGNORED != checkResult2)==false){
+            if ((AppOpsManagerCompat.MODE_IGNORED != checkResult && AppOpsManagerCompat.MODE_IGNORED != checkResult2) == false) {
                 return false;
             }
         }
-        if ((locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))==false){
+        if ((locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) == false) {
             return false;
         }
         return true;
     }
+
     //判断网络状态
     private boolean isLocationNetworkEnable() {
         ConnectivityManager manager = (ConnectivityManager) context
@@ -245,11 +288,12 @@ public class HSNewSettingsPanel extends BasePanel {
         if (locationManager != null) {
             network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         }
-        if ((networkinfo != null && networkinfo.isAvailable() && network)==false){
+        if ((networkinfo != null && networkinfo.isAvailable() && network) == false) {
             return false;
         }
-            return true;
+        return true;
     }
+
     //检查权限列表
     private static int checkOp(Context context, int op) {
         final int version = Build.VERSION.SDK_INT;
