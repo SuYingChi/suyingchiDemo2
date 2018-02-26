@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.AppOpsManagerCompat;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -26,7 +25,6 @@ import com.ihs.commons.location.HSLocationManager;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -127,17 +125,10 @@ public class HSNewSettingsPanel extends BasePanel {
             @Override
             public void onItemClick(ViewItem item) {
                 HSAnalytics.logEvent("keyboard_location_clicked ");
-                if (!isLocServiceEnable(getContext())){
-                    Toast.makeText(HSApplication.getContext(), R.string.no_location_permission,Toast.LENGTH_LONG).show();
-                    KCAnalytics.logEvent("keyboard_location_sendFailed","unable  location feature ");
-                    return;
+                Toast.makeText(HSApplication.getContext(),"Locating....",Toast.LENGTH_SHORT).show();
+                if (!isLocServiceEnable()&!isLocationNetworkEnable()){
+                    return ;
                 }
-                if(!networkState()){
-                    Toast.makeText(HSApplication.getContext(), R.string.network_not_available,Toast.LENGTH_LONG).show();
-                    KCAnalytics.logEvent("keyboard_location_sendFailed"," network no available");
-                    return;
-                }
-                Toast.makeText(HSApplication.getContext(),"Loading....",Toast.LENGTH_SHORT).show();
                 EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
                 HSLocationManager locationManager_device = new HSLocationManager(HSApplication.getContext());
                 locationManager_device.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
@@ -156,7 +147,7 @@ public class HSNewSettingsPanel extends BasePanel {
                             }
                             KCAnalytics.logEvent("keyboard_location_sendSuccess");
                         }else {
-                            Toast.makeText(HSApplication.getContext(), R.string.request_timeout,Toast.LENGTH_LONG).show();
+                            Toast.makeText(HSApplication.getContext(), R.string.request_location_fail,Toast.LENGTH_LONG).show();
                             KCAnalytics.logEvent("keyboard_location_sendFailed","request timeout");
                         }
                     }
@@ -209,24 +200,35 @@ public class HSNewSettingsPanel extends BasePanel {
         return items;
     }
     //判断定位服务与权限
-    private static boolean isLocServiceEnable(Context context) {
+    private  boolean isLocServiceEnable() {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             final int AppOpsManager_OP_GPS = 2;
             final int AppOpsManager_OP_FINE_LOCATION = 1;
             int checkResult = checkOp(context, AppOpsManager_OP_GPS);
             int checkResult2 = checkOp(context, AppOpsManager_OP_FINE_LOCATION);
-            return AppOpsManagerCompat.MODE_IGNORED != checkResult && AppOpsManagerCompat.MODE_IGNORED != checkResult2;
+            if((AppOpsManagerCompat.MODE_IGNORED != checkResult && AppOpsManagerCompat.MODE_IGNORED != checkResult2)==false){
+                Toast.makeText(HSApplication.getContext(), R.string.no_location_permission,Toast.LENGTH_LONG).show();
+                KCAnalytics.logEvent("keyboard_location_sendFailed","unable  location feature ");
+                return false;
+            }
         }
-        return false;
+        if ((locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))==false){
+            Toast.makeText(HSApplication.getContext(), R.string.no_location_permission,Toast.LENGTH_LONG).show();
+            KCAnalytics.logEvent("keyboard_location_sendFailed","unable  location feature ");
+            return false;
+        }
+        return true;
     }
     //判断网络状态
-    private boolean networkState() {
+    private boolean isLocationNetworkEnable() {
         ConnectivityManager manager = (ConnectivityManager) context
                 .getApplicationContext().getSystemService(
                         Context.CONNECTIVITY_SERVICE);
 
         if (manager == null) {
+            Toast.makeText(HSApplication.getContext(), R.string.network_not_available,Toast.LENGTH_LONG).show();
+            KCAnalytics.logEvent("keyboard_location_sendFailed"," network no available");
             return false;
         }
 
@@ -236,8 +238,12 @@ public class HSNewSettingsPanel extends BasePanel {
         if (locationManager != null) {
             network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         }
-        return networkinfo != null && networkinfo.isAvailable() && network;
-
+        if ((networkinfo != null && networkinfo.isAvailable() && network)==false){
+            Toast.makeText(HSApplication.getContext(), R.string.network_not_available,Toast.LENGTH_LONG).show();
+            KCAnalytics.logEvent("keyboard_location_sendFailed"," network no available");
+            return false;
+        }
+            return true;
     }
     //检查权限列表
     private static int checkOp(Context context, int op) {
