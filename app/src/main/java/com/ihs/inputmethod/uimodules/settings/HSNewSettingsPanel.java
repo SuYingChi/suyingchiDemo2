@@ -136,16 +136,17 @@ public class HSNewSettingsPanel extends BasePanel {
                     KCAnalytics.logEvent("keyboard_location_sendFailed", " network no available");
                     return;
                 }
+                int timeoutMillis = 10000;
                 EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
                 HSLocationManager locationManager_device = new HSLocationManager(HSApplication.getContext());
+                locationManager_device.setDeviceLocationTimeout(timeoutMillis);
                 long startTime = System.currentTimeMillis();
                 locationManager_device.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
-                    public boolean isOnLocationFetchedSuccess = false;
-                    public String country;
-                    public String Neighborhood;
-                    public String subLocality;
-                    public String city;
-
+                    public boolean isOnLocationFetchedSuccess;
+                    String country;
+                    String Neighborhood;
+                    String subLocality;
+                    String city;
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
                         if (success) {
@@ -165,11 +166,11 @@ public class HSNewSettingsPanel extends BasePanel {
                         } else {
                             isOnLocationFetchedSuccess = false;
                             long endTime = System.currentTimeMillis();
-                            if (endTime - startTime >= 30000) {
-                                Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_LONG).show();
+                            if (endTime - startTime >= timeoutMillis) {
+                                Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
                                 KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
                             } else {
-                                Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_LONG).show();
+                                Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
                                 KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
                             }
                         }
@@ -196,7 +197,7 @@ public class HSNewSettingsPanel extends BasePanel {
                         } else {
                             isOnLocationFetchedSuccess = false;
                             long endTime = System.currentTimeMillis();
-                            if (endTime - startTime >= 30000) {
+                            if (endTime - startTime >= timeoutMillis) {
                                 Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_LONG).show();
                                 KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
                             } else {
