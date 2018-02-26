@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,6 +93,9 @@ public final class ClipboardActionBar extends LinearLayout implements View.OnCli
                 clipboardTabChangeListener.showView(view);
                 selectedViewBtn(view);
                 HSLog.d(ClipboardActionBar.class.getSimpleName(), " to show " + tag.toString());
+                if(tag.equals(PANEL_PIN)){
+                    KCAnalytics.logEvent("keyboard_clipboard_pin_clicked");
+                }
             }
         }
     }

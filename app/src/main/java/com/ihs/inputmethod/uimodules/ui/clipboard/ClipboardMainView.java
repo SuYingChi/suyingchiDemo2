@@ -17,6 +17,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.alerts.KCAlert;
+import com.kc.utils.KCAnalytics;
 
 import java.util.List;
 
@@ -114,6 +115,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
                         @Override
                         public void onClick(View view) {
                             deleteAlert.dismiss();
+                            KCAnalytics.logEvent("keyboard_clipboard_pin_cancelled");
                         }
                     })
                     .setNegativeButton(getResources().getString(R.string.clipboard_delete_pin), new View.OnClickListener() {
