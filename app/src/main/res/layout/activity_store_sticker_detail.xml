@@ -82,6 +82,7 @@
                     android:layout_marginRight="24dp"
                     android:background="@drawable/acb_alert_ad_card_button_bg_selector"
                     android:gravity="center"
+                    android:maxWidth="390px"
                     android:paddingBottom="7dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
@@ -89,25 +90,24 @@
                     android:text="@string/theme_card_menu_download"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
-                    android:maxWidth="390px"
                     app:layout_marginEndPercent="5%" />
             </android.support.percent.PercentFrameLayout>
 
 
             <LinearLayout
+                android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="30dp"
-                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_weight="1"
-                    android:background="#aeaeae" />
+                    android:background="#cbcbcb" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -116,7 +116,6 @@
                     android:layout_marginRight="13dp"
                     android:fontFamily="sans-serif"
                     android:gravity="center_horizontal"
-                    android:lineSpacingExtra="11sp"
                     android:text="@string/preview_sticker_hint"
                     android:textColor="#aeaeae"
                     android:textSize="13.3sp"
@@ -126,7 +125,7 @@
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_weight="1"
-                    android:background="#aeaeae" />
+                    android:background="#cbcbcb" />
 
             </LinearLayout>
 
