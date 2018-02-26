@@ -137,6 +137,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 }
                 EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
                 HSLocationManager locationManager_device = new HSLocationManager(HSApplication.getContext());
+                long startTime=System.currentTimeMillis();
                 locationManager_device.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
@@ -153,8 +154,14 @@ public class HSNewSettingsPanel extends BasePanel {
                             }
                             KCAnalytics.logEvent("keyboard_location_sendSuccess");
                         }else {
-                            Toast.makeText(HSApplication.getContext(), R.string.request_location_fail,Toast.LENGTH_LONG).show();
-                            KCAnalytics.logEvent("keyboard_location_sendFailed","request timeout");
+                            long endTime=System.currentTimeMillis();
+                            if(endTime-startTime==30000){
+                                Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout,Toast.LENGTH_LONG).show();
+                                KCAnalytics.logEvent("keyboard_location_sendFailed","request timeout");
+                            }else {
+                                Toast.makeText(HSApplication.getContext(), R.string.request_location_fail,Toast.LENGTH_LONG).show();
+                                KCAnalytics.logEvent("keyboard_location_sendFailed","device nonsupport location");
+                            }
                         }
                     }
                 });
