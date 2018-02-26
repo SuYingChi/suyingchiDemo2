@@ -54,6 +54,7 @@ final class ViewItemBuilder {
 
     private final static String SETTINGS_KEY_MORE_SETTING = "ic_settings_key_more_setting";
 
+    private final static String SETTINGS_KEY_PINS = "ic_settings_key_pins";
 
     private static final String SETTING_ON = "on";
     private static final String SETTING_OFF = "off";
@@ -83,6 +84,12 @@ final class ViewItemBuilder {
     static ViewItem getMyThemeItem(ViewItem.ViewItemListener viewItemListener) {
         return new ViewItem(HSApplication.getContext().getResources().getString(R.string.setting_item_my_theme),
                 getStateListDrawable(SETTINGS_KEY_MY_THEME, SETTINGS_KEY_MY_THEME)
+                , viewItemListener, false);
+    }
+
+    static ViewItem getPinsItem(ViewItem.ViewItemListener viewItemListener) {
+        return new ViewItem(HSApplication.getContext().getResources().getString(R.string.setting_item_clipboard),
+                getStateListDrawable(SETTINGS_KEY_PINS,SETTINGS_KEY_PINS )
                 , viewItemListener, false);
     }
 

@@ -23,4 +23,8 @@
     <string name="disable_app_suggestion_msg">You can quickly open your recent apps here. Are you sure to disable it?</string>
 
     <string name="item_sticker_more_coming">More stickers are coming soon</string>
+
+    <string name="clipboard_delete_pin" >YES</string>
+    <string name="clipboard_delete_title" >Are you sure?</string>
+    <string name="clipboard_disable_suggestion_detail" >Do you want to delete this item?</string>
 </resources>

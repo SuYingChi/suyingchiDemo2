@@ -85,6 +85,8 @@ import java.util.List;
 import io.fabric.sdk.android.Fabric;
 
 import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_USER_SET_CHARGING_TOGGLE;
+import com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardMonitor;
+import com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPresenter;
 
 public class HSUIApplication extends HSInputMethodApplication {
 
@@ -305,6 +307,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         );
 
         KeyboardAnalytics.setExternalAnalytics(KCAnalytics::logFabricEvent);
+        ClipboardMonitor.getInstance().registerClipboardMonitor();
     }
     MediaFileObserver screenShotContentObserver = new MediaFileObserver(new Handler()) {
     };

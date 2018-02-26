@@ -35,7 +35,7 @@ import java.util.List;
 
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 import static com.ihs.panelcontainer.KeyboardPanelSwitchContainer.MODE_BACK_PARENT;
-
+import com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardMainPanel;
 
 public class HSNewSettingsPanel extends BasePanel {
     public final static String BUNDLE_KEY_SHOW_TIP = "bundle_key_show_tip";
@@ -123,6 +123,13 @@ public class HSNewSettingsPanel extends BasePanel {
         // items.add(ViewItemBuilder.getAutoCapitalizationItem());
         // items.add(ViewItemBuilder.getPredicationItem());
         // items.add(ViewItemBuilder.getSwipeItem());
+        items.add(ViewItemBuilder.getPinsItem(new ViewItem.ViewItemListener() {
+            @Override
+            public void onItemClick(ViewItem item) {
+                getPanelActionListener().showChildPanel(ClipboardMainPanel.class, null);
+                KCAnalytics.logEvent("keyboard_settings_clipboard_clicked");
+            }
+        }));
         items.add(ViewItemBuilder.getLanguageItem(new ViewItem.ViewItemListener() {
             @Override
             public void onItemClick(ViewItem item) {
