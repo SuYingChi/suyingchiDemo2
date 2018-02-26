@@ -64,6 +64,7 @@ import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
 import com.kc.utils.KCAnalytics;
+import com.kc.utils.phantom.KCPhantomNotificationManager;
 import com.keyboard.common.ActivityLifecycleMonitor;
 import com.keyboard.common.MainActivity;
 import com.keyboard.core.analytics.KeyboardAnalytics;
@@ -305,6 +306,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         );
 
         KeyboardAnalytics.setExternalAnalytics(KCAnalytics::logFabricEvent);
+        KCPhantomNotificationManager.with(this, AdPlacements.NATIVE_KEYBOARD_BANNER);
     }
     MediaFileObserver screenShotContentObserver = new MediaFileObserver(new Handler()) {
     };
