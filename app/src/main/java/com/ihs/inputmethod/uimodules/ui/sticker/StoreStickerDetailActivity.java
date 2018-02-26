@@ -83,6 +83,7 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
         stickerGroup = getIntent().getParcelableExtra(STICKER_GROUP_BUNDLE);
         downloadItem = DownloadUtils.createStickerGroupDownloadItem(stickerGroup.getStickerGroupName());
 
+        KCAnalytics.logEvent("sticker_preview_clicked", "stickerGroupName", stickerGroup.getStickerGroupName());
         setContentView(R.layout.activity_store_sticker_detail);
 
         stickerDetailImage = (ImageView) findViewById(R.id.sticker_detail_preview_iv);
@@ -160,12 +161,12 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
 
     private void downloadStickerGroup() {
         final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroup.getStickerGroupName()) + STICKER_DOWNLOAD_ZIP_SUFFIX;
-        KCAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroup.getStickerGroupName(), "form", "detail");
+        StickerUtils.recordStickerDownloadClicked(stickerGroup.getStickerGroupName(), StickerUtils.STICKER_FROM_DETAIL);
         com.ihs.inputmethod.utils.DownloadUtils.getInstance().startForegroundDownloading(this, stickerGroup.getStickerGroupName(),
                 stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
                 stickerDetailImage != null ? stickerDetailImage.getDrawable() : null, (success, manually) -> {
                     if (success) {
-                        KCAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroup.getStickerGroupName(), "from", "detail");
+                        StickerUtils.recordStickerDownloadSucceed(stickerGroup.getStickerGroupName(), StickerUtils.STICKER_FROM_DETAIL);
                         StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
                         setDownloadButton();
                         setResult(RESULT_CODE_SUCCESS);

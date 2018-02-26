@@ -27,7 +27,6 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
-import com.kc.utils.KCAnalytics;
 
 import java.util.List;
 
@@ -96,19 +95,19 @@ public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<S
                 // 移除点击过的new角标
                 StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
                 stickerCardViewHolder.stickerNewImage.setVisibility(View.GONE);
-
+                StickerUtils.recordStickerDownloadClicked(stickerGroupName, StickerUtils.STICKER_FROM_CARD);
                 DownloadUtils.getInstance().startForegroundDownloading(activity, stickerGroupName,
                         stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
                         stickerCardViewHolder.stickerRealImage.getDrawable(), new AdLoadingView.OnAdBufferingListener() {
                             @Override
                             public void onDismiss(boolean success, boolean manually) {
                                 if (success) {
-                                    KCAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
+                                    StickerUtils.recordStickerDownloadSucceed(stickerGroupName, StickerUtils.STICKER_FROM_CARD);
                                     StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
 
                                     HSBundle bundle = new HSBundle();
                                     bundle.putInt("position", position);
-                                    HSGlobalNotificationCenter.sendNotification(NOTIFICATION_STICKER_DOWNLOADED,bundle);
+                                    HSGlobalNotificationCenter.sendNotification(NOTIFICATION_STICKER_DOWNLOADED, bundle);
                                 }
                             }
 

@@ -210,7 +210,7 @@ public class StickerUtils {
         Bitmap backgroundBitmap = createBitmapAndGcIfNecessary(backgroundWidth, height); //创建背景图
         Bitmap stickerShareBitmapTemp = null;
         try {
-            stickerShareBitmapTemp = BitmapUtils.decodeImage(sticker.getStickerUri(),sticker.isAssetUri() ? BitmapUtils.ASSET_URI : BitmapUtils.FILE_URI);
+            stickerShareBitmapTemp = BitmapUtils.decodeImage(sticker.getStickerUri(), sticker.isAssetUri() ? BitmapUtils.ASSET_URI : BitmapUtils.FILE_URI);
         } catch (IOException e) {
         }
         if (stickerShareBitmapTemp == null) {
@@ -281,5 +281,17 @@ public class StickerUtils {
             HSLog.e("tag sticker suggestion name wrong format");
             return null;
         }
+    }
+
+    public static final String STICKER_FROM_DETAIL = "detailPage";
+    public static final String STICKER_FROM_KEYBOARD = "keyboard";
+    public static final String STICKER_FROM_CARD = "card";
+
+    public static void recordStickerDownloadClicked(String stickerGroupName, String from) {
+        KCAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroupName, "from", from);
+    }
+
+    public static void recordStickerDownloadSucceed(String stickerGroupName, String from) {
+        KCAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName, "from", from);
     }
 }
