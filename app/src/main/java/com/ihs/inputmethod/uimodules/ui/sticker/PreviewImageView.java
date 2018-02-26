@@ -61,7 +61,7 @@ public class PreviewImageView
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         layoutParams = new WindowManager.LayoutParams();
         layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_FULLSCREEN;
         layoutParams.format = PixelFormat.TRANSLUCENT;
         layoutParams.gravity = Gravity.START | Gravity.TOP;
         RequestOptions requestOptions = new RequestOptions()
@@ -81,7 +81,10 @@ public class PreviewImageView
                 longClickRunnable = new Runnable() {
                     @Override
                     public void run() {
-                        onItemLongClick(childViewUnder, recyclerView.getChildAdapterPosition(childViewUnder));
+                        final int childAdapterPosition = recyclerView.getChildAdapterPosition(childViewUnder);
+                        if (childAdapterPosition != -1 && childViewUnder != null) {
+                            onItemLongClick(childViewUnder, childAdapterPosition);
+                        }
                     }
                 };
                 handler.postDelayed(longClickRunnable, LONG_PRESS_DELAY_MILLIS);
@@ -195,14 +198,14 @@ public class PreviewImageView
     private void updateLayoutParams(int[] location) {
         layoutParams.y = location[1] - layoutParams.height;
         layoutParams.x = location[0] - (layoutParams.width / 2 - itemWidth / 2);
-        if (layoutParams.y < 0) {
-            layoutParams.y = 0;
-        }
+//        if (layoutParams.y < 0) {
+//            layoutParams.y = 0;
+//        }
         if (layoutParams.x < 0) {
             layoutParams.x = 0;
         }
-        if (layoutParams.x > recyclerView.getWidth() - layoutParams.width / 2) {
-            layoutParams.x = recyclerView.getWidth() - layoutParams.width / 2;
+        if (layoutParams.x + layoutParams.width > wm.getDefaultDisplay().getWidth()) {
+            layoutParams.x = wm.getDefaultDisplay().getWidth() - layoutParams.width;
         }
     }
 
