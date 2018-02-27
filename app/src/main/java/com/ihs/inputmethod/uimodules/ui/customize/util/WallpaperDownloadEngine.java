@@ -66,12 +66,11 @@ public class WallpaperDownloadEngine {
             final int endIndex = startIndex + DEFAULT_PAGE_SIZE;
 
             List<WallpaperInfo> wallpaperInfoList = new ArrayList<>();
-            List<Map<String, String>> wallpaperList = (List<Map<String, String>>) sConfig.get(categoryIndex).get("WallpaperList");
+            List<String> wallpaperList = (List<String>) sConfig.get(categoryIndex).get("WallpaperList");
             int configTotalSize = wallpaperList.size();
             int lastIndex = configTotalSize <= endIndex ? configTotalSize : endIndex;
             for (int i = startIndex; i < lastIndex; i++) {
-                Map<String, String> map = wallpaperList.get(i);
-                WallpaperInfo wallpaperInfo = WallpaperInfo.newConfigWallpaper(map.get("HDUrl"), map.get("ThumbUrl"));
+                WallpaperInfo wallpaperInfo = WallpaperInfo.newOnlineWallpaper(wallpaperList.get(i));
                 CategoryInfo category = CategoryInfo.ofConfig(sConfig.get(categoryIndex));
                 if (category != null) {
                     wallpaperInfo.setCategory(category);
