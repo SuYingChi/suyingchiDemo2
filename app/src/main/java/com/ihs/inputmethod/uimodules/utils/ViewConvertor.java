@@ -21,6 +21,7 @@ public class ViewConvertor {
         cardView.setMaxCardElevation(temp);
         cardView.setPreventCornerOverlap(false);
         cardView.setContentPadding(0, 0 , 0, 0);
+        cardView.setUseCompatPadding(true);
         FrameLayout.LayoutParams layoutParams = new CardView.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.gravity = Gravity.CENTER;
         cardView.setLayoutParams(layoutParams);
