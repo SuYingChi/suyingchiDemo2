@@ -187,6 +187,12 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
             panelViewGroupLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height - getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height));
 
         }
+        recyclerViewGroup.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         addView(recyclerViewGroup, panelViewGroupLayoutParams);
     }
 
