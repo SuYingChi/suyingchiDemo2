@@ -15,6 +15,8 @@ public class AdPlacements {
 
     // Express
     public static final String EXPRESS_CABLE = "Cable";
+    public static final String EXPRESS_LUMEN = "LumenExpress";
+    public static final String EXPRESS_CABLE_REPORT = "CableReportExpress";
 
     // Interstitial
     public static final String INTERSTITIAL_SPRING = "Spring";

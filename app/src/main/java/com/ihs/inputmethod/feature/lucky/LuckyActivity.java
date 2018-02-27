@@ -32,7 +32,8 @@ import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.ads.base.AcbAd;
 import net.appcloudbox.ads.base.AcbNativeAd;
-import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
+import net.appcloudbox.ads.nativead.AcbNativeAdLoader;
+import net.appcloudbox.ads.nativead.AcbNativeAdManager;
 
 import java.util.Locale;
 
@@ -422,7 +423,7 @@ public class LuckyActivity extends HSAppCompatActivity
 
     public void requestAds() {
         //request ad
-        AcbNativeAdLoader.preload(HSApplication.getContext(), 1, AdPlacements.NATIVE_THEME_TRY);
+        AcbNativeAdManager.preload(HSApplication.getContext(), 1, AdPlacements.NATIVE_THEME_TRY);
     }
 
     public int getChanceCount() {

@@ -76,7 +76,7 @@ import com.kc.utils.KCAnalytics;
 import com.keyboard.common.KeyboardActivationGuideActivity;
 import com.keyboard.common.SplashActivity;
 
-import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
+import net.appcloudbox.ads.interstitialad.AcbInterstitialAdLoader;
 import net.appcloudbox.autopilot.AutopilotEvent;
 
 import java.util.ArrayList;

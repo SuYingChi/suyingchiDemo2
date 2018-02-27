@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.constants.AdPlacements;
@@ -20,7 +19,8 @@ import com.ihs.inputmethod.uimodules.R;
 import net.appcloudbox.ads.base.AcbNativeAd;
 import net.appcloudbox.ads.base.ContainerView.AcbNativeAdContainerView;
 import net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView;
-import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
+import net.appcloudbox.ads.nativead.AcbNativeAdLoader;
+import net.appcloudbox.ads.nativead.AcbNativeAdManager;
 import net.appcloudbox.common.utils.AcbError;
 
 import java.util.List;
@@ -61,7 +61,7 @@ public class KeyboardBannerAdLayout extends FrameLayout {
         closeBtn.setVisibility(GONE);
 
 
-        AcbNativeAdLoader adLoader = new AcbNativeAdLoader(getContext(), AdPlacements.NATIVE_KEYBOARD_BANNER);
+        AcbNativeAdLoader adLoader = AcbNativeAdManager.createLoaderWithPlacement(getContext(), AdPlacements.NATIVE_KEYBOARD_BANNER);
         adLoader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
             @Override
             public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {

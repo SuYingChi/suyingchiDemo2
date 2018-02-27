@@ -72,11 +72,11 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.L;
 import com.squareup.leakcanary.LeakCanary;
 
-import net.appcloudbox.ads.base.config.AdConfig;
-import net.appcloudbox.ads.expressads.AcbExpressAdManager;
-import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
+import net.appcloudbox.AcbAds;
+import net.appcloudbox.ads.expressad.AcbExpressAdManager;
+import net.appcloudbox.ads.interstitialad.AcbInterstitialAdManager;
+import net.appcloudbox.ads.nativead.AcbNativeAdManager;
 import net.appcloudbox.autopilot.AutopilotConfig;
-import net.appcloudbox.goldeneye.AcbAdsManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -102,7 +102,7 @@ public class HSUIApplication extends HSInputMethodApplication {
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 StickerDataManager.getInstance().onConfigChange();
             } else if (RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED.equals(notificationName)) {
-                AcbNativeAdManager.sharedInstance().deactivePlacementInProcess(AcbCallManager.getAdPlacement());
+                AcbNativeAdManager.getInstance().deactivePlacementInProcess(AcbCallManager.getAdPlacement());
                 AcbCallManager.setAdPlacement("");
             }
         }
@@ -251,12 +251,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         CustomUIRateAlertUtils.initialize();
 
-        //golden eye
-        AcbAdsManager.initialize(this);
-        // 临时解决 AcbExpressAdManager 未初始化引起的 crash
-        if (!AdConfig.exists("expressAds") || AdConfig.getMap(new String[]{"expressAds"}).isEmpty()) {
-            AcbExpressAdManager.getInstance().init(this);
-        }
+        AcbAds.getInstance().initializeFromGoldenEye(this);
 
         initIAP();
 
@@ -323,13 +318,15 @@ public class HSUIApplication extends HSInputMethodApplication {
             return;
         }
         // 全屏插页广告
-        AcbAdsManager.activePlacementInProcess(AdPlacements.INTERSTITIAL_SPRING);
+        AcbInterstitialAdManager.getInstance().activePlacementInProcess(AdPlacements.INTERSTITIAL_SPRING);
         // Native广告
-        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_THEME_TRY);
-        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_BOOST_DONE);
-        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_APPLYING_ITEM);
-        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_KEYBOARD_BANNER);
-        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_LUMEN);
+        AcbNativeAdManager.getInstance().activePlacementInProcess(AdPlacements.NATIVE_THEME_TRY);
+        AcbNativeAdManager.getInstance().activePlacementInProcess(AdPlacements.NATIVE_BOOST_DONE);
+        AcbNativeAdManager.getInstance().activePlacementInProcess(AdPlacements.NATIVE_APPLYING_ITEM);
+        AcbNativeAdManager.getInstance().activePlacementInProcess(AdPlacements.NATIVE_KEYBOARD_BANNER);
+        AcbNativeAdManager.getInstance().activePlacementInProcess(AdPlacements.NATIVE_LUMEN);
+        // Express广告
+        AcbExpressAdManager.getInstance().activePlacementInProcess(AdPlacements.EXPRESS_LUMEN);
     }
 
     private void registerNotificationEvent() {

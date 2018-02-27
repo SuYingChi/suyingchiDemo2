@@ -31,7 +31,7 @@ import com.ihs.inputmethod.feature.lucky.TargetInfo;
 import com.ihs.inputmethod.uimodules.R;
 
 import net.appcloudbox.ads.base.AcbNativeAd;
-import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
+import net.appcloudbox.ads.nativead.AcbNativeAdManager;
 
 import java.util.HashMap;
 import java.util.List;
@@ -203,7 +203,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
                     shouldShowAd = mCurrentLargeAdCount < mLargeBoxAdCount;
                 }
                 if (shouldShowAd) {
-                    List<AcbNativeAd> ads = AcbNativeAdLoader.fetch(HSApplication.getContext(), AdPlacements.NATIVE_THEME_TRY, 1);
+                    List<AcbNativeAd> ads = AcbNativeAdManager.fetch(HSApplication.getContext(), AdPlacements.NATIVE_THEME_TRY, 1);
                     mAd = ads.isEmpty() ? null : ads.get(0);
                 } else {
                     mAd = null;

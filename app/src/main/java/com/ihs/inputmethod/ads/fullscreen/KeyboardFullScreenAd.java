@@ -15,7 +15,7 @@ import com.kc.utils.KCFeatureControlUtils;
 import com.keyboard.core.session.KCKeyboardSession;
 
 import net.appcloudbox.ads.base.AcbInterstitialAd;
-import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
+import net.appcloudbox.ads.interstitialad.AcbInterstitialAdManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -155,7 +155,7 @@ public class KeyboardFullScreenAd {
     public static void showSessionOneTimeAd(String from, OneTimeAdListener listener) {
         HSLog.e("show full ad");
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            List<AcbInterstitialAd> fetch = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), ONE_SESSION_ADPLACEMENT, 1);
+            List<AcbInterstitialAd> fetch = AcbInterstitialAdManager.fetch(HSApplication.getContext(), ONE_SESSION_ADPLACEMENT, 1);
             if (!fetch.isEmpty()) {
                 AcbInterstitialAd acbInterstitialAd = fetch.get(0);
                 acbInterstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
