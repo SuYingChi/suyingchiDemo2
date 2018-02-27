@@ -26,7 +26,6 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.adpanel.KeyboardGooglePlayAdManager;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
-import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
@@ -125,7 +124,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     public void onCreate() {
         HSLog.e("keyboard start");
         HSKeyboardThemeManager.init();
-        KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateStart();
+//        KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateStart();
         if (HSVersionControlUtils.isFirstLaunchSinceInstallation()) {
             ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
         }
@@ -142,7 +141,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_FINISH_INPUT_INSIDE, keyboardNotificationObserver);
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, keyboardNotificationObserver);
 
-        KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateEnd();
+//        KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateEnd();
         openFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Open");
         closeFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Close");
         keyboardGooglePlayAdManager = new KeyboardGooglePlayAdManager(HSApplication.getContext().getString(R.string.ad_placement_google_play_dialog_ad));
@@ -330,7 +329,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
 
     @Override
     public View onCreateInputView() {
-        KeyboardAnalyticsReporter.getInstance().recordKeyboardStartTime("CreateAndStartInputView");
+//        KeyboardAnalyticsReporter.getInstance().recordKeyboardStartTime("CreateAndStartInputView");
         return super.onCreateInputView();
     }
 
@@ -388,7 +387,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     public void onStartInputView(EditorInfo editorInfo, boolean restarting) {
         isInputViewShowing = true;
         Log.e("time log", "time log service onstartInputView started");
-        KeyboardAnalyticsReporter.getInstance().recordKeyboardStartTime("StartInputView");
+//        KeyboardAnalyticsReporter.getInstance().recordKeyboardStartTime("StartInputView");
         super.onStartInputView(editorInfo, restarting);
         getKeyboardPanelMananger().beforeStartInputView();
 
@@ -397,8 +396,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         }
         Log.e("time log", "time log service onstartInputView finished");
 
-        KeyboardAnalyticsReporter.getInstance().onKeyboardSessionStart();
-        KeyboardAnalyticsReporter.getInstance().recordKeyboardEndTime();
+//        KeyboardAnalyticsReporter.getInstance().onKeyboardSessionStart();
+//        KeyboardAnalyticsReporter.getInstance().recordKeyboardEndTime();
 
         if (!restarting) {
             if (!isInOwnApp()) {
@@ -427,7 +426,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         }
         HSEmojiSuggestionManager.cleanupFollowEmojiForTypedWords();
 
-        KeyboardAnalyticsReporter.getInstance().onKeyboardSessionEnd();
+//        KeyboardAnalyticsReporter.getInstance().onKeyboardSessionEnd();
         super.onFinishInputView(finishingInput);
     }
 

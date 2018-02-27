@@ -101,8 +101,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             } else if (HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD.equals(s)) {
                 showKeyboardWithMenu();
                 functionBar.showNewMarkIfNeed();
-            }else if(HSInputMethod.HS_NOTIFICATION_FIRST_OPEN_KEYBOARD_TODAY.equals(s)){
-                functionBar.checkNewGame();
+//            }else if(HSInputMethod.HS_NOTIFICATION_FIRST_OPEN_KEYBOARD_TODAY.equals(s)){
+//                functionBar.checkNewGame();
             }
         }
     };
@@ -164,7 +164,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_CHANGED, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
-        HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_FIRST_OPEN_KEYBOARD_TODAY, notificationObserver);
+//        HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_FIRST_OPEN_KEYBOARD_TODAY, notificationObserver);
 
 
         return keyboardPanelSwitchContainer;

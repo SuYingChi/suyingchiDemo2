@@ -32,7 +32,6 @@ import com.acb.call.CPSettings;
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.framework.inner.HomeKeyTracker;
@@ -42,7 +41,6 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
-import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -72,6 +70,7 @@ import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.AlertShowingUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 import com.keyboard.common.KeyboardActivationGuideActivity;
 import com.keyboard.common.SplashActivity;
 
@@ -749,10 +748,10 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     }
 
     public static void startThemeHomeActivity(Activity activity) {
-        if (!hasInitKeyboardBeforeOnCreate) {
-            HSUIInputMethodService.initResourcesBeforeOnCreate();
-            hasInitKeyboardBeforeOnCreate = true;
-        }
+//        if (!hasInitKeyboardBeforeOnCreate) {
+//            HSUIInputMethodService.initResourcesBeforeOnCreate();
+//            hasInitKeyboardBeforeOnCreate = true;
+//        }
         Uri data = activity.getIntent().getData();
         String needActiveThemePkName = null;
         if (data != null) {

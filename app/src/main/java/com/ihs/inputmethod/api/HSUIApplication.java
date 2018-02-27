@@ -222,7 +222,7 @@ public class HSUIApplication extends HSInputMethodApplication {
                 ScreenLockerManager.init();
                 LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
 
-                HSInputMethodExecutors.excuteDelayed(new Runnable() {
+                HSInputMethodExecutors.executeSingleThreadDelayed(new Runnable() {
                     @Override
                     public void run() {
                         if (BuildConfig.ENABLE_FACEMOJI) {
