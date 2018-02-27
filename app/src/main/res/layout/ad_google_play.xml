@@ -29,12 +29,6 @@
             android:text="Recommended For You"
             android:textColor="@android:color/white" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|left"
-            android:src="@mipmap/ad_engine_ad_mark"/>
-
         <FrameLayout
             android:id="@+id/ad_choice"
             android:layout_width="wrap_content"
