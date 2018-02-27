@@ -6,7 +6,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
-import com.ihs.inputmethod.mydownload.MyDownloadsActivity;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.utils.ActionbarUtils;
 
@@ -29,7 +28,7 @@ public abstract class BaseListActivity extends HSAppCompatActivity {
         findViewById(R.id.download_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyDownloadsActivity.startThisActivity(BaseListActivity.this);
+                onDownloadClick();
             }
         });
 
@@ -42,6 +41,10 @@ public abstract class BaseListActivity extends HSAppCompatActivity {
 
     protected void showDownloadIcon(boolean show) {
         findViewById(R.id.download_btn).setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    protected void onDownloadClick() {
+
     }
 
     @Override

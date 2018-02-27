@@ -794,7 +794,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
                 SexyWallpaperActivity.startThisActivity(this);
                 break;
             case R.id.nav_call_my_download:
-                MyDownloadsActivity.startThisActivity(this);
+                MyDownloadsActivity.startThisActivity(this, getString(R.string.my_download_tab_theme));
                 break;
             case R.id.nav_settings:
                 SettingActivity.startThisActivity(this);

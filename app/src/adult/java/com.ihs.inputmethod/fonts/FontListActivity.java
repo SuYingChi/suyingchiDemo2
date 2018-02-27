@@ -14,6 +14,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.base.BaseListActivity;
 import com.ihs.inputmethod.fonts.adapter.FontAdapter;
+import com.ihs.inputmethod.mydownload.MyDownloadsActivity;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontModel;
@@ -88,6 +89,11 @@ public class FontListActivity extends BaseListActivity implements FontAdapter.On
     @Override
     protected int getTitleTextResId() {
         return R.string.activity_font_title;
+    }
+
+    @Override
+    protected void onDownloadClick() {
+        MyDownloadsActivity.startThisActivity(this, getString(R.string.my_download_tab_font));
     }
 
     private void initFontList() {

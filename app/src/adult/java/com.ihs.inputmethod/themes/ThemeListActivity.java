@@ -8,6 +8,7 @@ import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.base.BaseListActivity;
 import com.ihs.inputmethod.home.model.HomeModel;
+import com.ihs.inputmethod.mydownload.MyDownloadsActivity;
 import com.ihs.inputmethod.themes.adapter.ThemeAdapter;
 import com.ihs.inputmethod.uimodules.R;
 
@@ -41,6 +42,12 @@ public class ThemeListActivity extends BaseListActivity {
     @Override
     protected int getTitleTextResId() {
         return R.string.activity_keyboard_themes_title;
+    }
+
+
+    @Override
+    protected void onDownloadClick() {
+        MyDownloadsActivity.startThisActivity(this, getString(R.string.my_download_tab_theme));
     }
 
     private List getDataList() {

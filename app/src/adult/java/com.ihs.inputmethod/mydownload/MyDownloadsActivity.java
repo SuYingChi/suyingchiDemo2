@@ -36,7 +36,7 @@ import java.util.ArrayList;
  */
 
 public class MyDownloadsActivity extends HSAppCompatActivity implements View.OnClickListener {
-    public static final String EXTRA_INITIAL_TAB_INDEX = "initial_tab_index";
+    public static final String EXTRA_INITIAL_TAB_NAME = "initial_tab_name";
 
     private static final int REQUEST_CODE_START_KEYBOARD_ACTIVATION = 1;
     private static final int REQUEST_CODE_START_CUSTOM_THEME = 2;
@@ -77,8 +77,17 @@ public class MyDownloadsActivity extends HSAppCompatActivity implements View.OnC
         viewPager.setOffscreenPageLimit(fragments.size());
         viewPager.setAdapter(tabFragmentPagerAdapter);
 
+        String tabName = getIntent().getStringExtra(EXTRA_INITIAL_TAB_NAME);
+        int firstIndex = 0;
+        for (int i = 0 ; i < tabTitles.length ; i++ ) {
+            if (tabTitles[i].equals(tabName)) {
+                firstIndex = i;
+                break;
+            }
+        }
         slidingTabLayout = findViewById(R.id.tab_layout);
         slidingTabLayout.setViewPager(viewPager);
+        slidingTabLayout.setCurrentTab(firstIndex);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
@@ -86,8 +95,10 @@ public class MyDownloadsActivity extends HSAppCompatActivity implements View.OnC
 
     }
 
-    public static void startThisActivity(Activity activity) {
-        activity.startActivity(new Intent(activity, MyDownloadsActivity.class));
+    public static void startThisActivity(Activity activity, String tabName) {
+        Intent intent = new Intent(activity, MyDownloadsActivity.class);
+        intent.putExtra(EXTRA_INITIAL_TAB_NAME, tabName);
+        activity.startActivity(intent);
     }
 
     @Override

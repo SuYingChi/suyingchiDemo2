@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.GridLayoutManager;
 
 import com.ihs.inputmethod.base.BaseListActivity;
+import com.ihs.inputmethod.mydownload.MyDownloadsActivity;
 import com.ihs.inputmethod.stickers.adapter.StickerAdapter;
 import com.ihs.inputmethod.stickers.model.StickerModel;
 import com.ihs.inputmethod.uimodules.R;
@@ -51,6 +52,11 @@ public class StickerListActivity extends BaseListActivity implements StickerAdap
     @Override
     protected int getTitleTextResId() {
         return R.string.activity_adult_stickers_title;
+    }
+
+    @Override
+    protected void onDownloadClick() {
+        MyDownloadsActivity.startThisActivity(this, getString(R.string.my_download_tab_sticker));
     }
 
     private List<StickerModel> getData() {
