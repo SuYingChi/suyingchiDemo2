@@ -17,7 +17,6 @@ import android.view.inputmethod.InputConnection;
 
 import com.acb.adcaffe.nativead.AdCaffeNativeAd;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -30,7 +29,6 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.constants.AdPlacements;
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.feature.common.AdCaffeHelper;
 import com.ihs.inputmethod.suggestions.CustomSearchEditText;
@@ -40,7 +38,6 @@ import com.ihs.inputmethod.uimodules.ui.sticker.Sticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerPrefsUtil;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
-import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
@@ -120,11 +117,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     @Override
     public void onCreate() {
         HSLog.e("keyboard start");
-        HSKeyboardThemeManager.init();
-//        KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateStart();
-        if (HSVersionControlUtils.isFirstLaunchSinceInstallation()) {
-            ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
-        }
         HSInputMethodService.setKeyboardSwitcher(new KeyboardPanelManager());
         super.onCreate();
 
@@ -432,8 +424,10 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         super.onStartInputView(editorInfo, restarting);
         getKeyboardPanelMananger().beforeStartInputView();
 
+        //如果不是内部输入，并且键盘为restarting没有收起出现操作，证明是在外部app内点击send按钮。
         if (insideConnection == null && restarting) {
             getKeyboardPanelMananger().showKeyboardWithMenu();
+            KCAnalytics.logEvent("keyboard_input_send_clicked");
         }
         Log.e("time log", "time log service onstartInputView finished");
 
