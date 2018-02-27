@@ -25,7 +25,7 @@
     <string name="item_sticker_more_coming">More stickers are coming soon</string>
     <string name="network_not_available">No network detected</string>
     <string name="no_location_permission">No location permission</string>
-    <string name="request_location_fail">Get Device Location Failed with NULL location.</string>
-    <string name="request_location_timeout">request timeout. Please try again later</string>
+    <string name="request_location_fail">Get Device Location Failed with NULL location. please  switch your location mode and try again</string>
+    <string name="request_location_timeout">request timeout.   please  switch your location mode and try again </string>
     <string name="setting_item_location">Location</string>
 </resources>
