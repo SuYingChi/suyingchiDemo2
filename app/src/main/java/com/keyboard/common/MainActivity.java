@@ -46,7 +46,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
-import com.kc.utils.KCAnalytics;
+
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.config.HSConfig;
@@ -58,16 +58,15 @@ import com.ihs.inputmethod.accessbility.AccessibilityEventListener;
 import com.ihs.inputmethod.accessbility.CustomViewDialog;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
-import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.view.CustomProgressDrawable;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.utils.Constants;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.text.MessageFormat;
 
@@ -164,10 +163,6 @@ public class MainActivity extends HSAppCompatActivity {
                         ivProgress.getDrawable().setLevel(progress);
                         tvProgress.setText(MessageFormat.format("{0}%", progress));
 
-                        if (progress == 98) {
-                            HSInputMethodService.initResourcesBeforeOnCreate();
-                            ThemeHomeActivity.hasInitKeyboardBeforeOnCreate = true;
-                        }
 
                         if (progress == 100) {
                             removeMessages(msg.what);

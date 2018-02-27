@@ -51,6 +51,7 @@ public class SplashActivity extends HSDeepLinkActivity {
         handler.postDelayed(() -> {
             HSUIApplication application = (HSUIApplication) getApplication();
             application.startActivityAfterSplash(SplashActivity.this);
+            finish();
         }, delayMillis);
 
         recordAppFirstOpen("icon click");

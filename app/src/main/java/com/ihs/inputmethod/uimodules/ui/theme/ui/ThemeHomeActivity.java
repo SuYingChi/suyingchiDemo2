@@ -43,7 +43,6 @@ import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
-import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -142,7 +141,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     private boolean fullscreenShowed = false;
 
     private int splashJumpCode = -1;
-    public static boolean hasInitKeyboardBeforeOnCreate = false;
 
 
     private Handler handler = new Handler() {
@@ -756,10 +754,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     }
 
     public static void startThemeHomeActivity(Activity activity) {
-        if (!hasInitKeyboardBeforeOnCreate) {
-            HSUIInputMethodService.initResourcesBeforeOnCreate();
-            hasInitKeyboardBeforeOnCreate = true;
-        }
         Uri data = activity.getIntent().getData();
         String needActiveThemePkName = null;
         if (data != null) {
