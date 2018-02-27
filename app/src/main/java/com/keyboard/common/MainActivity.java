@@ -62,7 +62,6 @@ import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.view.CustomProgressDrawable;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.utils.Constants;
@@ -164,10 +163,6 @@ public class MainActivity extends HSAppCompatActivity {
                         ivProgress.getDrawable().setLevel(progress);
                         tvProgress.setText(MessageFormat.format("{0}%", progress));
 
-                        if (progress == 98) {
-//                            HSInputMethodService.initResourcesBeforeOnCreate();
-                            ThemeHomeActivity.hasInitKeyboardBeforeOnCreate = true;
-                        }
 
                         if (progress == 100) {
                             removeMessages(msg.what);
@@ -656,8 +651,6 @@ public class MainActivity extends HSAppCompatActivity {
     protected void onResume() {
         super.onResume();
         HSLog.d("MainActivity onResume.");
-
-//        Debug.stopMethodTracing();
 
         if (currentType == TYPE_MANUAL) {
             if (!HSInputMethodListManager.isMyInputMethodEnabled()) {

@@ -195,9 +195,6 @@ public class HSUIApplication extends HSInputMethodApplication {
             LeakCanary.install(this);
         }
 
-//        Debug.startMethodTracing(Environment.getExternalStorageDirectory() + File.separator + "dm.trace", 200 * 1000 * 1000);
-
-
         if (HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable")) {
             startService(new Intent(getApplicationContext(), WakeKeyboardService.class));
         }
