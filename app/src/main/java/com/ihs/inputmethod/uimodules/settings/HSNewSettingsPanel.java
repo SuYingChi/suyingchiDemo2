@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.settings;
 
 import android.app.AppOpsManager;
 import android.content.Context;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -142,60 +143,26 @@ public class HSNewSettingsPanel extends BasePanel {
                 locationManager_device.setDeviceLocationTimeout(timeoutMillis);
                 long startTime = System.currentTimeMillis();
                 locationManager_device.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
-                    public boolean isOnLocationFetchedSuccess;
-                    String country;
-                    String Neighborhood;
-                    String subLocality;
-                    String city;
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
-                        if (success) {
-                            city = String.valueOf(locationManager.getCity());
-                            subLocality = locationManager.getSublocality();
-                            Neighborhood = locationManager.getNeighborhood();
-                            country = locationManager.getCountry();
-                            if (TextUtils.isEmpty(city) || TextUtils.isEmpty(subLocality) || TextUtils.isEmpty(Neighborhood) || TextUtils.isEmpty(country)) {
-                                isOnLocationFetchedSuccess = false;
-                                return;
-                            }
-                            if (editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
-                                HSInputMethod.inputText(Neighborhood + "," + subLocality + "," + city + "," + country);
-                                KCAnalytics.logEvent("keyboard_location_sendSuccess");
-                                isOnLocationFetchedSuccess = true;
-                            }
-                        } else {
-                            isOnLocationFetchedSuccess = false;
-                            long endTime = System.currentTimeMillis();
-                            if (endTime - startTime >= timeoutMillis) {
-                                Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
-                                KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
-                            } else {
-                                Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
-                                KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
-                            }
-                        }
+
                     }
 
                     @Override
                     public void onGeographyInfoFetched(boolean success, HSLocationManager locationManager) {
-                        if (isOnLocationFetchedSuccess)
-                            return;
                         if (success) {
-                            city = String.valueOf(locationManager.getCity());
-                            subLocality = locationManager.getSublocality();
-                            Neighborhood = locationManager.getNeighborhood();
-                            country = locationManager.getCountry();
+                            String city = String.valueOf(locationManager.getCity());
+                            String subLocality = locationManager.getSublocality();
+                            String Neighborhood = locationManager.getNeighborhood();
+                            String country = locationManager.getCountry();
                             if (TextUtils.isEmpty(city) || TextUtils.isEmpty(subLocality) || TextUtils.isEmpty(Neighborhood) || TextUtils.isEmpty(country)) {
-                                isOnLocationFetchedSuccess = false;
                                 return;
                             }
                             if (editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
                                 HSInputMethod.inputText(Neighborhood + "," + subLocality + "," + city + "," + country);
                                 KCAnalytics.logEvent("keyboard_location_sendSuccess");
-                                isOnLocationFetchedSuccess = true;
                             }
                         } else {
-                            isOnLocationFetchedSuccess = false;
                             long endTime = System.currentTimeMillis();
                             if (endTime - startTime >= timeoutMillis) {
                                 Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_LONG).show();
