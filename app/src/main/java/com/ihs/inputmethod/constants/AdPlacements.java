@@ -14,7 +14,7 @@ public class AdPlacements {
     public static final String NATIVE_LUMEN = "Lumen";
 
     // Express
-    public static final String EXPRESS_CABLE = "CableReportExpress";
+    public static final String EXPRESS_CABLE = "Cable";
     public static final String EXPRESS_LUMEN = "LumenExpress";
     public static final String EXPRESS_CABLE_REPORT = "CableReportExpress";
 
