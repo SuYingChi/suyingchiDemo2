@@ -128,7 +128,7 @@
 					<key>MinDaysFromFirstUse</key>
 					<integer>0</integer>
 					<key>MinUseCount</key>
-					<integer>0</integer>
+					<integer>1</integer>
 					<key>Probability</key>
 					<integer>100</integer>
 				</dict>

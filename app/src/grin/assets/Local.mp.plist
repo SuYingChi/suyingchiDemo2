@@ -15,6 +15,8 @@
 			</dict>
 			<key>AppSuggestion</key>
 			<dict>
+				<key>AdPlacement</key>
+				<string>ThemeTryAd</string>
 				<key>ApkDefault</key>
 				<array>
 					<string>com.whatsapp</string>
@@ -403,7 +405,7 @@
 			<key>CurrentTheme</key>
 			<dict>
 				<key>LaunchDelayTime</key>
-				<integer>3000</integer>
+				<integer>4500</integer>
 			</dict>
 			<key>DownloadScreenLocker</key>
 			<dict>
@@ -629,23 +631,6 @@
 					<integer>20</integer>
 					<key>MinIntervalByHour</key>
 					<integer>1</integer>
-					<key>PackageNameExclude</key>
-					<array>
-						<string>com.facebook.orca</string>
-						<string>com.facebook.katana</string>
-						<string>com.whatsapp</string>
-					</array>
-					<key>Show</key>
-					<false/>
-				</dict>
-				<key>AppOpen</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>0</integer>
-					<key>MaxCountPerDay</key>
-					<integer>6</integer>
-					<key>MinIntervalByHour</key>
-					<integer>0</integer>
 					<key>PackageNameExclude</key>
 					<array>
 						<string>com.facebook.orca</string>
@@ -1873,6 +1858,24 @@
 					</array>
 					<key>offical_themes</key>
 					<array>
+						<dict>
+							<key>apkUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/LoveGift.apk</string>
+							<key>bannerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/LoveGift.jpg</string>
+							<key>largePreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/LoveGift.jpg</string>
+							<key>mediumPreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/LoveGift.jpg</string>
+							<key>showName</key>
+							<string>Love Gift</string>
+							<key>showNewMark</key>
+							<true/>
+							<key>themePkName</key>
+							<string>com.keyboard.theme.lovegift</string>
+							<key>zipName</key>
+							<string>LoveGift</string>
+						</dict>
 						<dict>
 							<key>apkUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/StarrySky.apk</string>
@@ -3536,18 +3539,6 @@
 					</dict>
 					<dict>
 						<key>ActionType</key>
-						<string>Locker</string>
-						<key>Message</key>
-						<array>
-							<string>Displaying your favourite themes on lock screen.</string>
-						</array>
-						<key>Repeat</key>
-						<true/>
-						<key>Title</key>
-						<string>Enable Screen Locker</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
 						<string>Theme</string>
 						<key>IconUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/spinner.png</string>
@@ -3587,18 +3578,6 @@
 						<string>com.keyboard.theme.goldsilver</string>
 						<key>Title</key>
 						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Charging</string>
-						<key>Message</key>
-						<array>
-							<string>Enable smart charging to prevent overcharging efficiently.</string>
-						</array>
-						<key>Repeat</key>
-						<true/>
-						<key>Title</key>
-						<string>Enable Smart Charging</string>
 					</dict>
 					<dict>
 						<key>ActionType</key>
@@ -4364,7 +4343,7 @@
 						<key>body</key>
 						<dict>
 							<key>en</key>
-							<string>Tap the number of stars you&apos;d give us.</string>
+							<string>Tap the number of stars you'd give us.</string>
 						</dict>
 						<key>title</key>
 						<dict>
@@ -4463,7 +4442,7 @@
 							<key>es</key>
 							<string>¿Te gusta nuestra aplicación? </string>
 							<key>fr</key>
-							<string>Vous aimez l&apos;application?</string>
+							<string>Vous aimez l'application?</string>
 							<key>hi</key>
 							<string>क्या  आप हमारी ऐप पसंद करते हो?</string>
 							<key>it</key>
@@ -4568,11 +4547,11 @@
 								<key>es</key>
 								<string>¡Nos alegra oírlo! ¡Danos 5 estrellas!</string>
 								<key>fr</key>
-								<string>Nous sommes heureux de l&apos;apprendre ! Donnez-lui 5 étoiles.</string>
+								<string>Nous sommes heureux de l'apprendre ! Donnez-lui 5 étoiles.</string>
 								<key>hi</key>
 								<string>यह जानकर खुशी हुई! इसे 5-स्टार का मूल्यांकन दें हमारे पास</string>
 								<key>it</key>
-								<string>Ci fa piacere saperlo! Valuta l&apos;app con 5 stelle.</string>
+								<string>Ci fa piacere saperlo! Valuta l'app con 5 stelle.</string>
 								<key>ja</key>
 								<string>それが聞けて何よりです。5つ星をぜひお願いします！</string>
 								<key>ko</key>
@@ -4637,7 +4616,7 @@
 								<key>es</key>
 								<string>Somos un equipo pequeño y nos esforzamos mucho para ofrecerte la mejor aplicación gratis. ¡Tu valoración de 5 estrellas es mejor que todo el dinero del mundo!</string>
 								<key>fr</key>
-								<string>Nous sommes une petite équipe qui travaille très dur pour vous apporter gratuitement la meilleure application. Vos 5 étoiles valent tout l&apos;argent du monde !</string>
+								<string>Nous sommes une petite équipe qui travaille très dur pour vous apporter gratuitement la meilleure application. Vos 5 étoiles valent tout l'argent du monde !</string>
 								<key>hi</key>
 								<string>एक छोटी टीम है जो आपको निशुल्क में बेहतर एप्स‍ देने के लिए कड़ी मेहनत करती है। आपका 5-स्टार विश्व की पूरी दौलत से भी अच्छा है!</string>
 								<key>it</key>
@@ -4667,7 +4646,7 @@
 							<key>es</key>
 							<string>¿Te gusta nuestra aplicación?</string>
 							<key>fr</key>
-							<string>Vous aimez l&apos;application ?</string>
+							<string>Vous aimez l'application ?</string>
 							<key>hi</key>
 							<string>क्या  आप हमारी ऐप पसंद करते हो?</string>
 							<key>it</key>
@@ -4823,7 +4802,7 @@
 								<key>es</key>
 								<string>¿Qué te parecería valorar el trabajo del equipo?</string>
 								<key>fr</key>
-								<string>Que diriez-vous d&apos;un avis pour des équipes qui travaillent dur ?</string>
+								<string>Que diriez-vous d'un avis pour des équipes qui travaillent dur ?</string>
 								<key>hi</key>
 								<string>तो कड़ी मेहनत वाली टीमों के लिए एक मूल्यांकन के बारे में क्या?</string>
 								<key>it</key>
@@ -4876,7 +4855,7 @@
 							<key>es</key>
 							<string>Tengo algunos comentarios</string>
 							<key>fr</key>
-							<string>J&apos;ai des commentaires</string>
+							<string>J'ai des commentaires</string>
 							<key>hi</key>
 							<string>मेरे पास कुछ प्रतिक्रिया है</string>
 							<key>it</key>
@@ -4903,15 +4882,15 @@
 							<key>de</key>
 							<string>Ich würde sie mit 5 Sternen bewerten</string>
 							<key>en</key>
-							<string>I&apos;d like to give it a 5-star rating.</string>
+							<string>I'd like to give it a 5-star rating.</string>
 							<key>es</key>
 							<string>Me gustaría darle una valoración de 5 estrellas.</string>
 							<key>fr</key>
-							<string>J&apos;aimerais lui donner 5 étoiles.</string>
+							<string>J'aimerais lui donner 5 étoiles.</string>
 							<key>hi</key>
 							<string>मैं इसे 5-स्टार मूल्‍यांकन देना चाहता/चाहती हूं।</string>
 							<key>it</key>
-							<string>Voglio valutare l&apos;app con 5 stelle.</string>
+							<string>Voglio valutare l'app con 5 stelle.</string>
 							<key>ja</key>
 							<string>私は5つ星の評価を与えたいと思います。</string>
 							<key>ko</key>
@@ -4934,9 +4913,9 @@
 				<key>Enable</key>
 				<false/>
 				<key>RemindInterval</key>
-				<integer>1</integer>
+				<integer>3</integer>
 				<key>RemindWhenNotActive</key>
-				<real>0</real>
+				<integer>3</integer>
 			</dict>
 			<key>RemoteConfig</key>
 			<dict>
@@ -5391,6 +5370,18 @@
 					</array>
 					<key>StickerGroupList</key>
 					<array>
+						<dict>
+							<key>name</key>
+							<string>SuperBowl</string>
+							<key>showName</key>
+							<string>Super Bowl</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>BlackEmoji</string>
+							<key>showName</key>
+							<string>Black Emoji</string>
+						</dict>
 						<dict>
 							<key>name</key>
 							<string>FootballPlayer</string>
@@ -6189,6 +6180,8 @@
 						<key>state</key>
 						<integer>2</integer>
 					</dict>
+					<key>AutoSetKeyEnable</key>
+					<true/>
 					<key>ChargeAlert</key>
 					<dict>
 						<key>ChargingAlertEnabled</key>
@@ -6209,13 +6202,13 @@
 							<key>HoursFromFirstUse</key>
 							<integer>5</integer>
 							<key>MaxCountPerDay</key>
-							<integer>6</integer>
+							<integer>10</integer>
 							<key>MinCountPerDay</key>
 							<integer>3</integer>
 							<key>MinCountTriggerHour</key>
 							<integer>16</integer>
 							<key>MinIntervalByHour</key>
-							<real>0.2</real>
+							<real>0.20000000000000001</real>
 							<key>PackageNameExclude</key>
 							<array/>
 							<key>Show</key>
@@ -7118,6 +7111,8 @@
 						<key>state</key>
 						<integer>2</integer>
 					</dict>
+					<key>AutoSetKeyEnable</key>
+					<true/>
 					<key>ChargeAlert</key>
 					<dict>
 						<key>ChargingAlertEnabled</key>
@@ -7138,13 +7133,13 @@
 							<key>HoursFromFirstUse</key>
 							<integer>5</integer>
 							<key>MaxCountPerDay</key>
-							<integer>6</integer>
+							<integer>10</integer>
 							<key>MinCountPerDay</key>
 							<integer>3</integer>
 							<key>MinCountTriggerHour</key>
 							<integer>16</integer>
 							<key>MinIntervalByHour</key>
-							<real>0.2</real>
+							<real>0.20000000000000001</real>
 							<key>PackageNameExclude</key>
 							<array/>
 							<key>Show</key>
