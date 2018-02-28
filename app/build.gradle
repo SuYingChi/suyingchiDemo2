@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply from: 'tasks.gradle'
 
+def shouldIntegrateFirebase = false
+
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
@@ -142,6 +145,8 @@ android {
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "true"
             buildConfigField "int", "LOCKER_CHARGING_NO_ADS_START_VERSION", "6"
             signingConfig signingConfigs.grinReleaseConfig
+
+            shouldIntegrateFirebase = true
         }
 
         ecstasy {
@@ -278,5 +283,12 @@ dependencies {
 
     compile 'com.github.bumptech.glide:glide:4.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
+
+    grinCompile "com.google.firebase:firebase-core:11.8.0"
+    grinCompile "com.google.firebase:firebase-perf:11.8.0"
 }
 
+if (shouldIntegrateFirebase) {
+    apply plugin: 'com.google.firebase.firebase-perf'
+    apply plugin: 'com.google.gms.google-services'
+}

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1040768834623",
+    "firebase_url": "https://grin-196607.firebaseio.com",
+    "project_id": "grin-196607",
+    "storage_bucket": "grin-196607.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1040768834623:android:dd1495bddefe121a",
+        "android_client_info": {
+          "package_name": "com.keyboard.font.theme.emoji"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1040768834623-llkiq53bta5hfamplc3il8frq9p0q67g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHTqiBA21V6UaYpHUtVzv4-102ycvmFYw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
