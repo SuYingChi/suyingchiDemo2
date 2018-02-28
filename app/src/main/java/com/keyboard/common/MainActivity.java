@@ -67,7 +67,6 @@ import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
-import com.ihs.inputmethod.home.HomeActivity;
 import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.view.CustomProgressDrawable;
@@ -866,36 +865,40 @@ public class MainActivity extends HSAppCompatActivity {
             hasInitKeyboardBeforeOnCreate = true;
         }
 
-        Intent startThemeHomeIntent = new Intent(MainActivity.this, HomeActivity.class);
-        if (!TextUtils.isEmpty(needActiveThemePkName)) {
-            final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
+        try {
+            Intent startThemeHomeIntent = new Intent(MainActivity.this, Class.forName(getResources().getString(R.string.home_activity_name)));
+            if (!TextUtils.isEmpty(needActiveThemePkName)) {
+                final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
 
-            if (setThemeSucceed) {
-                startThemeHomeIntent.putExtra(ThemeHomeActivity.EXTRA_SHOW_TRIAL_KEYBOARD, true);
-            } else {
-                HSKeyboardTheme keyboardTheme = HSKeyboardThemeManager.getDownloadedThemeByPackageName(needActiveThemePkName);
-                if (keyboardTheme != null) {
-                    String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
-                    HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
+                if (setThemeSucceed) {
+                    startThemeHomeIntent.putExtra(ThemeHomeActivity.EXTRA_SHOW_TRIAL_KEYBOARD, true);
+                } else {
+                    HSKeyboardTheme keyboardTheme = HSKeyboardThemeManager.getDownloadedThemeByPackageName(needActiveThemePkName);
+                    if (keyboardTheme != null) {
+                        String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
+                        HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
+                    }
                 }
+
+                needActiveThemePkName = null;
             }
 
-            needActiveThemePkName = null;
-        }
+            int jumpCode = -1;
+            try {
+                jumpCode = getIntent().getIntExtra(SplashActivity.JUMP_TAG, -1);
+            } catch (Exception e) {
+                Crashlytics.log(getIntent().toString() + HSDeviceUtils.getDeviceModel() + " CJX");
+            }
+            if (jumpCode != -1) {
+                startThemeHomeIntent.putExtra(SplashActivity.JUMP_TAG, jumpCode);
+            }
 
-        int jumpCode = -1;
-        try {
-            jumpCode = getIntent().getIntExtra(SplashActivity.JUMP_TAG, -1);
-        } catch (Exception e) {
-            Crashlytics.log(getIntent().toString() + HSDeviceUtils.getDeviceModel() + " CJX");
+            startActivity(startThemeHomeIntent);
+            overridePendingTransition(0, 0);
+            finish();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        if (jumpCode != -1) {
-            startThemeHomeIntent.putExtra(SplashActivity.JUMP_TAG, jumpCode);
-        }
-
-        startActivity(startThemeHomeIntent);
-        overridePendingTransition(0, 0);
-        finish();
     }
 
     private void playManualButtonShowAnimation() {

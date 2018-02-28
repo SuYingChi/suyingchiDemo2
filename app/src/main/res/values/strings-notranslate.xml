@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="home_activity_name" translatable="false">com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity</string>
+
     <!--Key-->
     <string name="setting_key_more" translatable="false">setting_key_more</string>
 

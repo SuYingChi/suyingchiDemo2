@@ -167,9 +167,9 @@ android {
 
     sourceSets {
         bass {
-            java.srcDirs = ['src/adult/java', 'src/bass/java']
-            assets.srcDirs = ['src/adult/assets', 'src/bass/assets']
-            res.srcDirs = ['src/adult/res', 'src/bass/res']
+            java.srcDirs = ['src/instrument/java', 'src/bass/java']
+            assets.srcDirs = ['src/instrument/assets', 'src/bass/assets']
+            res.srcDirs = ['src/instrument/res', 'src/bass/res']
         }
     }
 
