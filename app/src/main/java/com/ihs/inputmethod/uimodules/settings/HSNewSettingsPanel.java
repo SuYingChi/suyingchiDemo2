@@ -229,14 +229,15 @@ public class HSNewSettingsPanel extends BasePanel {
                                         if(!TextUtils.isEmpty(address.getPostalCode())&&streetName.contains(address.getPostalCode())){
                                             locationText = streetName.substring(0,streetName.length()-address.getPostalCode().length()-2);
                                         }
+                                        isGeoCoderFetchSuccess = true;
                                     }else if(!TextUtils.isEmpty(featureName)){
                                         locationText = featureName+","+subLocality+","+locality+","+adminArea+","+country;
+                                        isGeoCoderFetchSuccess = true;
                                     }
                                     //如果GeoCoder请求完并成功，Geography还未请求完或者Geography请求完了但不成功则将GeoCoder的结果输入文本框
                                     if (isGeoCoderFetchFinish&&isGeoCoderFetchSuccess&&(!isGeographyFetchFinish||(isGeographyFetchFinish&&!isGeographyFetchSuccess))&& editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
                                         HSInputMethod.inputText(locationText);
                                         KCAnalytics.logEvent("keyboard_location_sendSuccess");
-                                        isGeoCoderFetchSuccess = true;
                                         HSLog.d("suyingchi", "240----onLocationFetched---------" + "isGeographyFetchFinish==" + isGeographyFetchFinish + "--------isGeographyFetchSuccess====" + isGeographyFetchSuccess +"isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"isGeoCoderFetchSuccess====="+isGeoCoderFetchSuccess);
                                     }
                                 }else {
@@ -263,7 +264,7 @@ public class HSNewSettingsPanel extends BasePanel {
                     @Override
                     public void onGeographyInfoFetched(boolean success, HSLocationManager locationManager) {
                         isGeographyFetchFinish = true;
-                        if (isGeoCoderFetchFinish) {
+                        if (isGeoCoderFetchFinish&&isGeoCoderFetchSuccess) {
                             HSLog.d("suyingchi", "267------onGeographyInfoFetched---------" + "isGeographyFetchFinish==" + isGeographyFetchFinish + "--------isGeographyFetchSuccess====" + isGeographyFetchSuccess +"isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"isGeoCoderFetchSuccess====="+isGeoCoderFetchSuccess);
                             return;
                         }
@@ -286,12 +287,13 @@ public class HSNewSettingsPanel extends BasePanel {
                                     HSLog.d("suyingchi", "286-----onGeographyInfoFetched---------" + "isGeographyFetchFinish==" + isGeographyFetchFinish + "--------isGeographyFetchSuccess====" + isGeographyFetchSuccess +"isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"isGeoCoderFetchSuccess====="+isGeoCoderFetchSuccess);
                                     return;
                                 }
+                            }else {
+                                isGeographyFetchSuccess = true;
                             }
                             //如果Geography请求完并成功，GeoCoder还未请求完或者GeoCoder请求完了但不成功则将Geography的结果输入文本框
                             if (isGeographyFetchFinish&&isGeographyFetchSuccess&&(!isGeoCoderFetchFinish||(isGeoCoderFetchFinish&&!isGeoCoderFetchSuccess)) && editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
                                 HSInputMethod.inputText(Neighborhood + "," + subLocality + "," + city + "," + country);
                                 KCAnalytics.logEvent("keyboard_location_sendSuccess");
-                                isGeographyFetchSuccess = true;
                                 HSLog.d("suyingchi", "295-----onGeographyInfoFetched---------" + "isGeographyFetchFinish==" + isGeographyFetchFinish + "--------isGeographyFetchSuccess====" + isGeographyFetchSuccess +"isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"isGeoCoderFetchSuccess====="+isGeoCoderFetchSuccess);
                             }
                         } else {
