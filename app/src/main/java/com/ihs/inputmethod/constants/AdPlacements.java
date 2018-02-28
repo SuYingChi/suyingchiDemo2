@@ -20,5 +20,5 @@ public class AdPlacements {
 
     // Interstitial
     public static final String INTERSTITIAL_SPRING = "Spring";
-    public static final String INTERSTITIAL_APP_OPEN = "Spring";
+    public static final String INTERSTITIAL_SUMMER = "Summer";
 }
