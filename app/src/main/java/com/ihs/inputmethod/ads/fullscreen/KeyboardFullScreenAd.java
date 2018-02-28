@@ -121,14 +121,12 @@ public class KeyboardFullScreenAd {
 
     }
 
-    private static final String ONE_SESSION_ADPLACEMENT = AdPlacements.INTERSTITIAL_SPRING;
-
     /**
      * 这个ad 一个session只出现一次
      */
     public static void loadSessionOneTimeAd() {
         if (canShowSessionAd && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            KCInterstitialAd.load(ONE_SESSION_ADPLACEMENT);
+            KCInterstitialAd.load(AdPlacements.INTERSTITIAL_SUMMER);
             HSLog.e("load full ad");
         }
     }
@@ -155,7 +153,7 @@ public class KeyboardFullScreenAd {
     public static void showSessionOneTimeAd(String from, OneTimeAdListener listener) {
         HSLog.e("show full ad");
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            List<AcbInterstitialAd> fetch = AcbInterstitialAdManager.fetch(HSApplication.getContext(), ONE_SESSION_ADPLACEMENT, 1);
+            List<AcbInterstitialAd> fetch = AcbInterstitialAdManager.fetch(HSApplication.getContext(), AdPlacements.INTERSTITIAL_SUMMER, 1);
             if (!fetch.isEmpty()) {
                 AcbInterstitialAd acbInterstitialAd = fetch.get(0);
                 acbInterstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {

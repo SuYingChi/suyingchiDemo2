@@ -319,6 +319,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         }
         // 全屏插页广告
         AcbInterstitialAdManager.getInstance().activePlacementInProcess(AdPlacements.INTERSTITIAL_SPRING);
+        AcbInterstitialAdManager.getInstance().activePlacementInProcess(AdPlacements.INTERSTITIAL_SUMMER);
         // Native广告
         AcbNativeAdManager.getInstance().activePlacementInProcess(AdPlacements.NATIVE_THEME_TRY);
         AcbNativeAdManager.getInstance().activePlacementInProcess(AdPlacements.NATIVE_BOOST_DONE);

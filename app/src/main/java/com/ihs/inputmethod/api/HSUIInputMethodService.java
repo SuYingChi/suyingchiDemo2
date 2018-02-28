@@ -199,12 +199,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
             return false;
         }
 
-        boolean adShown = KCInterstitialAd.show(AdPlacements.INTERSTITIAL_APP_OPEN, null, null, true);
+        boolean adShown = KCInterstitialAd.show(AdPlacements.INTERSTITIAL_SUMMER, null, null, true);
 
         if (adShown) {
             KCFeatureControlUtils.increaseCountToday(this, "AppOpen");
         } else {
-            KCInterstitialAd.load(AdPlacements.INTERSTITIAL_APP_OPEN);
+            KCInterstitialAd.load(AdPlacements.INTERSTITIAL_SUMMER);
         }
 
         return adShown;
