@@ -196,7 +196,7 @@ public class HSNewSettingsPanel extends BasePanel {
                                     String streetName = address.getAddressLine(0);
                                     if (TextUtils.isEmpty(country) || TextUtils.isEmpty(adminArea) || TextUtils.isEmpty(locality) || (TextUtils.isEmpty(featureName) && TextUtils.isEmpty(streetName))) {
                                         if(!isGeographyFetchFinish || !isGeoCoderFetchFinish){
-                                            HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------230");
+                                            HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------199");
                                             return;
                                         }
                                         long endTime = System.currentTimeMillis();
@@ -208,7 +208,7 @@ public class HSNewSettingsPanel extends BasePanel {
                                             KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
                                         }
                                         isGeoCoderFetchFinish = true;
-                                        HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------242");
+                                        HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------211");
                                         return;
                                     }
                                     if (TextUtils.isEmpty(featureName) && !TextUtils.isEmpty(streetName)&&streetName.contains(locality + subLocality)) {
@@ -223,7 +223,7 @@ public class HSNewSettingsPanel extends BasePanel {
                                         }
                                         KCAnalytics.logEvent("keyboard_location_sendSuccess");
                                         isGeoCoderFetchFinish = true;
-                                        HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------212");
+                                        HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------225");
                                     } else {
                                         if(!isGeographyFetchFinish || !isGeoCoderFetchFinish){
                                             return;
@@ -237,11 +237,11 @@ public class HSNewSettingsPanel extends BasePanel {
                                             KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
                                         }
                                         isGeoCoderFetchFinish = true;
-                                        HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------226");
+                                        HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------240");
                                     }
                                 }else {
                                     if(!isGeographyFetchFinish || !isGeoCoderFetchFinish){
-                                        HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------230");
+                                        HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------244");
                                         return;
                                     }
                                     long endTime = System.currentTimeMillis();
@@ -253,7 +253,7 @@ public class HSNewSettingsPanel extends BasePanel {
                                         KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
                                     }
                                     isGeoCoderFetchFinish = true;
-                                    HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------242");
+                                    HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------256");
                                 }
 
                             }
@@ -264,7 +264,7 @@ public class HSNewSettingsPanel extends BasePanel {
                     @Override
                     public void onGeographyInfoFetched(boolean success, HSLocationManager locationManager) {
                         if (isGeoCoderFetchFinish) {
-                            HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------253");
+                            HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------267");
                             return;
                         }
                         if (success) {
@@ -285,14 +285,14 @@ public class HSNewSettingsPanel extends BasePanel {
                                     KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
                                 }
                                 isGeographyFetchFinish = true;
-                                HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------281");
+                                HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------288");
                                 return;
                             }
                             if (!isGeographyFetchFinish&&!isGeoCoderFetchFinish && editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
                                 HSInputMethod.inputText(Neighborhood + "," + subLocality + "," + city + "," + country);
                                 KCAnalytics.logEvent("keyboard_location_sendSuccess");
                                 isGeographyFetchFinish = true;
-                                HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------268");
+                                HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------295");
                             }else {
                                 if(!isGeographyFetchFinish || !isGeoCoderFetchFinish){
                                     return;
@@ -306,11 +306,11 @@ public class HSNewSettingsPanel extends BasePanel {
                                     KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
                                 }
                                 isGeographyFetchFinish = true;
-                                HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------281");
+                                HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------309");
                             }
                         } else {
                             if(!isGeographyFetchFinish || !isGeoCoderFetchFinish){
-                                HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------286");
+                                HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------313");
                                 return;
                             }
                             long endTime = System.currentTimeMillis();
@@ -322,7 +322,7 @@ public class HSNewSettingsPanel extends BasePanel {
                                 KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
                             }
                             isGeographyFetchFinish = true;
-                            HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------298");
+                            HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------325");
                         }
                     }
                 });
