@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.kc.utils.KCAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.feature.common.Utils;
 import com.ihs.inputmethod.feature.common.ViewUtils;
@@ -23,6 +22,7 @@ import com.ihs.inputmethod.uimodules.ui.customize.WallpaperInfo;
 import com.ihs.inputmethod.uimodules.ui.customize.WallpaperPreviewActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.util.WallpaperDownloadEngine;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LoadingProgressBar;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,11 +49,14 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
     private GridLayoutManager mLayoutManager;
     private FooterViewHolder mFooterViewHolder;
 
+    private int mTotalSize;
+
     private WallpaperDownloadEngine.OnLoadWallpaperListener mListener = new WallpaperDownloadEngine.OnLoadWallpaperListener() {
         @Override
-        public void onLoadFinished(List<WallpaperInfo> wallpaperInfoList) {
+        public void onLoadFinished(List<WallpaperInfo> wallpaperInfoList, int totalSize) {
 //            int lastSize = mDataSet.size();
             mDataSet.addAll(wallpaperInfoList);
+            mTotalSize = totalSize;
             notifyDataSetChanged();
 //            notifyItemRangeInserted(lastSize, wallpaperInfoList.size());
         }
@@ -116,7 +119,11 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
             case WALLPAPER_IMAGE_VIEW:
                 View wallpaperImageView = LayoutInflater.from(parent.getContext()).inflate(R.layout.online_wallpaper_image_item, parent, false);
                 wallpaperImageView.setOnClickListener(this);
-                return new ImageViewHolder(wallpaperImageView);
+                ImageViewHolder imageViewHolder = new ImageViewHolder(wallpaperImageView);
+                RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) imageViewHolder.itemView.getLayoutParams();
+                layoutParams.width = (parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight() - layoutParams.leftMargin * 2 - layoutParams.rightMargin * 2) / 2;
+                layoutParams.height = (int) (layoutParams.width / 1.125);
+                return imageViewHolder;
             case WALLPAPER_FOOTER_VIEW_LOAD_MORE:
                 mFooterViewHolder = new FooterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.load_more_auto, parent, false));
                 return mFooterViewHolder;
@@ -157,12 +164,15 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public int getItemCount() {
+        if (mTotalSize > 0 && mDataSet.size() == mTotalSize) {
+            return mTotalSize;
+        }
         return mDataSet.size() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == mDataSet.size()) {
+        if (position == mDataSet.size() && (mTotalSize == 0 || position != mTotalSize)) {
             return WALLPAPER_FOOTER_VIEW_LOAD_MORE;
         }
         return WALLPAPER_IMAGE_VIEW;

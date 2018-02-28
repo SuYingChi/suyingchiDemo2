@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.uimodules.ui.customize.view.CategoryInfo;
 
 import org.json.JSONObject;
@@ -83,6 +84,15 @@ public class WallpaperInfo implements Parcelable {
         WallpaperInfo info = new WallpaperInfo();
         info.mType = WALLPAPER_TYPE_BUILT_IN;
         info.mBuiltInDrawableId = builtInWallpaperResId;
+        return info;
+    }
+
+    public static WallpaperInfo newOnlineWallpaper(String id) {
+        WallpaperInfo info = new WallpaperInfo();
+        info.mType = WALLPAPER_TYPE_ONLINE;
+        String baseUrl = HSConfig.optString("", "Application", "Server", "WallpaperBaseURL");
+        info.mSource = baseUrl + "/" + id + ".jpg";
+        info.mThumbnailUrl = baseUrl + "/" + id + "_540x480.jpg";
         return info;
     }
 
@@ -297,7 +307,6 @@ public class WallpaperInfo implements Parcelable {
 //        wallpaperProto.thumbnailUrl = mThumbnailUrl;
 //        return wallpaperProto;
 //    }
-
     public int getType() {
         return mType;
     }

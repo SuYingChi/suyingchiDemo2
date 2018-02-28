@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="custom_theme_activity_bg">#282832</color>
+    <color name="custom_theme_fragment_bg">#282832</color>
+    <color name="custom_theme_header_bg">#32323c</color>
+    <color name="custom_theme_header_text">#ffffff</color>
+    <color name="custom_theme_preview_placeholder">#32323c</color>
+    <color name="custom_theme_font_bg">#46464e</color>
+
     <color name="theme_text_title">#dc000000</color>
     <color name="theme_card_theme_name">#000000</color>
     <color name="theme_activity_bg">#eeeeee</color>
@@ -38,7 +45,6 @@
     <color name="gif_panel_search_bar_background_light">#A6ACAF</color>
     <color name="gif_panel_search_button_color">#FFFFFF</color>
     <color name="gif_panel_search_button_color_light">#38474F</color>
-    <color name="custom_theme_preview_placeholder">#32323c</color>
 
     <!-- Color used in Settings -->
     <color name="settings_main_title_bg_color">#263238</color>

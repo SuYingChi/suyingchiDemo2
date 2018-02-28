@@ -2,9 +2,21 @@
 
     <!-- Base application theme. -->
 
-    <style name="CustomProgressDialog" parent="@style/CustomDialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <!-- Customize your theme here. -->
+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -17,6 +29,11 @@
         <item name="android:windowFullscreen">true</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+    <style name="CustomProgressDialog" parent="@style/CustomDialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="LockerEnableTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -74,6 +91,15 @@
     </style>
 
 
+    <style name="NativeInterstitialActivity" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+    <style name="MD_ProgressBar" parent="Widget.MaterialProgressBar.ProgressBar">
+        <item name="android:progressDrawable">@color/white_text_color</item>
+    </style>
+
+
     <style name="SettingsCategoryTitle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -126,8 +152,7 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="NoPreviewTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
-    </style>
+    <style name="NoPreviewTheme" parent="@style/Theme.AppCompat.Light.NoActionBar"></style>
 
     <style name="MainGuideBgStyle">
         <item name="android:layout_width">wrap_content</item>
@@ -146,7 +171,6 @@
         <item name="android:padding">10dp</item>
     </style>
 
-
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@color/white</item>
         <item name="tabIndicatorHeight">2dp</item>
@@ -157,6 +181,7 @@
         <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
         <item name="tabSelectedTextColor">@color/abc_primary_text_material_dark</item>
     </style>
+
     <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/abc_secondary_text_material_dark</item>
@@ -169,13 +194,4 @@
         <item name="android:padding">@dimen/camera_capture_view_padding</item>
     </style>
 
-    <!-- Base application theme. -->
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <!--ActionBar的颜色-->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-
-    </style>
 </resources>

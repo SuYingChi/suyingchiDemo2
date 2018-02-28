@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSCommonHeaderView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/custom_theme_header_bg"
+    app:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/custom_theme_title_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical|left"
+        android:minWidth="0dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/cancel"
+        android:textAllCaps="true"
+        android:textColor="@drawable/custom_theme_head_common_button_selector"
+        android:textSize="14sp"
+        app:typeface="@string/typeface_asap_medium" />
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/custom_theme_title_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/custom_theme_title"
+        android:textColor="@color/black_standard"
+        android:textSize="22sp"
+        app:typeface="@string/typeface_brandon_text_black" />
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/custom_theme_title_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical|right"
+        android:minWidth="0dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/next"
+        android:textAllCaps="true"
+        android:textColor="@drawable/custom_theme_head_common_button_selector"
+        android:textSize="14sp"
+        app:typeface="@string/typeface_asap_medium" />
+
+</com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSCommonHeaderView>

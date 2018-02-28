@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:launcher="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/grid_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/common_item_bg">
+
+    <com.ihs.inputmethod.uimodules.ui.customize.view.HorizontalBannerImageView
+        android:id="@+id/call_flash_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_aspectRatio="60%"
+        app:layout_widthPercent="100%"
+        launcher:aspectRatioOverride="0.5625"
+        launcher:round_left_bottom_corner_radius="@dimen/card_round_corner_radius"
+        launcher:round_left_top_corner_radius="@dimen/card_round_corner_radius"
+        launcher:round_right_bottom_corner_radius="@dimen/card_round_corner_radius"
+        launcher:round_right_top_corner_radius="@dimen/card_round_corner_radius" />
+
+    <com.acb.call.views.ThemePreviewWindow
+        android:id="@+id/flash_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.acb.call.views.InCallActionView
+        android:id="@+id/in_call_view"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</android.support.percent.PercentFrameLayout>

@@ -39,8 +39,6 @@ import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
-import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
@@ -765,25 +763,28 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
 
         Intent startThemeHomeIntent = activity.getIntent();
-        startThemeHomeIntent.setClass(HSApplication.getContext(), ThemeHomeActivity.class);
+        try {
+            startThemeHomeIntent.setClass(HSApplication.getContext(), Class.forName(HSApplication.getContext().getResources().getString(R.string.home_activity_name)));
+            if (!TextUtils.isEmpty(needActiveThemePkName)) {
+                final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
 
-        if (!TextUtils.isEmpty(needActiveThemePkName)) {
-            final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
-
-            if (setThemeSucceed) {
-                startThemeHomeIntent.putExtra(ThemeHomeActivity.EXTRA_SHOW_TRIAL_KEYBOARD, true);
-            } else {
-                HSKeyboardTheme keyboardTheme = HSKeyboardThemeManager.getDownloadedThemeByPackageName(needActiveThemePkName);
-                if (keyboardTheme != null) {
-                    String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
-                    HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
+                if (setThemeSucceed) {
+                    startThemeHomeIntent.putExtra(ThemeHomeActivity.EXTRA_SHOW_TRIAL_KEYBOARD, true);
+                } else {
+                    HSKeyboardTheme keyboardTheme = HSKeyboardThemeManager.getDownloadedThemeByPackageName(needActiveThemePkName);
+                    if (keyboardTheme != null) {
+                        String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
+                        HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
+                    }
                 }
+
             }
 
+            activity.overridePendingTransition(0, 0);
+            activity.startActivity(startThemeHomeIntent);
+            activity.finish();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-
-        activity.overridePendingTransition(0, 0);
-        activity.startActivity(startThemeHomeIntent);
-        activity.finish();
     }
 }

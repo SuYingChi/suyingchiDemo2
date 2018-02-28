@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_activity_name" translatable="false">com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity</string>
+
+    <!--Key-->
+    <string name="setting_key_more" translatable="false">setting_key_more</string>
+
+    <!--Preference key-->
+    <string name="setting_key_call_assistant" translatable="false">setting_key_call_assistant</string>
+    <string name="locker_switcher" translatable="false">locker_screen_enabled</string>
+
+    <!--Copy-->
+    <string name="setting_item_correction" translatable="false">@string/setting_auto_correction</string>
+    <string name="dialog_agree" translatable="false">@string/allow</string>
+    <string name="dialog_disagree" translatable="false">@string/cancel</string>
+
+    <string name="setting_key_sms_assistant" translatable="false">setting_key_sms_assistant</string>
+    <string name="smart_locker_app_package_name" translatable="false">com.wallpaper.theme.privacy.smart.lock.screen</string>
+    <string name="pref_key_app_suggestion_enabled">pref_key_app_suggestion_enabled</string>
+
+    <!--built in theme-->
+    <string name="keyboard_theme_custom" translatable="false">Custom</string>
+    <string name="keyboard_theme_custom2" translatable="false">Custom2</string>
+    <string name="keyboard_theme_dark" translatable="false">Dark</string>
+    <string name="keyboard_theme_grey" translatable="false">Grey</string>
+    <string name="keyboard_theme_classic" translatable="false">Classic</string>
+    <string name="keyboard_theme_freshair" translatable="false">Freshair</string>
+    <string name="keyboard_theme_pop" translatable="false">Pop</string>
+    <string name="keyboard_theme_electric" translatable="false">electric</string>
+    <string name="keyboard_theme_wood" translatable="false">wood</string>
+    <string name="keyboard_theme_font" translatable="false">font</string>
+    <string name="keyboard_theme_doddle" translatable="false">doddle</string>
+    <string name="keyboard_theme_bit" translatable="false">bit</string>
+    <!--built in theme-->
+
+
+    <!--No need-->
+    <string name="unlock_theme_element_via_watch_video">Watch Video to Unlock</string>
+
+    <string name="free_slots_used_up">Free Slots Used Up</string>
+    <string name="free_slots_tip">You can create a maximum of %1$d free themes. Unlock unlimited slots to create more themes.</string>
+    <string name="free_slots_price">Unlimited slots for %1$s</string>
+    <string name="free_slots_via_watch_video">Watch Video to Unlock One Slot</string>
+    <string name="uninstall_complete">Uninstall Completed</string>
+    <string name="app_uninstalled_name">%1$s uninstalled</string>
+    <string name="app_recommended">Recommended for you:</string>
+    <string name="app_free_storage">You now have %1$s more free storage.</string>
+
+    <string name="lucky_game_title">Lucky</string>
+    <string name="lucky_game_award_no_network_description">No network connection!</string>
+    <string name="lucky_game_award_chances_receive_btn">ACCEPT</string>
+    <string name="lucky_game_award_theme_action">DOWNLOAD</string>
+    <string name="lucky_game_chance_restore_timer">More grabs in %1$s</string>
+    <string name="lucky_game_award_wallpaper_description">Wonderful Wallpaper!</string>
+    <string name="lucky_game_award_wallpaper_action">SET AS WALLPAPER</string>
+    <string name="lucky_game_award_chances_description">Congratulations! +3 grabs!</string>
+    <string name="lucky_game_award_theme_description">Found a new theme!</string>
+    <string name="lucky_game_chance_counter">Grabs: %1$s</string>
+    <string name="lucky_game_award_boom_description">"GRABS: "</string>
+    <string name="lucky_game_award_ad_related_title">You’ve won a prize!</string>
+    <string name="launcher_widget_lucky_title">Lucky</string>
+    <string name="lucky_game_award_empty_action">TRY AGAIN</string>
+    <string name="no_network_connection">No network connection!</string>
+</resources>

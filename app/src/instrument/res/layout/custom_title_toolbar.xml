@@ -1,0 +1,27 @@
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    app:popupTheme="@style/AppBaseTheme.PopupOverlay">
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#2c2c2c"
+        android:textSize="22.3sp"
+        app:typeface="@string/typeface_brandon_text_black" />
+
+    <ImageView
+        android:id="@+id/download_btn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="right"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="13dp"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_download" />
+
+</android.support.v7.widget.Toolbar>

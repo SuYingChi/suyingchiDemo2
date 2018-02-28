@@ -6,11 +6,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 
 /**
  * Created by dsapphire on 16/5/19.
@@ -20,8 +20,8 @@ public class HSCommonHeaderView extends RelativeLayout {
     Drawable buttonCancelLeftDrawable = null;
     Drawable buttonOKRightDrawable = null;
     Handler handler = new Handler(Looper.getMainLooper());
-    private Button textCancel;
-    private Button textOK;
+    private TextView textCancel;
+    private TextView textOK;
     private TextView textHead;
     private String titleCancel;
     private String titleOK;
@@ -54,8 +54,15 @@ public class HSCommonHeaderView extends RelativeLayout {
             return;
         }
         textCancel = findViewById(R.id.custom_theme_title_cancel);
-        textHead = findViewById(R.id.custom_theme_title_title);
+        textHead = (TextView) findViewById(R.id.custom_theme_title_title);
         textOK = findViewById(R.id.custom_theme_title_ok);
+
+        if (textCancel.getBackground() == null) {
+            textCancel.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
+        }
+        if (textOK.getBackground() == null) {
+            textOK.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
+        }
 //        textCancel.setAllCaps(false);
 //        textHead.setAllCaps(false);
 //        textOK.setAllCaps(false);

@@ -19,12 +19,12 @@
             android:layout_height="250dp">
 
             <!--<com.facebook.drawee.view.SimpleDraweeView-->
-                <!--android:id="@+id/keyboard_theme_screenshot"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--app:actualImageScaleType="focusCrop"-->
-                <!--app:placeholderImage="@drawable/image_placeholder"-->
-                <!--app:roundAsCircle="false" />-->
+            <!--android:id="@+id/keyboard_theme_screenshot"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--app:actualImageScaleType="focusCrop"-->
+            <!--app:placeholderImage="@drawable/image_placeholder"-->
+            <!--app:roundAsCircle="false" />-->
             <ImageView
                 android:id="@+id/keyboard_theme_screenshot"
                 android:layout_width="match_parent"
@@ -39,32 +39,32 @@
                 android:layout_height="36dp"
                 android:textSize="24sp"
                 android:layout_margin="25dp"
-               />
+                />
 
         </FrameLayout>
 
         <!--<TextView-->
-            <!--android:id="@+id/theme_name"-->
-            <!--android:layout_marginLeft="@dimen/theme_activity_horizontal_margin"-->
-            <!--android:paddingLeft="@dimen/theme_store_widget_gap"-->
-            <!--android:layout_marginTop="@dimen/theme_activity_vertical_margin"-->
-            <!--android:text="Strawberry Themes"-->
-            <!--android:textSize="16sp"-->
-            <!--style="@style/UiModuleThemeTitleTextView"-->
-            <!--android:visibility="gone"-->
-             <!--/>-->
+        <!--android:id="@+id/theme_name"-->
+        <!--android:layout_marginLeft="@dimen/theme_activity_horizontal_margin"-->
+        <!--android:paddingLeft="@dimen/theme_store_widget_gap"-->
+        <!--android:layout_marginTop="@dimen/theme_activity_vertical_margin"-->
+        <!--android:text="Strawberry Themes"-->
+        <!--android:textSize="16sp"-->
+        <!--style="@style/UiModuleThemeTitleTextView"-->
+        <!--android:visibility="gone"-->
+        <!--/>-->
 
         <!--<TextView-->
-            <!--android:id="@+id/theme_desc"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="@dimen/theme_activity_horizontal_margin"-->
-            <!--android:paddingLeft="@dimen/theme_store_widget_gap"-->
-            <!--android:layout_marginTop="3dp"-->
-            <!--android:text="Themes Description"-->
-            <!--android:textColor="#6a6a6a"-->
-            <!--android:textSize="14sp" -->
-            <!--android:visibility="gone"/>-->
+        <!--android:id="@+id/theme_desc"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="@dimen/theme_activity_horizontal_margin"-->
+        <!--android:paddingLeft="@dimen/theme_store_widget_gap"-->
+        <!--android:layout_marginTop="3dp"-->
+        <!--android:text="Themes Description"-->
+        <!--android:textColor="#6a6a6a"-->
+        <!--android:textSize="14sp" -->
+        <!--android:visibility="gone"/>-->
 
 
         <LinearLayout

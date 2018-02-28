@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources >
+<resources>
     <string name="low_memory_tip">Low memory,please clean your memory!</string>
     <string name="save_theme_failed">Sorry,save theme failed!</string>
     <string name="loading">Loading…</string>
@@ -23,4 +23,12 @@
     <string name="disable_app_suggestion_msg">You can quickly open your recent apps here. Are you sure to disable it?</string>
 
     <string name="item_sticker_more_coming">More stickers are coming soon</string>
+
+    <string name="home_nav_keyboard">Keyboard Theme</string>
+    <string name="home_nav_stickers">Stickers</string>
+    <string name="home_nav_wallpaper">Wallpaper</string>
+    <string name="home_nav_call_flash">Call Flash</string>
+    <string name="home_nav_font">Font</string>
+    <string name="home_nav_my_download">My download</string>
+    <string name="home_nav_settings">Settings</string>
 </resources>

@@ -829,7 +829,6 @@ public class MainActivity extends HSAppCompatActivity {
         }
     }
 
-
     private void playManualButtonShowAnimation() {
         AnimatorSet set = new AnimatorSet();
         set.playTogether(

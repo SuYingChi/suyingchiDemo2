@@ -46,6 +46,12 @@ android {
             storeFile file('KeyboardArts')
             storePassword "zdhszyzs"
         }
+        bassReleaseConfig {
+            keyAlias "keyboardarts"
+            keyPassword "zdhszyzs"
+            storeFile file('KeyboardArts')
+            storePassword "zdhszyzs"
+        }
     }
     buildTypes {
         //设置Deubug和Release下的编译模式，即proguard文件路径
@@ -108,7 +114,8 @@ android {
             versionCode 59
             manifestPlaceholders = [APPLY_SCHEME: "rainbowKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
-            buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "true" //MainActivity开启时显示video，只有color特殊
+            buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "true"
+            //MainActivity开启时显示video，只有color特殊
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
             signingConfig signingConfigs.colorReleaseConfig
         }
@@ -146,6 +153,24 @@ android {
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
         }
+
+        bass {
+            applicationId = "com.keyboard.adultkeyboard"
+            versionCode 1
+            versionName "1.0.0"
+            manifestPlaceholders = [APPLY_SCHEME: "adultkeyboard"]
+            buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
+            buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
+            buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
+        }
+    }
+
+    sourceSets {
+        bass {
+            java.srcDirs = ['src/instrument/java', 'src/bass/java']
+            assets.srcDirs = ['src/instrument/assets', 'src/bass/assets']
+            res.srcDirs = ['src/instrument/res', 'src/bass/res']
+        }
     }
 
     packagingOptions {
@@ -176,6 +201,7 @@ dependencies {
     smileyImplementation "net.appcloudbox.goldeneye:2:2018.01.22.002"
     colorImplementation "net.appcloudbox.goldeneye:72:2018.01.23.001"
     grinImplementation "net.appcloudbox.goldeneye:243:2018.02.27.001"
+    bassImplementation "net.appcloudbox.goldeneye:243:2018.02.27.001"
     // Autopilot
     compile "net.appcloudbox.autopilot:libAutoPilot.gm:5.0.5.gm"
 
@@ -239,11 +265,11 @@ dependencies {
     compile "com.ihandy.device:device-accessibility-task$LIB_DEVICE_VERSION"
     compile 'com.annimon:stream:1.1.7'
     compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
-    compile (name: 'ihs/libPermissionAcquire/libpermissionrequest', ext: 'aar')
+    compile(name: 'ihs/libPermissionAcquire/libpermissionrequest', ext: 'aar')
 
     //callassistant
-    compile (name: 'libColorPhone/libColorPhone', ext: 'aar')
-    compile (name: 'libColorPhone/libNotificationService', ext: 'aar')
+    compile(name: 'libColorPhone/libColorPhone', ext: 'aar')
+    compile(name: 'libColorPhone/libNotificationService', ext: 'aar')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //----
 

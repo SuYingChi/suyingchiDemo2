@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_keyboard"
+            android:icon="@drawable/ic_nav_keyboard_theme"
+            android:title="@string/home_nav_keyboard" />
+        <item
+            android:id="@+id/nav_stickers"
+            android:icon="@drawable/ic_nav_stickers"
+            android:title="@string/home_nav_stickers" />
+        <item
+            android:id="@+id/nav_wallpaper"
+            android:icon="@drawable/ic_nav_wallpaper"
+            android:title="@string/home_nav_wallpaper" />
+        <item
+            android:id="@+id/nav_call_flash"
+            android:icon="@drawable/ic_nav_call_flash"
+            android:title="@string/home_nav_call_flash" />
+        <item
+            android:id="@+id/nav_call_font"
+            android:icon="@drawable/ic_nav_font"
+            android:title="@string/home_nav_font" />
+        <item
+            android:id="@+id/nav_call_my_download"
+            android:icon="@drawable/ic_nav_my_download"
+            android:title="@string/home_nav_my_download" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_nav_settings"
+            android:title="@string/home_nav_settings" />
+    </group>
+</menu>

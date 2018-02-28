@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="50dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/tv_enable_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/button_activation_tip"
+        android:drawableRight="@drawable/tv_enable_keyboard_arrow"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingStart="16dp"
+        android:text="@string/tv_enable_keyboard_tip"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:typeface="sans"
+        android:visibility="visible" />
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/create_theme"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/create_theme_bg"
+        android:drawableRight="@drawable/tv_enable_keyboard_arrow"
+        android:drawableTint="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textSize="16sp"
+        android:text="@string/theme_store_background_title"
+        android:textColor="#ffffff"
+        app:typeface="@string/typeface_asap_regular" />
+
+</FrameLayout>
