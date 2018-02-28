@@ -161,6 +161,11 @@ public class HSNewSettingsPanel extends BasePanel {
                     @SuppressLint("StaticFieldLeak")
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
+                        if(locationManager.getLocation()==null){
+                            Toast.makeText(HSApplication.getContext(), R.string.request_null_LaLongitude_fail, Toast.LENGTH_LONG).show();
+                            KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
+                            return;
+                        }
                         new AsyncTask<Location, Void, Address>() {
                             @Override
                             protected Address doInBackground(Location... locations) {
