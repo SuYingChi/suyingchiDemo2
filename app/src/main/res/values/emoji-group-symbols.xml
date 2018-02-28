@@ -1,2 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <array name="emoji_symbols" format="string">
+        <item>U+2460</item>
+        <item>U+2461</item>
+        <item>U+2462</item>
+        <item>U+2463</item>
+        <item>U+2464</item>
+        <item>U+2465</item>
+        <item>U+2466</item>
+        <item>U+2467</item>
+        <item>U+2468</item>
+        <item>U+2469</item>
+        <item>U+00ae</item>
+        <item>U+00a9</item>
+        <item>U+2122</item>
+        <item>U+2716</item>
+        <item>U+2195</item>
+        <item>U+2197</item>
+        <item>U+2198</item>
+        <item>U+2199</item>
+        <item>U+2196</item>
+        <item>U+2194</item>
+        <item>U+25c0</item>
+        <item>U+25b6</item>
+        <item>U+25aa</item>
+        <item>U+203c</item>
+        <item>U+2660</item>
+        <item>U+2665</item>
+        <item>U+2663</item>
+        <item>U+2666</item>
+        <item>U+21a9</item>
+        <item>U+21aa</item>
+    </array>
+</resources>

@@ -219,9 +219,9 @@ public class HSUIApplication extends HSInputMethodApplication {
             @Override
             public void run() {
                 HSDirectoryManager.getInstance().init(HSApplication.getContext());
-                HSChargingScreenManager.init(true, AdPlacements.EXPRESS_CABLE, AdPlacements.NATIVE_CABLE_REPORT);
+                HSChargingScreenManager.init(true, AdPlacements.EXPRESS_CABLE, AdPlacements.EXPRESS_CABLE);
                 FloatWindowCompat.initLockScreen(HSUIApplication.this);
-                AppSuggestionManager.getInstance().init(true, HSConfig.optString(AdPlacements.NATIVE_LUMEN,"Application","AppSuggestion","AdPlacement"));
+                AppSuggestionManager.getInstance().init(true, AdPlacements.EXPRESS_LUMEN);
                 setChargingFunctionStatus();
                 initLockerChargingNoAdConfig();
                 registerNotificationEvent();
@@ -328,6 +328,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         AcbNativeAdManager.getInstance().activePlacementInProcess(AdPlacements.NATIVE_LUMEN);
         // Express广告
         AcbExpressAdManager.getInstance().activePlacementInProcess(AdPlacements.EXPRESS_LUMEN);
+        AcbExpressAdManager.getInstance().activePlacementInProcess(AdPlacements.EXPRESS_CABLE);
     }
 
     private void registerNotificationEvent() {
