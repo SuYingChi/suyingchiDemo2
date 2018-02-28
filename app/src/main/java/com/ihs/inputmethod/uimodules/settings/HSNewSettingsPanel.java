@@ -168,7 +168,7 @@ public class HSNewSettingsPanel extends BasePanel {
                                 double latitude = location.getLatitude();
                                 double longitude = location.getLongitude();
                                 try {
-                                    addressList = new Geocoder(HSApplication.getContext(), Locale.getDefault()).getFromLocation(latitude, longitude, 1);
+                                    addressList = new Geocoder(HSApplication.getContext(), getCurrentLocale()).getFromLocation(latitude, longitude, 1);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -195,9 +195,23 @@ public class HSNewSettingsPanel extends BasePanel {
                                     String subLocality = address.getSubLocality();
                                     String streetName = address.getAddressLine(0);
                                     if (TextUtils.isEmpty(country) || TextUtils.isEmpty(adminArea) || TextUtils.isEmpty(locality) || (TextUtils.isEmpty(featureName) && TextUtils.isEmpty(streetName))) {
+                                        if(!isGeographyFetchFinish || !isGeoCoderFetchFinish){
+                                            HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------230");
+                                            return;
+                                        }
+                                        long endTime = System.currentTimeMillis();
+                                        if (endTime - startTime >= timeoutMillis) {
+                                            Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_LONG).show();
+                                            KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
+                                        } else {
+                                            Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_LONG).show();
+                                            KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
+                                        }
+                                        isGeoCoderFetchFinish = true;
+                                        HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------242");
                                         return;
                                     }
-                                    if (TextUtils.isEmpty(featureName) && !TextUtils.isEmpty(streetName)) {
+                                    if (TextUtils.isEmpty(featureName) && !TextUtils.isEmpty(streetName)&&streetName.contains(locality + subLocality)) {
                                         featureName = streetName;
                                         featureName = featureName.substring((locality + subLocality).length());
                                     }
@@ -259,6 +273,19 @@ public class HSNewSettingsPanel extends BasePanel {
                             String Neighborhood = locationManager.getNeighborhood();
                             String country = locationManager.getCountry();
                             if (TextUtils.isEmpty(city) || TextUtils.isEmpty(subLocality) || TextUtils.isEmpty(Neighborhood) || TextUtils.isEmpty(country)) {
+                                if(!isGeographyFetchFinish || !isGeoCoderFetchFinish){
+                                    return;
+                                }
+                                long endTime = System.currentTimeMillis();
+                                if (endTime - startTime >= timeoutMillis) {
+                                    Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_LONG).show();
+                                    KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
+                                } else {
+                                    Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_LONG).show();
+                                    KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
+                                }
+                                isGeographyFetchFinish = true;
+                                HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------281");
                                 return;
                             }
                             if (!isGeographyFetchFinish&&!isGeoCoderFetchFinish && editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
@@ -347,57 +374,15 @@ public class HSNewSettingsPanel extends BasePanel {
         return items;
     }
 
-    private void updateWithNewLocation(Location location, int timeout) {
-      /*  String latitude = String.valueOf(location.getLatitude());
-        String longitude = String.valueOf(location.getLongitude());*/
-       /* String url = String.format(
-                "http://maps.google.cn/maps/api/geocode/json?latlng=%s,%s&sensor=false&language=en_us",
-                latitude, longitude);
-        HSHttpConnection request = new HSHttpConnection(url, HttpRequest.Method.GET);
-        HSLog.d("suyingchi","updateWithNewLocation");
-        request.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
-            @Override
-            public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
-                HSLog.d("suyingchi","onConnectionFinished");
-                if(hsHttpConnection.isSucceeded()){
-                    String body = request.getBodyString();
-                    HSLog.d("location",body);
-                    showResponse(body);
-                }
-            }
-
-            @Override
-            public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
-
-            }
-        });
-        request.startSync();*/
-    }
-
-    private String showResponse(String response) {
-        JSONObject jsonObj = null;
-        String firstResult = "";
-        String length_result = "";
-
-        try {
-            // 把服务器相应的字符串转换为JSONObject
-            jsonObj = new JSONObject(response);
-            // 解析出响应结果中的地址数据
-            JSONArray jsonArray = jsonObj.getJSONArray("results");
-            Log.i("location", "lenth = " + jsonArray.length());
-            length_result = jsonArray.getJSONObject(jsonArray.length() - 1).getString("formatted_address");
-            firstResult = jsonArray.getJSONObject(0).getString("formatted_address");
-            //result =  jsonObj.getJSONArray(String.valueOf(0)).getString("formatted_address");
-            // 此处jsonArray.length()-1得到的位置信息是最后一列，得到的是Google地图划分区域的最外层，
-            // 如国家或者特殊城市-香港等，若需要得到具体位置使用0；
-            Log.i("location", "address json result = " + firstResult);
-            HSInputMethod.inputText(firstResult + "--------" + length_result);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.i("location", "address json result error");
+   private Locale getCurrentLocale(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            return context.getResources().getConfiguration().getLocales().get(0);
+        } else{
+            //noinspection deprecation
+            return context.getResources().getConfiguration().locale;
         }
-        return firstResult;
     }
+
 
     //判断定位服务与权限
     private boolean isLocServiceEnable() {
