@@ -165,8 +165,9 @@ public class HSNewSettingsPanel extends BasePanel {
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
                         if(locationManager.getLocation()==null){
-                            Toast.makeText(HSApplication.getContext(), R.string.request_null_LaLongitude_fail, Toast.LENGTH_LONG).show();
+                            Toast.makeText(HSApplication.getContext(), R.string.geocoder_request_null_LaLongitude_fail, Toast.LENGTH_LONG).show();
                             KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
+                            isGeoCoderFetchFinish = true;
                             return;
                         }
                         new AsyncTask<Location, Void, Address>() {
@@ -228,10 +229,21 @@ public class HSNewSettingsPanel extends BasePanel {
                                         //去除结果文本中的邮编
                                         if(!TextUtils.isEmpty(address.getPostalCode())&&streetName.contains(address.getPostalCode())){
                                             locationText = streetName.substring(0,streetName.length()-address.getPostalCode().length()-2);
+                                        }else {
+                                            locationText = streetName;
                                         }
                                         isGeoCoderFetchSuccess = true;
                                     }else if(!TextUtils.isEmpty(featureName)){
                                         locationText = featureName+","+subLocality+","+locality+","+adminArea+","+country;
+                                        isGeoCoderFetchSuccess = true;
+                                    }else if(!TextUtils.isEmpty(streetName)){
+                                        //有些机型的请求结果含有邮编
+                                        //去除结果文本中的邮编
+                                        if(!TextUtils.isEmpty(address.getPostalCode())&&streetName.contains(address.getPostalCode())){
+                                            locationText = streetName.substring(0,streetName.length()-address.getPostalCode().length()-2);
+                                        }else {
+                                            locationText = streetName;
+                                        }
                                         isGeoCoderFetchSuccess = true;
                                     }
                                     //如果GeoCoder请求完并成功，Geography还未请求完或者Geography请求完了但不成功则将GeoCoder的结果输入文本框
@@ -264,7 +276,7 @@ public class HSNewSettingsPanel extends BasePanel {
                     @Override
                     public void onGeographyInfoFetched(boolean success, HSLocationManager locationManager) {
                         isGeographyFetchFinish = true;
-                        if (isGeoCoderFetchFinish&&isGeoCoderFetchSuccess) {
+                        if ((isGeoCoderFetchFinish&&isGeoCoderFetchSuccess)||locationManager.getLocation()==null) {
                             HSLog.d("suyingchi", "267------onGeographyInfoFetched---------" + "isGeographyFetchFinish==" + isGeographyFetchFinish + "--------isGeographyFetchSuccess====" + isGeographyFetchSuccess +"isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"isGeoCoderFetchSuccess====="+isGeoCoderFetchSuccess);
                             return;
                         }

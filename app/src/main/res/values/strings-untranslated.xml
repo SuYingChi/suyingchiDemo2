@@ -28,6 +28,6 @@
     <string name="request_location_fail">Get Device Location Failed with NULL location. please  switch your location mode and try again</string>
     <string name="request_location_timeout">request timeout.   please  switch your location mode and try again </string>
     <string name="setting_item_location">Location</string>
-    <string name="request_null_LaLongitude_fail">Get Device Location Failed with NULL Latitude and Longitude</string>
+    <string name="geocoder_request_null_LaLongitude_fail">Get Device Location Failed with NULL Latitude and Longitude</string>
 
 </resources>
