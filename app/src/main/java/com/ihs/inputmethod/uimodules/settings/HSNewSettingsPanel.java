@@ -193,9 +193,13 @@ public class HSNewSettingsPanel extends BasePanel {
                                     String featureName = address.getFeatureName();
                                     //城区
                                     String subLocality = address.getSubLocality();
-                                    if (TextUtils.isEmpty(country) || TextUtils.isEmpty(adminArea) || TextUtils.isEmpty(locality) || TextUtils.isEmpty(featureName)) {
-                                        isLocationFetchedGeographyInfoSuccess = false;
+                                    String streetName = address.getAddressLine(0);
+                                    if (TextUtils.isEmpty(country) || TextUtils.isEmpty(adminArea) || TextUtils.isEmpty(locality) || (TextUtils.isEmpty(featureName)&&TextUtils.isEmpty(streetName))) {
                                         return;
+                                    }
+                                    if(TextUtils.isEmpty(featureName)&&!TextUtils.isEmpty(streetName)){
+                                        featureName = streetName;
+                                        featureName = featureName.substring((locality+subLocality).length());
                                     }
                                     if (editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
                                         if(adminArea.equals(locality)){
@@ -205,16 +209,6 @@ public class HSNewSettingsPanel extends BasePanel {
                                         }
                                         KCAnalytics.logEvent("keyboard_location_sendSuccess");
                                         isLocationFetchedGeographyInfoSuccess = true;
-                                    }
-                                }else {
-                                    isLocationFetchedGeographyInfoSuccess = false;
-                                    long endTime = System.currentTimeMillis();
-                                    if (endTime - startTime >= timeoutMillis) {
-                                        Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_LONG).show();
-                                        KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
-                                    } else {
-                                        Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_LONG).show();
-                                        KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
                                     }
                                 }
                             }
