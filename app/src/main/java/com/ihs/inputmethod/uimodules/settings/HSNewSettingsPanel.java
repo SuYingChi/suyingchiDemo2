@@ -157,6 +157,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 locationManager_device.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
                     volatile boolean isGeoCoderFetchFinish = false;
                     volatile boolean isGeographyFetchFinish = false;
+                    String locationText="";
                     @SuppressLint("StaticFieldLeak")
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
@@ -189,10 +190,11 @@ public class HSNewSettingsPanel extends BasePanel {
                                     String adminArea = address.getAdminArea();
                                     //城市名
                                     String locality = address.getLocality();
-                                    //街名路牌号
+                                    //街名路牌号,streetName取不到的时候使用该地址
                                     String featureName = address.getFeatureName();
                                     //城区
                                     String subLocality = address.getSubLocality();
+                                    //优先使用该地址
                                     String streetName = address.getAddressLine(0);
                                     if (TextUtils.isEmpty(country) || TextUtils.isEmpty(adminArea) || TextUtils.isEmpty(locality) || (TextUtils.isEmpty(featureName) && TextUtils.isEmpty(streetName))) {
                                         if(!isGeographyFetchFinish || !isGeoCoderFetchFinish){
@@ -210,34 +212,19 @@ public class HSNewSettingsPanel extends BasePanel {
                                         isGeoCoderFetchFinish = true;
                                         HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------211");
                                         return;
+                                        //有些低版本手机取不到完整的街道名，这种情况下使用featureName
+                                    }else if (!TextUtils.isEmpty(streetName)&&streetName.contains(subLocality)) {
+                                        //去除结果文本中的邮编
+                                        locationText = streetName.substring(0,streetName.length()-8);;
+                                    }else if(!TextUtils.isEmpty(featureName)){
+                                        locationText = featureName+","+subLocality+","+locality+","+adminArea+","+country;
                                     }
-                                    if (TextUtils.isEmpty(featureName) && !TextUtils.isEmpty(streetName)&&streetName.contains(locality + subLocality)) {
-                                        featureName = streetName;
-                                        featureName = featureName.substring((locality + subLocality).length());
-                                    }
+
                                     if (!isGeoCoderFetchFinish&&!isGeographyFetchFinish && editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
-                                        if (adminArea.equals(locality)) {
-                                            HSInputMethod.inputText(featureName + "," + subLocality + "," + locality + "," + country);
-                                        } else {
-                                            HSInputMethod.inputText(featureName + "," + subLocality + "," + locality + "," + adminArea + "," + country);
-                                        }
+                                        HSInputMethod.inputText(locationText);
                                         KCAnalytics.logEvent("keyboard_location_sendSuccess");
                                         isGeoCoderFetchFinish = true;
                                         HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------225");
-                                    } else {
-                                        if(!isGeographyFetchFinish || !isGeoCoderFetchFinish){
-                                            return;
-                                        }
-                                        long endTime = System.currentTimeMillis();
-                                        if (endTime - startTime >= timeoutMillis) {
-                                            Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_LONG).show();
-                                            KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
-                                        } else {
-                                            Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_LONG).show();
-                                            KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
-                                        }
-                                        isGeoCoderFetchFinish = true;
-                                        HSLog.d("suyingchi","onLocationFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------240");
                                     }
                                 }else {
                                     if(!isGeographyFetchFinish || !isGeoCoderFetchFinish){
@@ -293,20 +280,6 @@ public class HSNewSettingsPanel extends BasePanel {
                                 KCAnalytics.logEvent("keyboard_location_sendSuccess");
                                 isGeographyFetchFinish = true;
                                 HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------295");
-                            }else {
-                                if(!isGeographyFetchFinish || !isGeoCoderFetchFinish){
-                                    return;
-                                }
-                                long endTime = System.currentTimeMillis();
-                                if (endTime - startTime >= timeoutMillis) {
-                                    Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_LONG).show();
-                                    KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
-                                } else {
-                                    Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_LONG).show();
-                                    KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
-                                }
-                                isGeographyFetchFinish = true;
-                                HSLog.d("suyingchi","onGeographyInfoFetched---------"+"isGeographyFetchFinish=="+isGeographyFetchFinish+"--------isGeoCoderFetchFinish===="+isGeoCoderFetchFinish+"------------309");
                             }
                         } else {
                             if(!isGeographyFetchFinish || !isGeoCoderFetchFinish){
