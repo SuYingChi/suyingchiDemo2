@@ -24,7 +24,7 @@
 
     <string name="item_sticker_more_coming">More stickers are coming soon</string>
     <string name="unable_location">No location permission and No network detected</string>
-    <string name="request_location_wrong_language">Get Device Location Failed with chinese.</string>
+    <string name="request_location_wrong_language">Failed to get the location.</string>
     <string name="request_location_timeout">request timeout.   please  switch your location mode and try again </string>
     <string name="setting_item_location">Location</string>
     <string name="request_null_LaLongitude_fail">Failed to get the Latitude and Longitude</string>
