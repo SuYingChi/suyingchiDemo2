@@ -67,7 +67,7 @@ public class HSNewSettingsPanel extends BasePanel {
     private ViewItem selectorItem;
     private List<ViewItem> items;
     private SettingsViewPager settingsViewPager;
-    private  static  volatile  boolean isLocationInfoFetching = false;
+    private static boolean isLocationInfoFetching = false;
     private static long geoRunMillis;
     private static long geographyRunTimeMillis;
     public HSNewSettingsPanel()
@@ -149,7 +149,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 final int timeoutMillis = 10000;
                 if (!isLocServiceEnable & !isLocationNetworkEnable) {
                     Toast.makeText(HSApplication.getContext(), R.string.unable_location, Toast.LENGTH_SHORT).show();
-                    KCAnalytics.logEvent("keyboard_location_sendFailed", "No network detected and no location permission");
+                    KCAnalytics.logEvent("keyboard_location_sendFailed", "reason","No network detected and no location permission");
                     isLocationInfoFetching = false;
                     return;
                 }
@@ -160,7 +160,7 @@ public class HSNewSettingsPanel extends BasePanel {
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
                         if(locationManager.getLocation()==null){
                             Toast.makeText(HSApplication.getContext(), R.string.request_null_LaLongitude_fail, Toast.LENGTH_SHORT).show();
-                            KCAnalytics.logEvent("keyboard_location_sendFailed", "null location");
+                            KCAnalytics.logEvent("keyboard_location_sendFailed", "reason","null location");
                             isLocationInfoFetching = false;
                             return;
                         }else {
@@ -170,7 +170,7 @@ public class HSNewSettingsPanel extends BasePanel {
                     @Override
                     public void onGeographyInfoFetched(boolean success, HSLocationManager locationManager) {
                         if (locationManager.getLocation()==null) {
-                            KCAnalytics.logEvent("keyboard_location_sendFailed", "null location");
+                            KCAnalytics.logEvent("keyboard_location_sendFailed", "reason","null location");
                             return;
                         }
                         if(success) {
@@ -181,9 +181,9 @@ public class HSNewSettingsPanel extends BasePanel {
                             if (TextUtils.isEmpty(city) || TextUtils.isEmpty(subLocality) || TextUtils.isEmpty(Neighborhood) || TextUtils.isEmpty(country)) {
                                 long endTime = System.currentTimeMillis();
                                 if (endTime - startTime >= timeoutMillis) {
-                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "request timeout");
+                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason","request timeout");
                                 } else {
-                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "result is not full");
+                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason","result is not full");
                                 }
                             } else {
                                 KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendSuccess");
@@ -191,19 +191,19 @@ public class HSNewSettingsPanel extends BasePanel {
                         } else {
                                 long endTime = System.currentTimeMillis();
                                 if (endTime - startTime >= timeoutMillis) {
-                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "request timeout");
+                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason","request timeout");
                                 } else {
-                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "Failed to get the location");
+                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason","Failed to get the location");
                                 }
 
                             }
                         geographyRunTimeMillis = System.currentTimeMillis()-startTime;
                         if(isLocationInfoFetching){
-                            KCAnalytics.logEvent("keyboard_location_reverse_finish_quickly","GeographyInfoFetched");
+                            KCAnalytics.logEvent("GeographyInfoFetched_keyboard_location_reverse_finish_quickly");
                         } else if(geoRunMillis<geographyRunTimeMillis){
-                            KCAnalytics.logEvent("keyboard_location_reverse_finish_quickly","GeoCoder");
+                            KCAnalytics.logEvent("GeoCoder_keyboard_location_reverse_finish_quickly");
                         }else {
-                            KCAnalytics.logEvent("keyboard_location_reverse_finish_quickly","GeographyInfoFetched");
+                            KCAnalytics.logEvent("GeographyInfoFetched_keyboard_location_reverse_finish_quickly");
                         }
                     }
                 });
@@ -302,10 +302,10 @@ public class HSNewSettingsPanel extends BasePanel {
                        long endTime = System.currentTimeMillis();
                        if (endTime - startTime >= timeoutMillis) {
                            Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
-                           KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
+                           KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","request timeout");
                        } else {
                            Toast.makeText(HSApplication.getContext(), R.string.location_info_is_not_full, Toast.LENGTH_SHORT).show();
-                           KCAnalytics.logEvent("keyboard_location_sendFailed", "result is not full");
+                           KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","result is not full");
                        }
                    //有些低版本手机取不到完整的街道名，这种情况下使用featureName
                }else if (!TextUtils.isEmpty(streetName)&&streetName.contains(subLocality)) {
@@ -330,20 +330,20 @@ public class HSNewSettingsPanel extends BasePanel {
                //某些机型返回结果是中文，则提示获取失败
                if(isContainChinese(locationText)){
                    Toast.makeText(HSApplication.getContext(), R.string.request_location_wrong_language, Toast.LENGTH_SHORT).show();
-                   KCAnalytics.logEvent("keyboard_location_sendFailed", "chinese result");
+                   KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","chinese result");
                }else if (editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
                    HSInputMethod.inputText(locationText);
-                   KCAnalytics.logEvent("keyboard_location_sendSuccess");
+                   KCAnalytics.logEvent("GeoCoder_keyboard_location_sendSuccess");
                }
 
            }else {
                    long endTime = System.currentTimeMillis();
                    if (endTime - startTime >= timeoutMillis) {
                        Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
-                       KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
+                       KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","request timeout");
                    } else {
                        Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
-                       KCAnalytics.logEvent("keyboard_location_sendFailed", "Failed to get the location");
+                       KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","Failed to get the location");
                    }
            }
            isLocationInfoFetching = false;
