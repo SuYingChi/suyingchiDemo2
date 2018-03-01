@@ -66,6 +66,8 @@ public class HSNewSettingsPanel extends BasePanel {
     private List<ViewItem> items;
     private SettingsViewPager settingsViewPager;
     private  static  boolean isLocationInfoFetching = false;
+    private static long geoRunMillis;
+    private static long geographyRunTimeMillis;
     public HSNewSettingsPanel()
     {
         mContext = HSApplication.getContext();
@@ -144,10 +146,8 @@ public class HSNewSettingsPanel extends BasePanel {
                 long startTime = System.currentTimeMillis();
                 final int timeoutMillis = 10000;
                 if (!isLocServiceEnable & !isLocationNetworkEnable) {
-                    Toast.makeText(HSApplication.getContext(), R.string.no_location_permission, Toast.LENGTH_SHORT).show();
-                    KCAnalytics.logEvent("keyboard_location_sendFailed", "unable  location feature ");
-                    Toast.makeText(HSApplication.getContext(), R.string.network_not_available, Toast.LENGTH_LONG).show();
-                    KCAnalytics.logEvent("keyboard_location_sendFailed", " network no available");
+                    Toast.makeText(HSApplication.getContext(), R.string.unable_location, Toast.LENGTH_SHORT).show();
+                    KCAnalytics.logEvent("keyboard_location_sendFailed", "No network detected and no location permission");
                     isLocationInfoFetching = false;
                     return;
                 }
@@ -158,7 +158,7 @@ public class HSNewSettingsPanel extends BasePanel {
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
                         if(locationManager.getLocation()==null){
                             Toast.makeText(HSApplication.getContext(), R.string.geocoder_request_null_LaLongitude_fail, Toast.LENGTH_LONG).show();
-                            KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
+                            KCAnalytics.logEvent("keyboard_location_sendFailed", "null location");
                             isLocationInfoFetching = false;
                             return;
                         }else {
@@ -168,6 +168,7 @@ public class HSNewSettingsPanel extends BasePanel {
                     @Override
                     public void onGeographyInfoFetched(boolean success, HSLocationManager locationManager) {
                         if (locationManager.getLocation()==null) {
+                            KCAnalytics.logEvent("keyboard_location_sendFailed", "null location");
                             return;
                         }
                         if(success) {
@@ -180,7 +181,7 @@ public class HSNewSettingsPanel extends BasePanel {
                                 if (endTime - startTime >= timeoutMillis) {
                                     KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "request timeout");
                                 } else {
-                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "device nonsupport location");
+                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "result is not full");
                                 }
                             } else {
                                 KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendSuccess");
@@ -190,10 +191,16 @@ public class HSNewSettingsPanel extends BasePanel {
                                 if (endTime - startTime >= timeoutMillis) {
                                     KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "request timeout");
                                 } else {
-                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "device nonsupport location");
+                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "Failed to get the location");
                                 }
 
                             }
+                        geographyRunTimeMillis = System.currentTimeMillis()-startTime;
+                        if(geoRunMillis<geographyRunTimeMillis){
+                            KCAnalytics.logEvent("keyboard_location_reverse_finish_quickly","GeoCoder");
+                        }else {
+                            KCAnalytics.logEvent("keyboard_location_reverse_finish_quickly","GeographyInfoFetched");
+                        }
                     }
                 });
             }
@@ -249,6 +256,7 @@ public class HSNewSettingsPanel extends BasePanel {
       EditorInfo editorInfo;
       long startTime;
       int timeoutMillis;
+
        LocationReverseAsyncTask(EditorInfo editorInfo,long startTime,int timeoutMillis){
            this.editorInfo = editorInfo;
            this.startTime = startTime;
@@ -293,7 +301,7 @@ public class HSNewSettingsPanel extends BasePanel {
                            KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
                        } else {
                            Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_LONG).show();
-                           KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
+                           KCAnalytics.logEvent("keyboard_location_sendFailed", "result is not full");
                        }
                    //有些低版本手机取不到完整的街道名，这种情况下使用featureName
                }else if (!TextUtils.isEmpty(streetName)&&streetName.contains(subLocality)) {
@@ -318,7 +326,7 @@ public class HSNewSettingsPanel extends BasePanel {
                //某些机型返回结果是中文，则提示获取失败
                if(TextUtils.isEmpty(locationText)||locationText.matches("[\u4E00-\u9FA5]+")){
                    Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_LONG).show();
-                   KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
+                   KCAnalytics.logEvent("keyboard_location_sendFailed", "chinese result");
                }else if (!TextUtils.isEmpty(locationText)&&editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
                    HSInputMethod.inputText(locationText);
                    KCAnalytics.logEvent("keyboard_location_sendSuccess");
@@ -331,10 +339,11 @@ public class HSNewSettingsPanel extends BasePanel {
                        KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
                    } else {
                        Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_LONG).show();
-                       KCAnalytics.logEvent("keyboard_location_sendFailed", "device nonsupport location");
+                       KCAnalytics.logEvent("keyboard_location_sendFailed", "Failed to get the location");
                    }
            }
            isLocationInfoFetching = false;
+           geoRunMillis= System.currentTimeMillis()-startTime;
        }
    }
     //判断定位服务与权限
