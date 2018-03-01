@@ -65,7 +65,7 @@ public class HSNewSettingsPanel extends BasePanel {
     private ViewItem selectorItem;
     private List<ViewItem> items;
     private SettingsViewPager settingsViewPager;
-    private  static  boolean isLocationInfoFetching = false;
+    private  static  volatile  boolean isLocationInfoFetching = false;
     private static long geoRunMillis;
     private static long geographyRunTimeMillis;
     public HSNewSettingsPanel()
@@ -196,7 +196,9 @@ public class HSNewSettingsPanel extends BasePanel {
 
                             }
                         geographyRunTimeMillis = System.currentTimeMillis()-startTime;
-                        if(geoRunMillis<geographyRunTimeMillis){
+                        if(isLocationInfoFetching){
+                            KCAnalytics.logEvent("keyboard_location_reverse_finish_quickly","GeographyInfoFetched");
+                        } else if(geoRunMillis<geographyRunTimeMillis){
                             KCAnalytics.logEvent("keyboard_location_reverse_finish_quickly","GeoCoder");
                         }else {
                             KCAnalytics.logEvent("keyboard_location_reverse_finish_quickly","GeographyInfoFetched");
