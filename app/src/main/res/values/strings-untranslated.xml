@@ -24,9 +24,11 @@
 
     <string name="item_sticker_more_coming">More stickers are coming soon</string>
     <string name="unable_location">No location permission and No network detected</string>
-    <string name="request_location_fail">Get Device Location Failed with NULL location. please  switch your location mode and try again</string>
+    <string name="request_location_wrong_language">Get Device Location Failed with chinese.</string>
     <string name="request_location_timeout">request timeout.   please  switch your location mode and try again </string>
     <string name="setting_item_location">Location</string>
-    <string name="geocoder_request_null_LaLongitude_fail">Failed to get the location</string>
+    <string name="request_null_LaLongitude_fail">Failed to get the Latitude and Longitude</string>
+    <string name="location_info_is_not_full">location info is not full</string>
+    <string name="request_location_fail">Failed to get the location</string>
 
 </resources>

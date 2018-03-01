@@ -51,6 +51,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 import static com.ihs.panelcontainer.KeyboardPanelSwitchContainer.MODE_BACK_PARENT;
@@ -157,7 +159,7 @@ public class HSNewSettingsPanel extends BasePanel {
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
                         if(locationManager.getLocation()==null){
-                            Toast.makeText(HSApplication.getContext(), R.string.geocoder_request_null_LaLongitude_fail, Toast.LENGTH_LONG).show();
+                            Toast.makeText(HSApplication.getContext(), R.string.request_null_LaLongitude_fail, Toast.LENGTH_SHORT).show();
                             KCAnalytics.logEvent("keyboard_location_sendFailed", "null location");
                             isLocationInfoFetching = false;
                             return;
@@ -299,10 +301,10 @@ public class HSNewSettingsPanel extends BasePanel {
                if (TextUtils.isEmpty(country) || TextUtils.isEmpty(adminArea) || TextUtils.isEmpty(locality) || (TextUtils.isEmpty(featureName) && TextUtils.isEmpty(streetName))) {
                        long endTime = System.currentTimeMillis();
                        if (endTime - startTime >= timeoutMillis) {
-                           Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_LONG).show();
+                           Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
                            KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
                        } else {
-                           Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_LONG).show();
+                           Toast.makeText(HSApplication.getContext(), R.string.location_info_is_not_full, Toast.LENGTH_SHORT).show();
                            KCAnalytics.logEvent("keyboard_location_sendFailed", "result is not full");
                        }
                    //有些低版本手机取不到完整的街道名，这种情况下使用featureName
@@ -326,10 +328,10 @@ public class HSNewSettingsPanel extends BasePanel {
                    }
                }
                //某些机型返回结果是中文，则提示获取失败
-               if(TextUtils.isEmpty(locationText)||locationText.matches("[\u4E00-\u9FA5]+")){
-                   Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_LONG).show();
+               if(isContainChinese(locationText)){
+                   Toast.makeText(HSApplication.getContext(), R.string.request_location_wrong_language, Toast.LENGTH_SHORT).show();
                    KCAnalytics.logEvent("keyboard_location_sendFailed", "chinese result");
-               }else if (!TextUtils.isEmpty(locationText)&&editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
+               }else if (editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
                    HSInputMethod.inputText(locationText);
                    KCAnalytics.logEvent("keyboard_location_sendSuccess");
                }
@@ -337,10 +339,10 @@ public class HSNewSettingsPanel extends BasePanel {
            }else {
                    long endTime = System.currentTimeMillis();
                    if (endTime - startTime >= timeoutMillis) {
-                       Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_LONG).show();
+                       Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
                        KCAnalytics.logEvent("keyboard_location_sendFailed", "request timeout");
                    } else {
-                       Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_LONG).show();
+                       Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
                        KCAnalytics.logEvent("keyboard_location_sendFailed", "Failed to get the location");
                    }
            }
@@ -348,6 +350,15 @@ public class HSNewSettingsPanel extends BasePanel {
            geoRunMillis= System.currentTimeMillis()-startTime;
        }
    }
+    public static boolean isContainChinese(String str) {
+
+        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+        Matcher m = p.matcher(str);
+        if (m.find()) {
+            return true;
+        }
+        return false;
+    }
     //判断定位服务与权限
     private boolean isLocServiceEnable() {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
