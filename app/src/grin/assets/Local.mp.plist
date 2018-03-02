@@ -15,8 +15,6 @@
 			</dict>
 			<key>AppSuggestion</key>
 			<dict>
-				<key>AdPlacement</key>
-				<string>ThemeTryAd</string>
 				<key>ApkDefault</key>
 				<array>
 					<string>com.whatsapp</string>
