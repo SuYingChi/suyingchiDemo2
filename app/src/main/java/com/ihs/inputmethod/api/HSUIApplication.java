@@ -325,7 +325,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         AcbNativeAdManager.getInstance().activePlacementInProcess(AdPlacements.NATIVE_BOOST_DONE);
         AcbNativeAdManager.getInstance().activePlacementInProcess(AdPlacements.NATIVE_APPLYING_ITEM);
         AcbNativeAdManager.getInstance().activePlacementInProcess(AdPlacements.NATIVE_KEYBOARD_BANNER);
-        AcbNativeAdManager.getInstance().activePlacementInProcess(AdPlacements.NATIVE_LUMEN);
         // Express广告
         AcbExpressAdManager.getInstance().activePlacementInProcess(AdPlacements.EXPRESS_LUMEN);
         AcbExpressAdManager.getInstance().activePlacementInProcess(AdPlacements.EXPRESS_CABLE_REPORT);

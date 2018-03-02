@@ -11,7 +11,6 @@ public class AdPlacements {
     public static final String NATIVE_KEYBOARD_BANNER = "KeyboardBanner";
     public static final String NATIVE_CABLE_REPORT = "CableReport";
     public static final String NATIVE_APPLYING_ITEM = "ApplyingItem";
-    public static final String NATIVE_LUMEN = "Lumen";
 
     // Express
     public static final String EXPRESS_CABLE = "Cable";
