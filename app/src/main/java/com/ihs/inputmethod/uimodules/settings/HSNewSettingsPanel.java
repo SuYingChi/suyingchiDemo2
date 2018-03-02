@@ -163,7 +163,6 @@ public class HSNewSettingsPanel extends BasePanel {
                             Toast.makeText(HSApplication.getContext(), R.string.request_null_LaLongitude_fail, Toast.LENGTH_SHORT).show();
                             KCAnalytics.logEvent("keyboard_location_sendFailed", "reason","null location");
                             isLocationInfoFetching = false;
-                            return;
                         }else {
                             new LocationReverseAsyncTask(editorInfo,startTime,timeoutMillis).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,locationManager.getLocation());
                         }
@@ -348,16 +347,13 @@ public class HSNewSettingsPanel extends BasePanel {
            geoRunMillis= endMillis-startTime;
        }
    }
-    public static boolean isContainChinese(String str) {
+    static boolean isContainChinese(String str) {
 
         Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
         Matcher m = p.matcher(str);
-        if (m.find()) {
-            return true;
-        }
-        return false;
+        return m.find();
     }
-    //判断定位服务与权限
+    //判断是否使用GPS定位
     private boolean isLocServiceEnable() {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -365,17 +361,14 @@ public class HSNewSettingsPanel extends BasePanel {
             final int AppOpsManager_OP_FINE_LOCATION = 1;
             int checkResult = checkOp(context, AppOpsManager_OP_GPS);
             int checkResult2 = checkOp(context, AppOpsManager_OP_FINE_LOCATION);
-            if ((AppOpsManagerCompat.MODE_IGNORED != checkResult && AppOpsManagerCompat.MODE_IGNORED != checkResult2) == false) {
+            if (!(AppOpsManagerCompat.MODE_IGNORED != checkResult && AppOpsManagerCompat.MODE_IGNORED != checkResult2) ) {
                 return false;
             }
         }
-        if ((locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) == false) {
-            return false;
-        }
-        return true;
+        return locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
-    //判断网络状态
+    //判断使用网络定位
     private boolean isLocationNetworkEnable() {
         ConnectivityManager manager = (ConnectivityManager) context
                 .getApplicationContext().getSystemService(
@@ -391,10 +384,7 @@ public class HSNewSettingsPanel extends BasePanel {
         if (locationManager != null) {
             network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         }
-        if ((networkinfo != null && networkinfo.isAvailable() && network) == false) {
-            return false;
-        }
-        return true;
+        return networkinfo != null && networkinfo.isAvailable() && network;
     }
 
     //检查权限列表
@@ -429,7 +419,7 @@ public class HSNewSettingsPanel extends BasePanel {
         return -1;
     }
 
-    public static void setViewHeight(View v, int height) {
+    private static void setViewHeight(View v, int height) {
         if (v != null && v.getLayoutParams() != null) {
             final ViewGroup.LayoutParams params = v.getLayoutParams();
             params.height = height;
