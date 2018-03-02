@@ -138,6 +138,7 @@ public class HSNewSettingsPanel extends BasePanel {
             @Override
             public void onItemClick(ViewItem item) {
                 HSAnalytics.logEvent("keyboard_location_clicked ");
+                //保证不重复发起异步请求
                 if(isLocationInfoFetching){
                     return;
                 }
@@ -269,7 +270,6 @@ public class HSNewSettingsPanel extends BasePanel {
        @Override
        protected Address doInBackground(Location... locations) {
            editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
-           startTime = System.currentTimeMillis();
            Location location = locations[0];
            List<Address> addressList = new ArrayList<Address>();
            double latitude = location.getLatitude();
@@ -284,7 +284,8 @@ public class HSNewSettingsPanel extends BasePanel {
 
        @Override
        protected void onPostExecute(Address address) {
-           if (address != null) {
+           long endMillis = System.currentTimeMillis();
+           if (address != null&&(endMillis-startTime)<=timeoutMillis) {
                //国家
                String country = address.getCountryName();
                //省份
@@ -336,18 +337,15 @@ public class HSNewSettingsPanel extends BasePanel {
                    KCAnalytics.logEvent("GeoCoder_keyboard_location_sendSuccess");
                }
 
+           }else if(endMillis-startTime>=timeoutMillis){
+               Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
+               KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","request timeout");
            }else {
-                   long endTime = System.currentTimeMillis();
-                   if (endTime - startTime >= timeoutMillis) {
-                       Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
-                       KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","request timeout");
-                   } else {
-                       Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
-                       KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","Failed to get the location");
-                   }
+               Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
+               KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","Failed to get the location");
            }
            isLocationInfoFetching = false;
-           geoRunMillis= System.currentTimeMillis()-startTime;
+           geoRunMillis= endMillis-startTime;
        }
    }
     public static boolean isContainChinese(String str) {
