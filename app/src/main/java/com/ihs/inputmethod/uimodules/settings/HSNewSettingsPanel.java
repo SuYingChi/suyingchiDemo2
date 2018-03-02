@@ -327,11 +327,7 @@ public class HSNewSettingsPanel extends BasePanel {
                        locationText = streetName;
                    }
                }
-               //某些机型返回结果是中文，则提示获取失败
-               if(isContainChinese(locationText)){
-                   Toast.makeText(HSApplication.getContext(), R.string.request_location_wrong_language, Toast.LENGTH_SHORT).show();
-                   KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","chinese result");
-               }else if (editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
+                if (editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
                    HSInputMethod.inputText(locationText);
                    KCAnalytics.logEvent("GeoCoder_keyboard_location_sendSuccess");
                }
