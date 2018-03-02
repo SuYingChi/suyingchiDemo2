@@ -26,22 +26,20 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
 
     private ClipboardRecentViewAdapter clipboardRecentViewAdapter;
     private ClipboardPinsViewAdapter clipboardPinsViewAdapter;
-
     private ClipboardActionBar actionBar;
     private RecyclerView clipboardPanelPinsView;
     private RecyclerView clipboardPanelRecentView;
     private ClipboardPresenter clipboardPresenter;
     private FrameLayout recyclerViewGroup;
     private RecyclerView currentView = null;
-    int height = HSResourceUtils.getDefaultKeyboardHeight(getResources());
-    private PopupWindow deletePinPopWindow;
+    int keyboardHeight = HSResourceUtils.getDefaultKeyboardHeight(getResources());
     private KCAlert deleteAlert;
 
     public ClipboardMainView(Context context) {
         super(context);
         clipboardPresenter = ClipboardPresenter.getInstance();
         setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
-        setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+        setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, keyboardHeight));
         setOrientation(VERTICAL);
         //填充frameLayout(填充RecyclerView)到此LinearLayout
         addRecyclerViewGroup();
@@ -50,16 +48,20 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
         //填充底部actionbar到此LinearLayout
         addBarView();
         //recyclerView与actionbar建立关联
-        actionBar.setRecyclerViewRelateToActionBar(clipboardPanelRecentView, clipboardPanelPinsView);
+        actionBar.setRecyclerViewRelateToActionBar((String) clipboardPanelRecentView.getTag(), (String) clipboardPanelPinsView.getTag());
         //初始的时候recent在显示，相应按钮设为被选中
-        actionBar.selectedViewBtn(currentView);
+        actionBar.selectedViewBtn((String) currentView.getTag());
         clipboardPresenter.setOnMainViewCreatedListener(this);
     }
 
 
     @Override
-    public void showView(RecyclerView selectedView) {
-        addNewView(selectedView);
+    public void onTabChange(String selectedViewName) {
+        if(selectedViewName.equals(ClipboardActionBar.PANEL_RECENT)){
+           addNewView(clipboardPanelRecentView);
+        }else if(selectedViewName.equals(ClipboardActionBar.PANEL_PIN)){
+            addNewView(clipboardPanelPinsView);
+        }
     }
 
     private void addNewView(RecyclerView recyclerViewToShow) {
@@ -132,7 +134,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     @Override
     public void showPinsView() {
         addNewView(clipboardPanelPinsView);
-        actionBar.selectedViewBtn(currentView);
+        actionBar.selectedViewBtn((String) currentView.getTag());
     }
     private void addRecyclerViewToPanelViewGroup() {
         LinearLayoutManager recentLayoutManager = new LinearLayoutManager(getContext());
@@ -154,6 +156,8 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
         clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(clipPinsData, clipboardPresenter);
         clipboardPanelRecentView.setAdapter(clipboardRecentViewAdapter);
         clipboardPanelPinsView.setAdapter(clipboardPinsViewAdapter);
+        clipboardPanelRecentView.setTag(ClipboardActionBar.PANEL_RECENT);
+        clipboardPanelPinsView.setTag(ClipboardActionBar.PANEL_PIN);
         clipboardPanelRecentView.setVisibility(VISIBLE);
         currentView = clipboardPanelRecentView;
         clipboardPanelPinsView.setVisibility(INVISIBLE);
@@ -164,10 +168,6 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     private void addBarView() {
         actionBar = (ClipboardActionBar) View.inflate(HSApplication.getContext(), R.layout.clipboard_action_bar, null);
         actionBar.setClipboardTabChangeListener(this);
-        if (actionBar.getParent() != null) {
-            ((ViewGroup) actionBar.getParent()).removeView(actionBar);
-        }
-
         LinearLayout.LayoutParams actionBarLayoutParams = (LinearLayout.LayoutParams) actionBar.getLayoutParams();
         if (actionBarLayoutParams == null) {
             actionBarLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -178,13 +178,9 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
 
     private void addRecyclerViewGroup() {
         recyclerViewGroup = new FrameLayout(this.getContext());
-        if (recyclerViewGroup.getParent() != null) {
-            ((ViewGroup) recyclerViewGroup.getParent()).removeView(recyclerViewGroup);
-        }
-
         LinearLayout.LayoutParams panelViewGroupLayoutParams = (LinearLayout.LayoutParams) recyclerViewGroup.getLayoutParams();
         if (panelViewGroupLayoutParams == null) {
-            panelViewGroupLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height - getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height));
+            panelViewGroupLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, keyboardHeight - getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height));
 
         }
         recyclerViewGroup.setOnClickListener(new OnClickListener() {

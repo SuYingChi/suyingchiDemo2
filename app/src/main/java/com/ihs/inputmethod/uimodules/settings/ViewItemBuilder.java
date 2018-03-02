@@ -87,7 +87,7 @@ final class ViewItemBuilder {
                 , viewItemListener, false);
     }
 
-    static ViewItem getPinsItem(ViewItem.ViewItemListener viewItemListener) {
+    static ViewItem getClipboardItem(ViewItem.ViewItemListener viewItemListener) {
         return new ViewItem(HSApplication.getContext().getResources().getString(R.string.setting_item_clipboard),
                 getStateListDrawable(SETTINGS_KEY_PINS,SETTINGS_KEY_PINS )
                 , viewItemListener, false);

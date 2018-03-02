@@ -123,7 +123,7 @@ public class HSNewSettingsPanel extends BasePanel {
         // items.add(ViewItemBuilder.getAutoCapitalizationItem());
         // items.add(ViewItemBuilder.getPredicationItem());
         // items.add(ViewItemBuilder.getSwipeItem());
-        items.add(ViewItemBuilder.getPinsItem(new ViewItem.ViewItemListener() {
+        items.add(ViewItemBuilder.getClipboardItem(new ViewItem.ViewItemListener() {
             @Override
             public void onItemClick(ViewItem item) {
                 getPanelActionListener().showChildPanel(ClipboardMainPanel.class, null);

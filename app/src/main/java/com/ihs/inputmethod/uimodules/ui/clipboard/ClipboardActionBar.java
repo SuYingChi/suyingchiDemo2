@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.ui.clipboard;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -23,10 +22,10 @@ public final class ClipboardActionBar extends LinearLayout implements View.OnCli
 
     public final static String PANEL_RECENT = "Recent";
     public final static String PANEL_PIN = "Pins";
-    private RecyclerView recentRecyclerView = null;
-    private RecyclerView pinsRecyclerView = null;
-    private Map<RecyclerView, TextView> btnMap = new HashMap<>();
-    private Map<String, RecyclerView> clipboardViews = new HashMap<>();
+    private String recentRecyclerViewName = "";
+    private String pinsRecyclerViewName = "";
+    private Map<String, TextView> relateViewsNameAndTabViewMap = new HashMap<String, TextView>();
+    private List<String> relateViewsName = new ArrayList<String>();
     private ClipboardTabChangeListener clipboardTabChangeListener;
 
     public ClipboardActionBar(Context context) {
@@ -45,34 +44,34 @@ public final class ClipboardActionBar extends LinearLayout implements View.OnCli
         this.clipboardTabChangeListener = clipboardTabChangeListener;
     }
 
-    public void setRecyclerViewRelateToActionBar(RecyclerView clipboardPanelRecentView, RecyclerView clipboardPanelPinsView) {
+    public void setRecyclerViewRelateToActionBar(String clipboardPanelRecentViewName, String clipboardPanelPinsViewName) {
         List<ClipboardActionbarTab> actionbarTabs = new ArrayList<>();
-        recentRecyclerView = clipboardPanelRecentView;
-        pinsRecyclerView = clipboardPanelPinsView;
-        actionbarTabs.add(new ClipboardActionbarTab(PANEL_RECENT, recentRecyclerView));
-        actionbarTabs.add(new ClipboardActionbarTab(PANEL_PIN, pinsRecyclerView));
+        recentRecyclerViewName = clipboardPanelRecentViewName;
+        pinsRecyclerViewName = clipboardPanelPinsViewName;
+        actionbarTabs.add(new ClipboardActionbarTab(PANEL_RECENT, recentRecyclerViewName));
+        actionbarTabs.add(new ClipboardActionbarTab(PANEL_PIN, pinsRecyclerViewName));
         final int height = getResources().getDimensionPixelSize(R.dimen.clipboard_panel_actionbar_height);
         final int actionBarAmount = actionbarTabs.size();
         for (int i = 0; i < actionBarAmount; i++) {
-            final String viewName = actionbarTabs.get(i).viewName;
-            final RecyclerView recyclerView = actionbarTabs.get(i).view;
+            final String tabName = actionbarTabs.get(i).tabName;
+            final String relateViewName = actionbarTabs.get(i).relateViewName;
             final LayoutParams params = new LayoutParams(0, height, 1.0f);
 
             TextView clipActionBarBtnView = (TextView) inflate(getContext(), R.layout.clipboard_bar_button, null);
-            ((TextView) clipActionBarBtnView.findViewById(R.id.tv_title)).setText(viewName);
-            clipActionBarBtnView.setTag(viewName);
+            ((TextView) clipActionBarBtnView.findViewById(R.id.tv_title)).setText(tabName);
+            clipActionBarBtnView.setTag(relateViewName);
             clipActionBarBtnView.setOnClickListener(this);
             clipActionBarBtnView.setTextColor(Color.WHITE);
             clipActionBarBtnView.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
             addView(clipActionBarBtnView, params);
-            clipboardViews.put(viewName, recyclerView);
-            btnMap.put(recyclerView, clipActionBarBtnView);
+            relateViewsName.add(relateViewName);
+            relateViewsNameAndTabViewMap.put(relateViewName, clipActionBarBtnView);
         }
     }
 
     interface ClipboardTabChangeListener {
 
-        void showView(RecyclerView selectedView);
+        void onTabChange(String selectedViewName);
     }
 
     @Override
@@ -86,23 +85,20 @@ public final class ClipboardActionBar extends LinearLayout implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        final Object tag = v.getTag();
-        if (tag != null && tag instanceof String) {
-            RecyclerView view = clipboardViews.get(tag);
-            if (view != null) {
-                clipboardTabChangeListener.showView(view);
-                selectedViewBtn(view);
-                HSLog.d(ClipboardActionBar.class.getSimpleName(), " to show " + tag.toString());
-                if(tag.equals(PANEL_PIN)){
+        String relateViewName = (String) v.getTag();
+            if (!android.text.TextUtils.isEmpty(relateViewName)) {
+                clipboardTabChangeListener.onTabChange(relateViewName);
+                selectedViewBtn(relateViewName);
+                HSLog.d(ClipboardActionBar.class.getSimpleName(), " to show " + relateViewName.toString());
+                if(relateViewName.equals(pinsRecyclerViewName)){
                     KCAnalytics.logEvent("keyboard_clipboard_pin_clicked");
                 }
             }
-        }
     }
 
-    void selectedViewBtn(RecyclerView recyclerView) {
-        for (RecyclerView recyclerViewValue : clipboardViews.values()) {
-            TextView view = btnMap.get(recyclerViewValue);
+    void selectedViewBtn(String recyclerViewName) {
+        for (String recyclerView : relateViewsName) {
+            TextView view = relateViewsNameAndTabViewMap.get(recyclerView);
             if (view != null) {
                 view.setSelected(false);
                 view.setTextColor(Color.WHITE);
@@ -111,7 +107,7 @@ public final class ClipboardActionBar extends LinearLayout implements View.OnCli
             }
         }
 
-        TextView view = btnMap.get(recyclerView);
+        TextView view = relateViewsNameAndTabViewMap.get(recyclerViewName);
         if (view != null) {
             view.setSelected(true);
         }
@@ -122,12 +118,12 @@ public final class ClipboardActionBar extends LinearLayout implements View.OnCli
     }
 
     private class ClipboardActionbarTab {
-        String viewName;
-        public RecyclerView view;
+        String tabName;
+        public String relateViewName;
 
-        ClipboardActionbarTab(String viewName, RecyclerView view) {
-            this.viewName = viewName;
-            this.view = view;
+        ClipboardActionbarTab(String tabName, String relateViewName) {
+            this.tabName = tabName;
+            this.relateViewName = relateViewName;
         }
     }
 }
