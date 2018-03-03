@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -62,7 +63,25 @@ public class HSNewSettingsPanel extends BasePanel {
     private List<ViewItem> items;
     private SettingsViewPager settingsViewPager;
     private static boolean isLocationInfoFetching = false;
-    private Handler reverseLocationHandler = new Handler();
+    private static Handler reverseLocationHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case LOCATION_MESSAGE:
+                    removeMessages(LOCATION_MESSAGE);
+                    if (isLocationInfoFetching&&tsk!=null){
+                        Toast.makeText(HSApplication.getContext(),R.string.request_location_timeout,Toast.LENGTH_SHORT).show();
+                        KCAnalytics.logEvent("keyboard_location_sendFailed","reason","time out");
+                        tsk.cancel(true);
+                        isLocationInfoFetching = false;
+                    }
+                    break;
+            }
+        }
+    };
+    private static AsyncTask<Location, Void, Address> tsk;
+    private final int TIMEOUT_MILLIS = 10000;
+    private static final int LOCATION_MESSAGE = 1;
     public HSNewSettingsPanel() {
         mContext = HSApplication.getContext();
     }
@@ -130,18 +149,15 @@ public class HSNewSettingsPanel extends BasePanel {
             public void onItemClick(ViewItem item) {
                 HSAnalytics.logEvent("keyboard_location_clicked");
                 //保证不重复发起异步请求
-                if (isLocationInfoFetching) {
+                if (isLocationInfoFetching||(!checkLocationPermission((LocationManager) context.getSystemService(Context.LOCATION_SERVICE)))) {
+                    Toast.makeText(HSApplication.getContext(), R.string.unable_location, Toast.LENGTH_SHORT).show();
+                    KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "No network detected and no location permission");
                     return;
                 }
                 isLocationInfoFetching = true;
+                reverseLocationHandler.removeMessages(LOCATION_MESSAGE);
+                reverseLocationHandler.sendEmptyMessageAtTime(LOCATION_MESSAGE, TIMEOUT_MILLIS);
                 Toast.makeText(HSApplication.getContext(), R.string.start_request_location, Toast.LENGTH_SHORT).show();
-                final int TIMEOUT_MILLIS = 5000;
-                if (!checkLocationPermission((LocationManager) context.getSystemService(Context.LOCATION_SERVICE))) {
-                    Toast.makeText(HSApplication.getContext(), R.string.unable_location, Toast.LENGTH_SHORT).show();
-                    KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "No network detected and no location permission");
-                    isLocationInfoFetching = false;
-                    return;
-                }
                 HSLocationManager locationManagerDevice = new HSLocationManager(HSApplication.getContext());
                 locationManagerDevice.setDeviceLocationTimeout(TIMEOUT_MILLIS);
                 locationManagerDevice.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
@@ -150,21 +166,11 @@ public class HSNewSettingsPanel extends BasePanel {
                         if (!success) {
                             Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
                             KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "null location");
+                            reverseLocationHandler.removeMessages(LOCATION_MESSAGE);
                             isLocationInfoFetching = false;
                         } else {
                             EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
-                            AsyncTask<Location, Void, Address> tsk = new LocationReverseAsyncTask(editorInfo, TIMEOUT_MILLIS).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, locationManager.getLocation());
-                            reverseLocationHandler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                   if (isLocationInfoFetching){
-                                       Toast.makeText(context,R.string.request_location_timeout,Toast.LENGTH_SHORT).show();
-                                       KCAnalytics.logEvent("keyboard_location_sendFailed","reason","time out");
-                                       tsk.cancel(true);
-                                       isLocationInfoFetching = false;
-                                   }
-                                }
-                            }, TIMEOUT_MILLIS);
+                            tsk = new LocationReverseAsyncTask(editorInfo, TIMEOUT_MILLIS).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, locationManager.getLocation());
                         }
                     }
 
@@ -235,7 +241,8 @@ public class HSNewSettingsPanel extends BasePanel {
 
     }
 
-    private static class LocationReverseAsyncTask extends AsyncTask<Location, Void, Address> {
+
+    private  static class LocationReverseAsyncTask extends AsyncTask<Location, Void, Address> {
         private String locationText = "";
         EditorInfo editorInfo;
         int timeoutMillis;
@@ -281,8 +288,10 @@ public class HSNewSettingsPanel extends BasePanel {
                 KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason", "Failed to get the location");
             }
             isLocationInfoFetching = false;
+            reverseLocationHandler.removeMessages(LOCATION_MESSAGE);
         }
     }
+
 
     private static void setViewHeight(View v, int height) {
         if (v != null && v.getLayoutParams() != null) {
