@@ -137,7 +137,6 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
         PreviewImageView previewImageView = new PreviewImageView(this, recyclerView, stickerGroup);
         recyclerView.setOnTouchListener(previewImageView);
 
-        CameraNewMarkUtil.setElementVisited(CameraNewMarkUtil.TAG_STICKER, stickerGroup.getStickerGroupName());
         setResult(RESULT_CODE_FAILED);
     }
 
