@@ -28,6 +28,7 @@ import com.ihs.commons.location.HSLocationManager;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -63,25 +64,26 @@ public class HSNewSettingsPanel extends BasePanel {
     private List<ViewItem> items;
     private SettingsViewPager settingsViewPager;
     private static boolean isLocationInfoFetching = false;
-    private static Handler reverseLocationHandler = new Handler(){
+    private static AsyncTask<Location, Void, Address> tsk;
+    private static final int REQUEST_LOCATION_TOTAL_TIMEOUT_MILLIS = 10000;
+    private static final int LOCATION_TIMEOUT_MESSAGE = 1;
+    private static Handler reverseLocationHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
-                case LOCATION_MESSAGE:
-                    removeMessages(LOCATION_MESSAGE);
-                    if (isLocationInfoFetching&&tsk!=null){
-                        Toast.makeText(HSApplication.getContext(),R.string.request_location_timeout,Toast.LENGTH_SHORT).show();
-                        KCAnalytics.logEvent("keyboard_location_sendFailed","reason","time out");
-                        tsk.cancel(true);
-                        isLocationInfoFetching = false;
+            switch (msg.what) {
+                case LOCATION_TIMEOUT_MESSAGE:
+                    if (isLocationInfoFetching && tsk != null) {
+                        Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
+                        KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "time out");
+                        boolean tskCancelResult = tsk.cancel(true);
+                        HSLog.d("suyingchi", "tsk.cancel  at " + "----tskCancelResult----" + tskCancelResult + System.currentTimeMillis());
+                        startMonitorLocatingState(false);
                     }
                     break;
             }
         }
     };
-    private static AsyncTask<Location, Void, Address> tsk;
-    private final int TIMEOUT_MILLIS = 10000;
-    private static final int LOCATION_MESSAGE = 1;
+
     public HSNewSettingsPanel() {
         mContext = HSApplication.getContext();
     }
@@ -149,28 +151,28 @@ public class HSNewSettingsPanel extends BasePanel {
             public void onItemClick(ViewItem item) {
                 HSAnalytics.logEvent("keyboard_location_clicked");
                 //保证不重复发起异步请求
-                if (isLocationInfoFetching||(!checkLocationPermission((LocationManager) context.getSystemService(Context.LOCATION_SERVICE)))) {
+                if (isLocationInfoFetching || (!checkLocationPermission((LocationManager) context.getSystemService(Context.LOCATION_SERVICE)))) {
                     Toast.makeText(HSApplication.getContext(), R.string.unable_location, Toast.LENGTH_SHORT).show();
                     KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "No network detected and no location permission");
                     return;
                 }
-                isLocationInfoFetching = true;
-                reverseLocationHandler.removeMessages(LOCATION_MESSAGE);
-                reverseLocationHandler.sendEmptyMessageAtTime(LOCATION_MESSAGE, TIMEOUT_MILLIS);
+                startMonitorLocatingState(true);
+                HSLog.d("suyingchi", "start loc");
                 Toast.makeText(HSApplication.getContext(), R.string.start_request_location, Toast.LENGTH_SHORT).show();
                 HSLocationManager locationManagerDevice = new HSLocationManager(HSApplication.getContext());
-                locationManagerDevice.setDeviceLocationTimeout(TIMEOUT_MILLIS);
+                //setDeviceLocationTimeout设定异步请求延迟执行时间，请求超时时间为30秒
+                locationManagerDevice.setDeviceLocationTimeout(1);
                 locationManagerDevice.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
                         if (!success) {
-                            Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
-                            KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "null location");
-                            reverseLocationHandler.removeMessages(LOCATION_MESSAGE);
-                            isLocationInfoFetching = false;
+                               Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
+                               KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "null location");
+                            startMonitorLocatingState(false);
                         } else {
+                            HSLog.d("suyingchi", "onLocationFetched");
                             EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
-                            tsk = new LocationReverseAsyncTask(editorInfo, TIMEOUT_MILLIS).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, locationManager.getLocation());
+                            tsk = new LocationReverseAsyncTask(editorInfo).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, locationManager.getLocation());
                         }
                     }
 
@@ -178,7 +180,7 @@ public class HSNewSettingsPanel extends BasePanel {
                     public void onGeographyInfoFetched(boolean success, HSLocationManager locationManager) {
                         if (!success) {
                             KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFail");
-                        }else {
+                        } else {
                             KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendSuccess");
                         }
                     }
@@ -232,28 +234,34 @@ public class HSNewSettingsPanel extends BasePanel {
     }
 
     private boolean checkLocationPermission(LocationManager locationManager) {
-        if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( context, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission( context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return false ;
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return false;
         }
         return !(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER));
 
     }
 
+    private static void startMonitorLocatingState(boolean startLocating) {
+        reverseLocationHandler.removeMessages(LOCATION_TIMEOUT_MESSAGE);
+        if (startLocating) {
+            reverseLocationHandler.sendEmptyMessageDelayed(LOCATION_TIMEOUT_MESSAGE, REQUEST_LOCATION_TOTAL_TIMEOUT_MILLIS);
+        }
+        isLocationInfoFetching = startLocating;
+    }
 
-    private  static class LocationReverseAsyncTask extends AsyncTask<Location, Void, Address> {
+    private static class LocationReverseAsyncTask extends AsyncTask<Location, Void, Address> {
         private String locationText = "";
         EditorInfo editorInfo;
-        int timeoutMillis;
 
-        LocationReverseAsyncTask(EditorInfo editorInfo, int timeoutMillis) {
+        LocationReverseAsyncTask(EditorInfo editorInfo) {
             this.editorInfo = editorInfo;
-            this.timeoutMillis = timeoutMillis;
         }
 
         @Override
         protected Address doInBackground(Location... locations) {
+            HSLog.d("suyingchi", "doInBackground start");
             Location location = locations[0];
             List<Address> addressList = null;
             double latitude = location.getLatitude();
@@ -263,23 +271,26 @@ public class HSNewSettingsPanel extends BasePanel {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return addressList!=null&&addressList.size() >= 1 ? addressList.get(0) : null;
+            return addressList != null && addressList.size() >= 1 ? addressList.get(0) : null;
+
         }
 
         @Override
         protected void onPostExecute(Address address) {
+            HSLog.d("suyingchi", "onPostExecute isCancelled" + isCancelled());
             if (address != null) {
                 String streetName = address.getAddressLine(0);
                 if (TextUtils.isEmpty(streetName)) {
                     Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
                     KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason", "result is not full");
-                } else if (!TextUtils.isEmpty(streetName)&&streetName.contains(address.getPostalCode())) {
-                        locationText = streetName.substring(0, streetName.length() - address.getPostalCode().length() - 2);
-                }else {
-                    locationText  =streetName;
+                } else if (!TextUtils.isEmpty(streetName) && streetName.contains(address.getPostalCode())) {
+                    locationText = streetName.substring(0, streetName.length() - address.getPostalCode().length() - 2);
+                } else {
+                    locationText = streetName;
                 }
                 if (editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
                     HSInputMethod.inputText(locationText);
+                    HSLog.d("suyingchi", "onPostExecute  at " + System.currentTimeMillis());
                     KCAnalytics.logEvent("GeoCoder_keyboard_location_sendSuccess");
                 }
 
@@ -287,8 +298,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
                 KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason", "Failed to get the location");
             }
-            isLocationInfoFetching = false;
-            reverseLocationHandler.removeMessages(LOCATION_MESSAGE);
+            startMonitorLocatingState(false);
         }
     }
 
