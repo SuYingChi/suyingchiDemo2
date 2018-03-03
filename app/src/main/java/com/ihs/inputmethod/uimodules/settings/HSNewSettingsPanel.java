@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AppOpsManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.AppOpsManagerCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,9 +73,7 @@ public class HSNewSettingsPanel extends BasePanel {
     private List<ViewItem> items;
     private SettingsViewPager settingsViewPager;
     private static boolean isLocationInfoFetching = false;
-    private static long geoRunMillis;
-    private static long geographyRunTimeMillis;
-
+    Handler handler = new Handler();
     public HSNewSettingsPanel() {
         mContext = HSApplication.getContext();
     }
@@ -146,84 +146,47 @@ public class HSNewSettingsPanel extends BasePanel {
                 }
                 isLocationInfoFetching = true;
                 Toast.makeText(HSApplication.getContext(), R.string.start_request_location, Toast.LENGTH_SHORT).show();
-                boolean isLocServiceEnable = isLocServiceEnable();
-                boolean isLocationNetworkEnable = isLocationNetworkEnable();
                 long startTime = System.currentTimeMillis();
-                final int TIMEOUT_MILLIS = 10000;
-                if (!isLocServiceEnable & !isLocationNetworkEnable) {
+                final int TIMEOUT_MILLIS = 5000;
+                if (!checkLocationPermission((LocationManager) context.getSystemService(Context.LOCATION_SERVICE))) {
                     Toast.makeText(HSApplication.getContext(), R.string.unable_location, Toast.LENGTH_SHORT).show();
                     KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "No network detected and no location permission");
                     isLocationInfoFetching = false;
                     return;
                 }
                 HSLocationManager locationManagerDevice = new HSLocationManager(HSApplication.getContext());
+                locationManagerDevice.setDeviceLocationTimeout(TIMEOUT_MILLIS);
                 locationManagerDevice.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
-                    EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
 
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
-                        if (locationManager.getLocation() == null) {
+                        if (!success||locationManager.getLocation() == null) {
                             Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
                             KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "null location");
                             isLocationInfoFetching = false;
                         } else {
-                            AsyncTask<Location, Void, Address> tsk = new LocationReverseAsyncTask(editorInfo, startTime, TIMEOUT_MILLIS).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, locationManager.getLocation());
-                            //setting timeout thread for async task
-                            new Thread() {
+                            EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
+                            AsyncTask<Location, Void, Address> tsk = new LocationReverseAsyncTask(editorInfo, TIMEOUT_MILLIS).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, locationManager.getLocation());
+                            handler.postDelayed(new Runnable() {
+                                @Override
                                 public void run() {
-                                    try {
-                                        tsk.get(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS); //set time in milisecond(in this timeout is 30 seconds
-                                    } catch (Exception e) {
-                                        tsk.cancel(true);
-                                        ((Activity) mContext).runOnUiThread(new Runnable() {
-                                            public void run() {
-                                                Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
-                                                KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason", "request timeout");
-                                            }
-                                        });
-                                    }
+                                   if (isLocationInfoFetching){
+                                       Toast.makeText(context,R.string.request_location_timeout,Toast.LENGTH_SHORT).show();
+                                       KCAnalytics.logEvent("keyboard_location_sendFailed","reason","time out");
+                                       tsk.cancel(true);
+                                       isLocationInfoFetching = false;
+                                   }
                                 }
-                            }.start();
+                            }, TIMEOUT_MILLIS);
                         }
                     }
 
                     @Override
                     public void onGeographyInfoFetched(boolean success, HSLocationManager locationManager) {
-                        if (locationManager.getLocation() == null) {
+                        if (!success||locationManager.getLocation() == null) {
                             KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "null location");
-                            return;
-                        }
-                        if (success) {
-                            String city = String.valueOf(locationManager.getCity());
-                            String subLocality = locationManager.getSublocality();
-                            String Neighborhood = locationManager.getNeighborhood();
-                            String country = locationManager.getCountry();
-                            if (TextUtils.isEmpty(city) || TextUtils.isEmpty(subLocality) || TextUtils.isEmpty(Neighborhood) || TextUtils.isEmpty(country)) {
-                                long endTime = System.currentTimeMillis();
-                                if (endTime - startTime >= TIMEOUT_MILLIS) {
-                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason", "request timeout");
-                                } else {
-                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason", "result is not full");
-                                }
-                            } else {
-                                KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendSuccess");
-                            }
-                        } else {
-                            long endTime = System.currentTimeMillis();
-                            if (endTime - startTime >= TIMEOUT_MILLIS) {
-                                KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason", "request timeout");
-                            } else {
-                                KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason", "Failed to get the location");
-                            }
-
-                        }
-                        geographyRunTimeMillis = System.currentTimeMillis() - startTime;
-                        if (isLocationInfoFetching) {
-                            KCAnalytics.logEvent("GeographyInfoFetched_keyboard_location_reverse_finish_quickly");
-                        } else if (geoRunMillis < geographyRunTimeMillis) {
-                            KCAnalytics.logEvent("GeoCoder_keyboard_location_reverse_finish_quickly");
-                        } else {
-                            KCAnalytics.logEvent("GeographyInfoFetched_keyboard_location_reverse_finish_quickly");
+                        }else {
+                            KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendSuccess");
                         }
                     }
                 });
@@ -275,23 +238,30 @@ public class HSNewSettingsPanel extends BasePanel {
         return items;
     }
 
+    private boolean checkLocationPermission(LocationManager locationManager) {
+        if ( Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission( context, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission( context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return false ;
+        }
+        return !(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER));
+
+    }
+
     private static class LocationReverseAsyncTask extends AsyncTask<Location, Void, Address> {
         private String locationText = "";
         EditorInfo editorInfo;
-        long startTime;
         int timeoutMillis;
 
-        LocationReverseAsyncTask(EditorInfo editorInfo, long startTime, int timeoutMillis) {
+        LocationReverseAsyncTask(EditorInfo editorInfo, int timeoutMillis) {
             this.editorInfo = editorInfo;
-            this.startTime = startTime;
             this.timeoutMillis = timeoutMillis;
         }
 
         @Override
         protected Address doInBackground(Location... locations) {
-            editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
             Location location = locations[0];
-            List<Address> addressList = new ArrayList<Address>();
+            List<Address> addressList = null;
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
             try {
@@ -299,48 +269,20 @@ public class HSNewSettingsPanel extends BasePanel {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return addressList.size() >= 1 ? addressList.get(0) : null;
+            return addressList!=null&&addressList.size() >= 1 ? addressList.get(0) : null;
         }
 
         @Override
         protected void onPostExecute(Address address) {
             if (address != null) {
-                //国家
-                String country = address.getCountryName();
-                //省份
-                String adminArea = address.getAdminArea();
-                //城市名
-                String locality = address.getLocality();
-                //街名路牌号,streetName取不到的时候使用该地址
-                String featureName = address.getFeatureName();
-                //城区
-                String subLocality = address.getSubLocality();
-                //优先使用该地址
                 String streetName = address.getAddressLine(0);
-
-                if (TextUtils.isEmpty(country) || TextUtils.isEmpty(adminArea) || TextUtils.isEmpty(locality) || (TextUtils.isEmpty(featureName) && TextUtils.isEmpty(streetName))) {
+                if (TextUtils.isEmpty(streetName)) {
                     Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
                     KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason", "result is not full");
-
-                    //有些低版本手机取不到完整的街道名，这种情况下使用featureName
-                } else if (!TextUtils.isEmpty(streetName) && streetName.contains(subLocality)) {
-                    //有些机型的请求结果含有邮编
-                    //去除结果文本中的邮编
-                    if (!TextUtils.isEmpty(address.getPostalCode()) && streetName.contains(address.getPostalCode())) {
+                } else if (!TextUtils.isEmpty(streetName)&&streetName.contains(address.getPostalCode())) {
                         locationText = streetName.substring(0, streetName.length() - address.getPostalCode().length() - 2);
-                    } else {
-                        locationText = streetName;
-                    }
-                } else if (!TextUtils.isEmpty(featureName)) {
-                    locationText = featureName + "," + subLocality + "," + locality + "," + adminArea + "," + country;
-                } else if (!TextUtils.isEmpty(streetName)) {
-                    //有些机型的请求结果含有邮编
-                    //去除结果文本中的邮编
-                    if (!TextUtils.isEmpty(address.getPostalCode()) && streetName.contains(address.getPostalCode())) {
-                        locationText = streetName.substring(0, streetName.length() - address.getPostalCode().length() - 2);
-                    } else {
-                        locationText = streetName;
-                    }
+                }else {
+                    locationText  =streetName;
                 }
                 if (editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
                     HSInputMethod.inputText(locationText);
@@ -352,74 +294,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason", "Failed to get the location");
             }
             isLocationInfoFetching = false;
-            geoRunMillis = System.currentTimeMillis() - startTime;
         }
-    }
-
-    //判断是否使用GPS定位
-    private boolean isLocServiceEnable() {
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            final int AppOpsManager_OP_GPS = 2;
-            final int AppOpsManager_OP_FINE_LOCATION = 1;
-            int checkResult = checkOp(context, AppOpsManager_OP_GPS);
-            int checkResult2 = checkOp(context, AppOpsManager_OP_FINE_LOCATION);
-            if (!(AppOpsManagerCompat.MODE_IGNORED != checkResult && AppOpsManagerCompat.MODE_IGNORED != checkResult2)) {
-                return false;
-            }
-        }
-        return locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    }
-
-    //判断使用网络定位
-    private boolean isLocationNetworkEnable() {
-        ConnectivityManager manager = (ConnectivityManager) context
-                .getApplicationContext().getSystemService(
-                        Context.CONNECTIVITY_SERVICE);
-
-        if (manager == null) {
-            return false;
-        }
-
-        NetworkInfo networkinfo = manager.getActiveNetworkInfo();
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        boolean network = false;
-        if (locationManager != null) {
-            network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        }
-        return networkinfo != null && networkinfo.isAvailable() && network;
-    }
-
-    //检查权限列表
-    private static int checkOp(Context context, int op) {
-        final int version = Build.VERSION.SDK_INT;
-        if (version >= Build.VERSION_CODES.KITKAT) {
-            Object object = context.getSystemService(Context.APP_OPS_SERVICE);
-            Class c = null;
-            if (object != null) {
-                c = object.getClass();
-            }
-            try {
-                Class[] cArg = new Class[3];
-                cArg[0] = int.class;
-                cArg[1] = int.class;
-                cArg[2] = String.class;
-                Method lMethod = null;
-                if (c != null)
-                    lMethod = c.getDeclaredMethod("checkOp", cArg);
-                if (lMethod != null) {
-                    return (Integer) lMethod.invoke(object, op, Binder.getCallingUid(), context.getPackageName());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    return AppOpsManagerCompat.noteOp(context, AppOpsManager.OPSTR_FINE_LOCATION, context.getApplicationInfo().uid,
-                            context.getPackageName());
-                }
-
-            }
-        }
-        return -1;
     }
 
     private static void setViewHeight(View v, int height) {
