@@ -11,15 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemePanelModel;
+import com.kc.utils.KCAnalytics;
 
 import java.util.List;
 
@@ -112,8 +111,13 @@ public final class PanelMoreAdapterDelegate extends AdapterDelegate<List<ThemePa
 	private void startThemeHomeActivity() {
 		HSInputMethod.hideWindow();
 		final Context context = HSApplication.getContext();
-		final Intent intent = new Intent(context, ThemeHomeActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		context.startActivity(intent);
+		final Intent intent;
+		try {
+			intent = new Intent(context, Class.forName(HSApplication.getContext().getString(R.string.home_activity_name)));
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			context.startActivity(intent);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 }

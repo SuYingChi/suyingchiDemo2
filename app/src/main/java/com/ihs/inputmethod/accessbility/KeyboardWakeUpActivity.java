@@ -9,12 +9,12 @@ import android.os.RemoteException;
 import android.view.View;
 import android.widget.TextView;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 
 import static android.view.View.GONE;
 
@@ -99,9 +99,13 @@ public class KeyboardWakeUpActivity extends HSActivity {
         if (startThemeHomeIntent == null) {
             startThemeHomeIntent = new Intent();
         }
-        startThemeHomeIntent.setClass(this, ThemeHomeActivity.class);
-        startActivity(startThemeHomeIntent);
-        finish();
+        try {
+            startThemeHomeIntent.setClass(this, Class.forName(HSApplication.getContext().getString(R.string.home_activity_name)));
+            startActivity(startThemeHomeIntent);
+            finish();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

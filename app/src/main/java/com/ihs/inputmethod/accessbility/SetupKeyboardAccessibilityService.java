@@ -25,7 +25,6 @@ import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.kc.commons.utils.KCCommonUtils;
 
 import java.util.List;
@@ -217,13 +216,18 @@ public class SetupKeyboardAccessibilityService {
             @Override
             public void onCancel(DialogInterface dialog) {
                 HSFloatWindowManager.getInstance().removeAccessibilityCover();
-                Intent intent = new Intent(HSApplication.getContext(), ThemeHomeActivity.class);
-                intent.setFlags(
-                        FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | FLAG_ACTIVITY_REORDER_TO_FRONT | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP |
-                                FLAG_ACTIVITY_REORDER_TO_FRONT | FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-                stopSelf = true;
-                handler.removeCallbacksAndMessages(null);
+                Intent intent = null;
+                try {
+                    intent = new Intent(HSApplication.getContext(), Class.forName(HSApplication.getContext().getString(R.string.home_activity_name)));
+                    intent.setFlags(
+                            FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | FLAG_ACTIVITY_REORDER_TO_FRONT | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP |
+                                    FLAG_ACTIVITY_REORDER_TO_FRONT | FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                    stopSelf = true;
+                    handler.removeCallbacksAndMessages(null);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
         AlertDialog alertDialog = alertDialogBuilder.create();

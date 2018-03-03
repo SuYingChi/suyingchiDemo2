@@ -85,26 +85,30 @@ public class KeyboardActivationActivity extends HSActivity {
                     if (actIntent == null) {
                         actIntent = new Intent();
                     }
-                    actIntent.setClass(HSApplication.getContext(), ThemeHomeActivity.class);
-                    actIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP);
-                    KeyboardActivationActivity.this.startActivity(actIntent);
+                    try {
+                        actIntent.setClass(HSApplication.getContext(),Class.forName(HSApplication.getContext().getString(R.string.home_activity_name)));
+                        actIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP);
+                        KeyboardActivationActivity.this.startActivity(actIntent);
 
-                    View coverView = HSFloatWindowManager.getInstance().getAccessibilityCoverView();
-                    logOneTimeGA(app_setting_up_page_viewed);
+                        View coverView = HSFloatWindowManager.getInstance().getAccessibilityCoverView();
+                        logOneTimeGA(app_setting_up_page_viewed);
 
 
-                    if (coverView != null) {
-                        coverView.findViewById(R.id.progressBar).setVisibility(GONE);
-                        coverView.findViewById(R.id.iv_succ).setVisibility(View.VISIBLE);
-                        ((TextView) coverView.findViewById(R.id.tv_settings_item)).setText(R.string.access_set_up_success);
-                        logOneTimeGA(app_accessibility_setkey_success_page_viewed);
-                    }
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            KeyboardActivationActivity.this.finish();
+                        if (coverView != null) {
+                            coverView.findViewById(R.id.progressBar).setVisibility(GONE);
+                            coverView.findViewById(R.id.iv_succ).setVisibility(View.VISIBLE);
+                            ((TextView) coverView.findViewById(R.id.tv_settings_item)).setText(R.string.access_set_up_success);
+                            logOneTimeGA(app_accessibility_setkey_success_page_viewed);
                         }
-                    }, 200);
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                KeyboardActivationActivity.this.finish();
+                            }
+                        }, 200);
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -142,12 +146,16 @@ public class KeyboardActivationActivity extends HSActivity {
             Intent actIntent = new Intent();
             actIntent.putExtras(getIntent());
             if (oneTapPageViewed) {
-                actIntent.setClass(HSApplication.getContext(), ThemeHomeActivity.class);
+                try {
+                    actIntent.setClass(HSApplication.getContext(), Class.forName(HSApplication.getContext().getString(R.string.home_activity_name)));
+                    startActivity(actIntent);
+                    finish();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             } else {
                 actIntent.setAction(ACTION_MAIN_ACTIVITY);
             }
-            startActivity(actIntent);
-            finish();
             return;
         }
 

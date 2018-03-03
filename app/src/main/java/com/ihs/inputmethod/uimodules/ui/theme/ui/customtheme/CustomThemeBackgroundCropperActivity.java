@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
@@ -130,11 +131,16 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_START_CUSTOM_THEME) {
             if (resultCode == RESULT_OK) {
-                Intent intent = new Intent(this, ThemeHomeActivity.class);
-                intent.putExtra(ThemeHomeActivity.EXTRA_SHOW_TRIAL_KEYBOARD, true);
-                intent.putExtra(ThemeHomeActivity.EXTRA_SHOW_AD_ON_TRIAL_KEYBOARD_DISMISS, false);
-                startActivity(intent);
-                CustomThemeBackgroundCropperActivity.this.finish();
+                Intent intent = null;
+                try {
+                    intent = new Intent(this, Class.forName(HSApplication.getContext().getString(R.string.home_activity_name)));
+                    intent.putExtra(ThemeHomeActivity.EXTRA_SHOW_TRIAL_KEYBOARD, true);
+                    intent.putExtra(ThemeHomeActivity.EXTRA_SHOW_AD_ON_TRIAL_KEYBOARD_DISMISS, false);
+                    startActivity(intent);
+                    CustomThemeBackgroundCropperActivity.this.finish();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
