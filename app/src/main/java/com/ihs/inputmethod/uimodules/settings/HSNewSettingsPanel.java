@@ -1,23 +1,16 @@
 package com.ihs.inputmethod.uimodules.settings;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.AppOpsManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -51,13 +44,9 @@ import com.ihs.panelcontainer.panel.KeyboardPanel;
 import com.kc.utils.KCAnalytics;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 import static com.ihs.panelcontainer.KeyboardPanelSwitchContainer.MODE_BACK_PARENT;
@@ -73,7 +62,7 @@ public class HSNewSettingsPanel extends BasePanel {
     private List<ViewItem> items;
     private SettingsViewPager settingsViewPager;
     private static boolean isLocationInfoFetching = false;
-    Handler handler = new Handler();
+    private Handler reverseLocationHandler = new Handler();
     public HSNewSettingsPanel() {
         mContext = HSApplication.getContext();
     }
@@ -146,7 +135,6 @@ public class HSNewSettingsPanel extends BasePanel {
                 }
                 isLocationInfoFetching = true;
                 Toast.makeText(HSApplication.getContext(), R.string.start_request_location, Toast.LENGTH_SHORT).show();
-                long startTime = System.currentTimeMillis();
                 final int TIMEOUT_MILLIS = 5000;
                 if (!checkLocationPermission((LocationManager) context.getSystemService(Context.LOCATION_SERVICE))) {
                     Toast.makeText(HSApplication.getContext(), R.string.unable_location, Toast.LENGTH_SHORT).show();
@@ -157,7 +145,6 @@ public class HSNewSettingsPanel extends BasePanel {
                 HSLocationManager locationManagerDevice = new HSLocationManager(HSApplication.getContext());
                 locationManagerDevice.setDeviceLocationTimeout(TIMEOUT_MILLIS);
                 locationManagerDevice.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
-
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
                         if (!success||locationManager.getLocation() == null) {
@@ -167,7 +154,7 @@ public class HSNewSettingsPanel extends BasePanel {
                         } else {
                             EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
                             AsyncTask<Location, Void, Address> tsk = new LocationReverseAsyncTask(editorInfo, TIMEOUT_MILLIS).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, locationManager.getLocation());
-                            handler.postDelayed(new Runnable() {
+                            reverseLocationHandler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                    if (isLocationInfoFetching){
