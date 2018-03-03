@@ -214,21 +214,20 @@ public class HSUIApplication extends HSInputMethodApplication {
         registerReceiver(broadcastReceiver, new IntentFilter(HSNotificationConstant.HS_APPSFLYER_RESULT));
         registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_INPUT_METHOD_CHANGED));
 
+        HSChargingScreenManager.init(true, AdPlacements.EXPRESS_CABLE, AdPlacements.EXPRESS_CABLE_REPORT);
+        ScreenLockerManager.init(AdPlacements.NATIVE_BOOST_DONE, AdPlacements.EXPRESS_CABLE);
+        setChargingFunctionStatus();
+        initLockerChargingNoAdConfig();
+        registerNotificationEvent();
         //init facemoji
         handler.post(new Runnable() {
             @Override
             public void run() {
                 HSDirectoryManager.getInstance().init(HSApplication.getContext());
-                HSChargingScreenManager.init(true, AdPlacements.EXPRESS_CABLE, AdPlacements.EXPRESS_CABLE_REPORT);
                 FloatWindowCompat.initLockScreen(HSUIApplication.this);
                 AppSuggestionManager.getInstance().init(true, HSConfig.optString(AdPlacements.EXPRESS_LUMEN,"Application","AppSuggestion","AdPlacement"));
-                setChargingFunctionStatus();
-                initLockerChargingNoAdConfig();
-                registerNotificationEvent();
-                ScreenLockerManager.init(AdPlacements.NATIVE_BOOST_DONE, AdPlacements.EXPRESS_CABLE);
                 LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
                 SoftGameManager.getInstance().init(AdPlacements.NATIVE_THEME_TRY, AdPlacements.INTERSTITIAL_SPRING);
-
                 HSInputMethodExecutors.executeSingleThreadDelayed(new Runnable() {
                     @Override
                     public void run() {
