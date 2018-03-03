@@ -73,13 +73,12 @@ public class HSNewSettingsPanel extends BasePanel {
     private static boolean isLocationInfoFetching = false;
     private static long geoRunMillis;
     private static long geographyRunTimeMillis;
-    public HSNewSettingsPanel()
-    {
+
+    public HSNewSettingsPanel() {
         mContext = HSApplication.getContext();
     }
 
-    public Context getContext()
-    {
+    public Context getContext() {
         return mContext;
     }
 
@@ -140,47 +139,46 @@ public class HSNewSettingsPanel extends BasePanel {
         items.add(ViewItemBuilder.getLocationItem(new ViewItem.ViewItemListener() {
             @Override
             public void onItemClick(ViewItem item) {
-                HSAnalytics.logEvent("keyboard_location_clicked ");
+                HSAnalytics.logEvent("keyboard_location_clicked");
                 //保证不重复发起异步请求
-                if(isLocationInfoFetching){
+                if (isLocationInfoFetching) {
                     return;
                 }
                 isLocationInfoFetching = true;
-                Toast.makeText(HSApplication.getContext(), "Locating....", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HSApplication.getContext(), R.string.start_request_location, Toast.LENGTH_SHORT).show();
                 boolean isLocServiceEnable = isLocServiceEnable();
                 boolean isLocationNetworkEnable = isLocationNetworkEnable();
                 long startTime = System.currentTimeMillis();
                 final int TIMEOUT_MILLIS = 10000;
                 if (!isLocServiceEnable & !isLocationNetworkEnable) {
                     Toast.makeText(HSApplication.getContext(), R.string.unable_location, Toast.LENGTH_SHORT).show();
-                    KCAnalytics.logEvent("keyboard_location_sendFailed", "reason","No network detected and no location permission");
+                    KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "No network detected and no location permission");
                     isLocationInfoFetching = false;
                     return;
                 }
-                HSLocationManager locationManager_device = new HSLocationManager(HSApplication.getContext());
-                locationManager_device.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
+                HSLocationManager locationManagerDevice = new HSLocationManager(HSApplication.getContext());
+                locationManagerDevice.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
                     EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
+
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
-                        if(locationManager.getLocation()==null){
+                        if (locationManager.getLocation() == null) {
                             Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
-                            KCAnalytics.logEvent("keyboard_location_sendFailed", "reason","null location");
+                            KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "null location");
                             isLocationInfoFetching = false;
-                        }else {
+                        } else {
                             AsyncTask<Location, Void, Address> tsk = new LocationReverseAsyncTask(editorInfo, startTime, TIMEOUT_MILLIS).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, locationManager.getLocation());
                             //setting timeout thread for async task
-                            new Thread(){
-                                public void run(){
+                            new Thread() {
+                                public void run() {
                                     try {
                                         tsk.get(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS); //set time in milisecond(in this timeout is 30 seconds
                                     } catch (Exception e) {
                                         tsk.cancel(true);
-                                        ((Activity) mContext).runOnUiThread(new Runnable()
-                                        {
-                                            public void run()
-                                            {
+                                        ((Activity) mContext).runOnUiThread(new Runnable() {
+                                            public void run() {
                                                 Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
-                                                KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","request timeout");
+                                                KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason", "request timeout");
                                             }
                                         });
                                     }
@@ -188,13 +186,14 @@ public class HSNewSettingsPanel extends BasePanel {
                             }.start();
                         }
                     }
+
                     @Override
                     public void onGeographyInfoFetched(boolean success, HSLocationManager locationManager) {
-                        if (locationManager.getLocation()==null) {
-                            KCAnalytics.logEvent("keyboard_location_sendFailed", "reason","null location");
+                        if (locationManager.getLocation() == null) {
+                            KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "null location");
                             return;
                         }
-                        if(success) {
+                        if (success) {
                             String city = String.valueOf(locationManager.getCity());
                             String subLocality = locationManager.getSublocality();
                             String Neighborhood = locationManager.getNeighborhood();
@@ -202,28 +201,28 @@ public class HSNewSettingsPanel extends BasePanel {
                             if (TextUtils.isEmpty(city) || TextUtils.isEmpty(subLocality) || TextUtils.isEmpty(Neighborhood) || TextUtils.isEmpty(country)) {
                                 long endTime = System.currentTimeMillis();
                                 if (endTime - startTime >= TIMEOUT_MILLIS) {
-                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason","request timeout");
+                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason", "request timeout");
                                 } else {
-                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason","result is not full");
+                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason", "result is not full");
                                 }
                             } else {
                                 KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendSuccess");
                             }
                         } else {
-                                long endTime = System.currentTimeMillis();
-                                if (endTime - startTime >= TIMEOUT_MILLIS) {
-                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason","request timeout");
-                                } else {
-                                    KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason","Failed to get the location");
-                                }
-
+                            long endTime = System.currentTimeMillis();
+                            if (endTime - startTime >= TIMEOUT_MILLIS) {
+                                KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason", "request timeout");
+                            } else {
+                                KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason", "Failed to get the location");
                             }
-                        geographyRunTimeMillis = System.currentTimeMillis()-startTime;
-                        if(isLocationInfoFetching){
+
+                        }
+                        geographyRunTimeMillis = System.currentTimeMillis() - startTime;
+                        if (isLocationInfoFetching) {
                             KCAnalytics.logEvent("GeographyInfoFetched_keyboard_location_reverse_finish_quickly");
-                        } else if(geoRunMillis<geographyRunTimeMillis){
+                        } else if (geoRunMillis < geographyRunTimeMillis) {
                             KCAnalytics.logEvent("GeoCoder_keyboard_location_reverse_finish_quickly");
-                        }else {
+                        } else {
                             KCAnalytics.logEvent("GeographyInfoFetched_keyboard_location_reverse_finish_quickly");
                         }
                     }
@@ -276,85 +275,86 @@ public class HSNewSettingsPanel extends BasePanel {
         return items;
     }
 
-   private static class LocationReverseAsyncTask extends AsyncTask<Location, Void, Address>{
-      private String locationText="";
-      EditorInfo editorInfo;
-      long startTime;
-      int timeoutMillis;
+    private static class LocationReverseAsyncTask extends AsyncTask<Location, Void, Address> {
+        private String locationText = "";
+        EditorInfo editorInfo;
+        long startTime;
+        int timeoutMillis;
 
-       LocationReverseAsyncTask(EditorInfo editorInfo,long startTime,int timeoutMillis){
-           this.editorInfo = editorInfo;
-           this.startTime = startTime;
-           this.timeoutMillis = timeoutMillis;
-       }
-       @Override
-       protected Address doInBackground(Location... locations) {
-           editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
-           Location location = locations[0];
-           List<Address> addressList = new ArrayList<Address>();
-           double latitude = location.getLatitude();
-           double longitude = location.getLongitude();
-           try {
-               addressList = new Geocoder(HSApplication.getContext(), Locale.getDefault()).getFromLocation(latitude, longitude, 1);
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
-           return addressList.size()>=1? addressList.get(0):null;
-       }
+        LocationReverseAsyncTask(EditorInfo editorInfo, long startTime, int timeoutMillis) {
+            this.editorInfo = editorInfo;
+            this.startTime = startTime;
+            this.timeoutMillis = timeoutMillis;
+        }
 
-       @Override
-       protected void onPostExecute(Address address) {
-           if (address != null) {
-               //国家
-               String country = address.getCountryName();
-               //省份
-               String adminArea = address.getAdminArea();
-               //城市名
-               String locality = address.getLocality();
-               //街名路牌号,streetName取不到的时候使用该地址
-               String featureName = address.getFeatureName();
-               //城区
-               String subLocality = address.getSubLocality();
-               //优先使用该地址
-               String streetName = address.getAddressLine(0);
+        @Override
+        protected Address doInBackground(Location... locations) {
+            editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
+            Location location = locations[0];
+            List<Address> addressList = new ArrayList<Address>();
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            try {
+                addressList = new Geocoder(HSApplication.getContext(), Locale.getDefault()).getFromLocation(latitude, longitude, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return addressList.size() >= 1 ? addressList.get(0) : null;
+        }
 
-               if (TextUtils.isEmpty(country) || TextUtils.isEmpty(adminArea) || TextUtils.isEmpty(locality) || (TextUtils.isEmpty(featureName) && TextUtils.isEmpty(streetName))) {
-                           Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
-                           KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","result is not full");
+        @Override
+        protected void onPostExecute(Address address) {
+            if (address != null) {
+                //国家
+                String country = address.getCountryName();
+                //省份
+                String adminArea = address.getAdminArea();
+                //城市名
+                String locality = address.getLocality();
+                //街名路牌号,streetName取不到的时候使用该地址
+                String featureName = address.getFeatureName();
+                //城区
+                String subLocality = address.getSubLocality();
+                //优先使用该地址
+                String streetName = address.getAddressLine(0);
 
-                   //有些低版本手机取不到完整的街道名，这种情况下使用featureName
-               }else if (!TextUtils.isEmpty(streetName)&&streetName.contains(subLocality)) {
-                   //有些机型的请求结果含有邮编
-                   //去除结果文本中的邮编
-                   if(!TextUtils.isEmpty(address.getPostalCode())&&streetName.contains(address.getPostalCode())){
-                       locationText = streetName.substring(0,streetName.length()-address.getPostalCode().length()-2);
-                   }else {
-                       locationText = streetName;
-                   }
-               }else if(!TextUtils.isEmpty(featureName)){
-                   locationText = featureName+","+subLocality+","+locality+","+adminArea+","+country;
-               }else if(!TextUtils.isEmpty(streetName)){
-                   //有些机型的请求结果含有邮编
-                   //去除结果文本中的邮编
-                   if(!TextUtils.isEmpty(address.getPostalCode())&&streetName.contains(address.getPostalCode())){
-                       locationText = streetName.substring(0,streetName.length()-address.getPostalCode().length()-2);
-                   }else {
-                       locationText = streetName;
-                   }
-               }
+                if (TextUtils.isEmpty(country) || TextUtils.isEmpty(adminArea) || TextUtils.isEmpty(locality) || (TextUtils.isEmpty(featureName) && TextUtils.isEmpty(streetName))) {
+                    Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
+                    KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason", "result is not full");
+
+                    //有些低版本手机取不到完整的街道名，这种情况下使用featureName
+                } else if (!TextUtils.isEmpty(streetName) && streetName.contains(subLocality)) {
+                    //有些机型的请求结果含有邮编
+                    //去除结果文本中的邮编
+                    if (!TextUtils.isEmpty(address.getPostalCode()) && streetName.contains(address.getPostalCode())) {
+                        locationText = streetName.substring(0, streetName.length() - address.getPostalCode().length() - 2);
+                    } else {
+                        locationText = streetName;
+                    }
+                } else if (!TextUtils.isEmpty(featureName)) {
+                    locationText = featureName + "," + subLocality + "," + locality + "," + adminArea + "," + country;
+                } else if (!TextUtils.isEmpty(streetName)) {
+                    //有些机型的请求结果含有邮编
+                    //去除结果文本中的邮编
+                    if (!TextUtils.isEmpty(address.getPostalCode()) && streetName.contains(address.getPostalCode())) {
+                        locationText = streetName.substring(0, streetName.length() - address.getPostalCode().length() - 2);
+                    } else {
+                        locationText = streetName;
+                    }
+                }
                 if (editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
-                   HSInputMethod.inputText(locationText);
-                   KCAnalytics.logEvent("GeoCoder_keyboard_location_sendSuccess");
-               }
+                    HSInputMethod.inputText(locationText);
+                    KCAnalytics.logEvent("GeoCoder_keyboard_location_sendSuccess");
+                }
 
-           }else {
-               Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
-               KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","Failed to get the location");
-           }
-           isLocationInfoFetching = false;
-           geoRunMillis= System.currentTimeMillis()-startTime;
-       }
-   }
+            } else {
+                Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
+                KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason", "Failed to get the location");
+            }
+            isLocationInfoFetching = false;
+            geoRunMillis = System.currentTimeMillis() - startTime;
+        }
+    }
 
     //判断是否使用GPS定位
     private boolean isLocServiceEnable() {
@@ -364,7 +364,7 @@ public class HSNewSettingsPanel extends BasePanel {
             final int AppOpsManager_OP_FINE_LOCATION = 1;
             int checkResult = checkOp(context, AppOpsManager_OP_GPS);
             int checkResult2 = checkOp(context, AppOpsManager_OP_FINE_LOCATION);
-            if (!(AppOpsManagerCompat.MODE_IGNORED != checkResult && AppOpsManagerCompat.MODE_IGNORED != checkResult2) ) {
+            if (!(AppOpsManagerCompat.MODE_IGNORED != checkResult && AppOpsManagerCompat.MODE_IGNORED != checkResult2)) {
                 return false;
             }
         }

@@ -27,5 +27,6 @@
     <string name="request_location_timeout">Network failed. Please try again later. </string>
     <string name="setting_item_location">Location</string>
     <string name="request_location_fail">Failed to get the location</string>
+    <string name="start_request_location">Location...</string>
 
 </resources>
