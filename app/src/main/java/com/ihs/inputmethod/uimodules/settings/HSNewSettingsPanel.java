@@ -147,7 +147,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 locationManagerDevice.fetchLocation(HSLocationManager.LocationSource.DEVICE, new HSLocationManager.HSLocationListener() {
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
-                        if (!success||locationManager.getLocation() == null) {
+                        if (!success) {
                             Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
                             KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "null location");
                             isLocationInfoFetching = false;
@@ -170,8 +170,8 @@ public class HSNewSettingsPanel extends BasePanel {
 
                     @Override
                     public void onGeographyInfoFetched(boolean success, HSLocationManager locationManager) {
-                        if (!success||locationManager.getLocation() == null) {
-                            KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "null location");
+                        if (!success) {
+                            KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFail");
                         }else {
                             KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendSuccess");
                         }
