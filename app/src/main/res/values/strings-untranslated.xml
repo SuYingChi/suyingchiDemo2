@@ -23,12 +23,9 @@
     <string name="disable_app_suggestion_msg">You can quickly open your recent apps here. Are you sure to disable it?</string>
 
     <string name="item_sticker_more_coming">More stickers are coming soon</string>
-    <string name="unable_location">No location permission and No network detected</string>
-    <string name="request_location_wrong_language">Failed to get the location.</string>
-    <string name="request_location_timeout">request timeout.   please  switch your location mode and try again </string>
+    <string name="unable_location">No location permission</string>
+    <string name="request_location_timeout">Network failed. Please try again later. </string>
     <string name="setting_item_location">Location</string>
-    <string name="request_null_LaLongitude_fail">Failed to get the Latitude and Longitude</string>
-    <string name="location_info_is_not_full">location info is not full</string>
     <string name="request_location_fail">Failed to get the location</string>
 
 </resources>

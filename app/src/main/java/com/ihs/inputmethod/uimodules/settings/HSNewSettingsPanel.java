@@ -1,5 +1,7 @@
 package com.ihs.inputmethod.uimodules.settings;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.location.Address;
@@ -51,6 +53,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -147,7 +150,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 boolean isLocServiceEnable = isLocServiceEnable();
                 boolean isLocationNetworkEnable = isLocationNetworkEnable();
                 long startTime = System.currentTimeMillis();
-                final int timeoutMillis = 10000;
+                final int TIMEOUT_MILLIS = 10000;
                 if (!isLocServiceEnable & !isLocationNetworkEnable) {
                     Toast.makeText(HSApplication.getContext(), R.string.unable_location, Toast.LENGTH_SHORT).show();
                     KCAnalytics.logEvent("keyboard_location_sendFailed", "reason","No network detected and no location permission");
@@ -160,11 +163,29 @@ public class HSNewSettingsPanel extends BasePanel {
                     @Override
                     public void onLocationFetched(boolean success, HSLocationManager locationManager) {
                         if(locationManager.getLocation()==null){
-                            Toast.makeText(HSApplication.getContext(), R.string.request_null_LaLongitude_fail, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
                             KCAnalytics.logEvent("keyboard_location_sendFailed", "reason","null location");
                             isLocationInfoFetching = false;
                         }else {
-                            new LocationReverseAsyncTask(editorInfo,startTime,timeoutMillis).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,locationManager.getLocation());
+                            AsyncTask<Location, Void, Address> tsk = new LocationReverseAsyncTask(editorInfo, startTime, TIMEOUT_MILLIS).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, locationManager.getLocation());
+                            //setting timeout thread for async task
+                            new Thread(){
+                                public void run(){
+                                    try {
+                                        tsk.get(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS); //set time in milisecond(in this timeout is 30 seconds
+                                    } catch (Exception e) {
+                                        tsk.cancel(true);
+                                        ((Activity) mContext).runOnUiThread(new Runnable()
+                                        {
+                                            public void run()
+                                            {
+                                                Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
+                                                KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","request timeout");
+                                            }
+                                        });
+                                    }
+                                }
+                            }.start();
                         }
                     }
                     @Override
@@ -180,7 +201,7 @@ public class HSNewSettingsPanel extends BasePanel {
                             String country = locationManager.getCountry();
                             if (TextUtils.isEmpty(city) || TextUtils.isEmpty(subLocality) || TextUtils.isEmpty(Neighborhood) || TextUtils.isEmpty(country)) {
                                 long endTime = System.currentTimeMillis();
-                                if (endTime - startTime >= timeoutMillis) {
+                                if (endTime - startTime >= TIMEOUT_MILLIS) {
                                     KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason","request timeout");
                                 } else {
                                     KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason","result is not full");
@@ -190,7 +211,7 @@ public class HSNewSettingsPanel extends BasePanel {
                             }
                         } else {
                                 long endTime = System.currentTimeMillis();
-                                if (endTime - startTime >= timeoutMillis) {
+                                if (endTime - startTime >= TIMEOUT_MILLIS) {
                                     KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason","request timeout");
                                 } else {
                                     KCAnalytics.logEvent("onGeographyInfoFetched_keyboard_location_sendFailed", "reason","Failed to get the location");
@@ -283,8 +304,7 @@ public class HSNewSettingsPanel extends BasePanel {
 
        @Override
        protected void onPostExecute(Address address) {
-           long endMillis = System.currentTimeMillis();
-           if (address != null&&(endMillis-startTime)<=timeoutMillis) {
+           if (address != null) {
                //国家
                String country = address.getCountryName();
                //省份
@@ -299,14 +319,9 @@ public class HSNewSettingsPanel extends BasePanel {
                String streetName = address.getAddressLine(0);
 
                if (TextUtils.isEmpty(country) || TextUtils.isEmpty(adminArea) || TextUtils.isEmpty(locality) || (TextUtils.isEmpty(featureName) && TextUtils.isEmpty(streetName))) {
-                       long endTime = System.currentTimeMillis();
-                       if (endTime - startTime >= timeoutMillis) {
-                           Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
-                           KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","request timeout");
-                       } else {
-                           Toast.makeText(HSApplication.getContext(), R.string.location_info_is_not_full, Toast.LENGTH_SHORT).show();
+                           Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
                            KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","result is not full");
-                       }
+
                    //有些低版本手机取不到完整的街道名，这种情况下使用featureName
                }else if (!TextUtils.isEmpty(streetName)&&streetName.contains(subLocality)) {
                    //有些机型的请求结果含有邮编
@@ -332,23 +347,15 @@ public class HSNewSettingsPanel extends BasePanel {
                    KCAnalytics.logEvent("GeoCoder_keyboard_location_sendSuccess");
                }
 
-           }else if(endMillis-startTime>=timeoutMillis){
-               Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
-               KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","request timeout");
            }else {
                Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
                KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason","Failed to get the location");
            }
            isLocationInfoFetching = false;
-           geoRunMillis= endMillis-startTime;
+           geoRunMillis= System.currentTimeMillis()-startTime;
        }
    }
-    static boolean isContainChinese(String str) {
 
-        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
-        Matcher m = p.matcher(str);
-        return m.find();
-    }
     //判断是否使用GPS定位
     private boolean isLocServiceEnable() {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
