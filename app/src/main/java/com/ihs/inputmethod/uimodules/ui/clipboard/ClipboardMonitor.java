@@ -34,10 +34,7 @@ public class ClipboardMonitor {
                     if (!TextUtils.isEmpty(text)) {
                         String data = text.toString();
                         HSLog.d(ClipboardMonitor.class.getSimpleName(), "     ClipboardMonitor    add  new data      " + data);
-                        ClipboardPresenter.getInstance().clipDataOperateAndSaveToDatabase(data, ClipboardPresenter.OPERATE_ADD_RECENT);
-                        if (ClipboardPresenter.getInstance().isNeedClipRecentReDraw()) {
-                            ClipboardPresenter.getInstance().notifyRecentDataChange();
-                        }
+                        ClipboardSQLiteDao.getInstance().clipDataOperateAddRecent(data);
                     }
                 }
             });

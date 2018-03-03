@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
@@ -19,10 +18,11 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.kc.utils.KCAnalytics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public final class ClipboardMainView extends LinearLayout implements ClipboardActionBar.ClipboardTabChangeListener, ClipboardPresenter.OnMainViewCreatedListener {
+public final class ClipboardMainView extends LinearLayout implements ClipboardActionBar.ClipboardTabChangeListener, ClipboardPresenter.ClipboardMainViewListener,ClipboardRecentViewAdapter.SaveRecentItemToPinsListener, ClipboardPinsViewAdapter.DeleteFromPinsToRecentListener {
 
     private ClipboardRecentViewAdapter clipboardRecentViewAdapter;
     private ClipboardPinsViewAdapter clipboardPinsViewAdapter;
@@ -34,10 +34,14 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     private RecyclerView currentView = null;
     int keyboardHeight = HSResourceUtils.getDefaultKeyboardHeight(getResources());
     private KCAlert deleteAlert;
-
+    private List<ClipboardRecentViewAdapter.ClipboardRecentMessage> clipRecentData = new ArrayList<ClipboardRecentViewAdapter.ClipboardRecentMessage>();
+    private List<String> clipPinsData = new ArrayList<String>();
+    public final static String PANEL_RECENT = "Recent";
+    public final static String PANEL_PIN = "Pins";
+    List<String> tabNameList = new ArrayList<String>();
     public ClipboardMainView(Context context) {
         super(context);
-        clipboardPresenter = ClipboardPresenter.getInstance();
+        clipboardPresenter = new ClipboardPresenter();
         setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
         setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, keyboardHeight));
         setOrientation(VERTICAL);
@@ -48,18 +52,22 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
         //填充底部actionbar到此LinearLayout
         addBarView();
         //recyclerView与actionbar建立关联
-        actionBar.setRecyclerViewRelateToActionBar((String) clipboardPanelRecentView.getTag(), (String) clipboardPanelPinsView.getTag());
+        tabNameList.add(PANEL_RECENT);
+        tabNameList.add(PANEL_PIN);
+        actionBar.relateToActionBar(tabNameList);
         //初始的时候recent在显示，相应按钮设为被选中
         actionBar.selectedViewBtn((String) currentView.getTag());
-        clipboardPresenter.setOnMainViewCreatedListener(this);
+        clipboardPresenter.setClipboardMainViewListener(this);
+        clipRecentData = ClipboardSQLiteDao.getInstance().getRecentAllContentFromTable();
+        clipPinsData = ClipboardSQLiteDao.getInstance().getPinsAllContentFromTable();
     }
 
 
     @Override
-    public void onTabChange(String selectedViewName) {
-        if(selectedViewName.equals(ClipboardActionBar.PANEL_RECENT)){
+    public void onTabChange(String tabName) {
+        if(tabName.equals(PANEL_RECENT)){
            addNewView(clipboardPanelRecentView);
-        }else if(selectedViewName.equals(ClipboardActionBar.PANEL_PIN)){
+        }else if(tabName.equals(PANEL_PIN)){
             addNewView(clipboardPanelPinsView);
         }
     }
@@ -97,18 +105,19 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
 
     @Override
     public void notifyPinsChange() {
-        clipboardPinsViewAdapter.dataChangeAndRefresh(clipboardPresenter.getClipPinsData());
-        clipboardPresenter.clipPinsNoNeedReDraw();
+        clipPinsData.clear();
+        clipPinsData .addAll(ClipboardSQLiteDao.getInstance().getPinsAllContentFromTable());
+        clipboardPinsViewAdapter.dataChangeAndRefresh(clipPinsData);
     }
 
     @Override
     public void notifyRecentChange() {
-        clipboardRecentViewAdapter.dataChangeAndRefresh(clipboardPresenter.getClipRecentData());
-        clipboardPresenter.clipRecentNoNeedReDraw();
+        clipRecentData.clear();
+        clipRecentData.addAll(ClipboardSQLiteDao.getInstance().getRecentAllContentFromTable());
+        clipboardRecentViewAdapter.dataChangeAndRefresh(clipRecentData);
     }
 
-    @Override
-    public void showDeletedSuggestionAlert() {
+    public void showDeletedSuggestionAlert(String pinsContentItem) {
         if(deleteAlert == null) {
             deleteAlert = new KCAlert.Builder(HSApplication.getContext())
                     .setTitle(getResources().getString(R.string.clipboard_delete_title))
@@ -123,7 +132,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
                     .setNegativeButton(getResources().getString(R.string.clipboard_delete_pin), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            clipboardPresenter.deletePin();
+                            clipboardPresenter.clipDataOperateDeletePins(pinsContentItem);
                             deleteAlert.dismiss();
                         }
                     }).build();
@@ -131,8 +140,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
         deleteAlert.show();
 
     }
-    @Override
-    public void showPinsView() {
+    private void showPinsView() {
         addNewView(clipboardPanelPinsView);
         actionBar.selectedViewBtn((String) currentView.getTag());
     }
@@ -149,15 +157,13 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
         clipboardPanelPinsView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerViewGroup.addView(clipboardPanelRecentView, new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         recyclerViewGroup.addView(clipboardPanelPinsView, new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        List<ClipboardRecentViewAdapter.ClipboardRecentMessage> clipRecentData = clipboardPresenter.getClipRecentData();
-        List<String> clipPinsData = clipboardPresenter.getClipPinsData();
         HSLog.d(ClipboardMainView.class.getSimpleName(), "clipboard mainView created  clipboardRecentData = " + clipRecentData.toString() + "    clipboardPinsData  = " + clipPinsData.toString());
-        clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(clipRecentData, clipboardPresenter);
-        clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(clipPinsData, clipboardPresenter);
+        clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(clipRecentData,this);
+        clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(clipPinsData,this);
         clipboardPanelRecentView.setAdapter(clipboardRecentViewAdapter);
         clipboardPanelPinsView.setAdapter(clipboardPinsViewAdapter);
-        clipboardPanelRecentView.setTag(ClipboardActionBar.PANEL_RECENT);
-        clipboardPanelPinsView.setTag(ClipboardActionBar.PANEL_PIN);
+        clipboardPanelRecentView.setTag(PANEL_RECENT);
+        clipboardPanelPinsView.setTag(PANEL_PIN);
         clipboardPanelRecentView.setVisibility(VISIBLE);
         currentView = clipboardPanelRecentView;
         clipboardPanelPinsView.setVisibility(INVISIBLE);
@@ -205,6 +211,23 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
             panelViewToShow.setVisibility(VISIBLE);
         }
         currentView = panelViewToShow;
+    }
+
+    //点击recent的条目的pins按钮时执行的回调
+    @Override
+    public void saveToPins(String itemPinsContent) {
+        clipboardPresenter.clipDataOperateSaveToPins(itemPinsContent);
+        showPinsView();
+        KCAnalytics.logEvent("keyboard_clipboard_pin_clicked");
+
+    }
+
+    //点击pins的条目的删除按钮时的回调
+    @Override
+    public void deletePinsItem(String pinsContentItem) {
+
+        showDeletedSuggestionAlert(pinsContentItem);
+        KCAnalytics.logEvent("keyboard_clipboard_OneDeleted");
     }
 
 }
