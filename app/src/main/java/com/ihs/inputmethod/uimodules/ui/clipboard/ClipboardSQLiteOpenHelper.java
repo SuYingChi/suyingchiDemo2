@@ -8,7 +8,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 
 
-
 public class ClipboardSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final String CLIPBOARD_DATABASE_NAME = "clipboard";

@@ -13,6 +13,7 @@ import com.ihs.panelcontainer.BasePanel;
 
 public class ClipboardMainPanel extends BasePanel {
     private BaseFunctionBar functionBar;
+
     @Override
     protected View onCreatePanelView() {
         functionBar = (BaseFunctionBar) panelActionListener.getBarView();
@@ -20,11 +21,13 @@ public class ClipboardMainPanel extends BasePanel {
         return new ClipboardMainView(HSApplication.getContext());
 
     }
+
     @Override
     protected boolean onHidePanelView(int appearMode) {
         functionBar.getPLusButton().setVisibility(View.GONE);
         return super.onHidePanelView(appearMode);
     }
+
     @Override
     protected boolean onShowPanelView(int appearMode) {
         functionBar.getPLusButton().setVisibility(View.VISIBLE);

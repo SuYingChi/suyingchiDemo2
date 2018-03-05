@@ -18,7 +18,7 @@ import java.util.List;
 public final class ClipboardActionBar extends LinearLayout implements View.OnClickListener {
 
     private ClipboardTabChangeListener clipboardTabChangeListener;
-    private  List<TextView> tabViewList = new ArrayList<TextView>();
+    private List<TextView> tabViewList = new ArrayList<TextView>();
     private List<String> actionbarTabsNames;
 
     public ClipboardActionBar(Context context) {
@@ -72,11 +72,11 @@ public final class ClipboardActionBar extends LinearLayout implements View.OnCli
     @Override
     public void onClick(View v) {
         String tabName = (String) v.getTag();
-            if (!android.text.TextUtils.isEmpty(tabName)) {
-                clipboardTabChangeListener.onTabChange(tabName);
-                selectedViewBtn(tabName);
-                HSLog.d(ClipboardActionBar.class.getSimpleName(), " to show " + tabName);
-            }
+        if (!android.text.TextUtils.isEmpty(tabName)) {
+            clipboardTabChangeListener.onTabChange(tabName);
+            selectedViewBtn(tabName);
+            HSLog.d(ClipboardActionBar.class.getSimpleName(), " to show " + tabName);
+        }
     }
 
     void selectedViewBtn(String tabName) {
@@ -89,7 +89,7 @@ public final class ClipboardActionBar extends LinearLayout implements View.OnCli
                 tabView.setBackgroundColor(Color.argb(0, Color.red(color), Color.green(color), Color.blue(color)));
             }
         }
-        TextView selectedTabView  = tabViewList.get(actionbarTabsNames.indexOf(tabName));
+        TextView selectedTabView = tabViewList.get(actionbarTabsNames.indexOf(tabName));
         if (selectedTabView != null) {
             selectedTabView.setSelected(true);
         }

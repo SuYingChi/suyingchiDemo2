@@ -17,7 +17,7 @@ import static com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPresenter.RECE
 
 
 //
-public class ClipboardSQLiteDao {
+public class ClipboardSQLiteDao implements ClipboardSQLiteOperate {
 
     private static final String CLIPBOARD_RECENT_TABLE = "clipboard_recent_table";
     private static final String CLIPBOARD_PINS_TABLE = "clipboard_pins_table";
@@ -25,9 +25,9 @@ public class ClipboardSQLiteDao {
     private static final String CLIPBOARD_RECENT_CONTENT_COLUMN_NAME = "clipboard_recent_content";
     private static final String CLIPBOARD_RECENT_ISPINED_COLUMN_NAME = "clipboard_recent_isPined";
     private static final String CLIPBOARD_PINS_CONTENT_COLUMN_NAME = "clipboard_PinS_content";
-    private static  volatile ClipboardSQLiteDao clipboardSQLiteDao;
+    private static volatile ClipboardSQLiteDao clipboardSQLiteDao;
     private final static String TAG = ClipboardSQLiteDao.class.getSimpleName();
-    private OnDataBaseOperateFinishListener onDataBaseOperateFinishListener;
+    private OnClipboardDataBaseOperateFinishListener onDataBaseOperateFinishListener;
 
     public static ClipboardSQLiteDao getInstance() {
         if (clipboardSQLiteDao == null) {
@@ -57,7 +57,9 @@ public class ClipboardSQLiteDao {
         HSLog.d(TAG, "create recent table and pins table");
     }
 
-    //获取Recent表的被反转的list,
+    @Override
+    public
+        //获取Recent表的被反转的list,
     List<ClipboardRecentViewAdapter.ClipboardRecentMessage> getRecentAllContentFromTable() {
         List<ClipboardRecentViewAdapter.ClipboardRecentMessage> all = new ArrayList<ClipboardRecentViewAdapter.ClipboardRecentMessage>();
         SQLiteDatabase database = openClipboardDatabase();
@@ -85,7 +87,9 @@ public class ClipboardSQLiteDao {
         return all;
     }
 
-    //获取Pins表反转的list
+    @Override
+    public
+        //获取Pins表反转的list
     List<String> getPinsAllContentFromTable() {
         List<String> all = new ArrayList<>();
         SQLiteDatabase database = openClipboardDatabase();
@@ -116,47 +120,53 @@ public class ClipboardSQLiteDao {
 
     }
 
-    void deleteItemInRecentTable(String item){
+    @Override
+    public void deleteItemInRecentTable(String item) {
         SQLiteDatabase database = openClipboardDatabase();
         int isDelete = -1;
         try {
             isDelete = database.delete(CLIPBOARD_RECENT_TABLE, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item});
             HSLog.d(TAG, "   deleteItem  =" + item + "      InRecentTable" + "  deleteResult   ==== " + isDelete);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(HSApplication.getContext(),R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
+            Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail, Toast.LENGTH_SHORT).show();
         }
     }
 
-    void deleteItemInPinsTable(String item){
+    @Override
+    public void deleteItemInPinsTable(String item) {
         SQLiteDatabase database = openClipboardDatabase();
         int isDelete = -1;
         try {
             isDelete = database.delete(CLIPBOARD_PINS_TABLE, CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{item});
             HSLog.d(TAG, "   deleteItem   =" + item + "        InPinsTable" + "       deleteResult   ==== " + isDelete);
-            if(onDataBaseOperateFinishListener!=null){
+            if (onDataBaseOperateFinishListener != null) {
                 onDataBaseOperateFinishListener.deletePinsItemSuccess();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(HSApplication.getContext(),R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
+            Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail, Toast.LENGTH_SHORT).show();
         }
     }
-  void setItemPositionToBottomInRecentTable(String item){
-      SQLiteDatabase database = openClipboardDatabase();
-      try {
-              deleteItemInRecentTable(item);
-              addItemToBottomInRecentTable(item);
-              HSLog.d(TAG, " change " + item + "posion to the bottom of recentTable");
-          if(onDataBaseOperateFinishListener!=null) {
-              onDataBaseOperateFinishListener.setRecentItemToTopSuccess();
-          }
-      } catch (Exception e) {
-          e.printStackTrace();
-          Toast.makeText(HSApplication.getContext(),R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
-      }
-  }
-    void setItemPositionToBottomInPinsTable(String item){
+
+    @Override
+    public void setItemPositionToBottomInRecentTable(String item) {
+        SQLiteDatabase database = openClipboardDatabase();
+        try {
+            deleteItemInRecentTable(item);
+            addItemToBottomInRecentTable(item);
+            HSLog.d(TAG, " change " + item + "posion to the bottom of recentTable");
+            if (onDataBaseOperateFinishListener != null) {
+                onDataBaseOperateFinishListener.setRecentItemToTopSuccess();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void setItemPositionToBottomInPinsTable(String item) {
         SQLiteDatabase database = openClipboardDatabase();
         try {
             deleteItemInPinsTable(item);
@@ -164,10 +174,11 @@ public class ClipboardSQLiteDao {
             HSLog.d(TAG, " change " + item + "posion to the bottom of recentTable");
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(HSApplication.getContext(),R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
+            Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail, Toast.LENGTH_SHORT).show();
         }
     }
 
+    @Override
     public void addItemToBottomInPinsTable(String item) {
         SQLiteDatabase database = openClipboardDatabase();
         try {
@@ -180,11 +191,12 @@ public class ClipboardSQLiteDao {
             HSLog.d(TAG, "addItem   " + item + "   to bottom of PinsTable");
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(HSApplication.getContext(),R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
+            Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail, Toast.LENGTH_SHORT).show();
         }
     }
 
-    void addItemToBottomInRecentTable(String item) {
+    @Override
+    public void addItemToBottomInRecentTable(String item) {
         SQLiteDatabase database = openClipboardDatabase();
         try {
             boolean pined = queryItemExistsInPinsTable(item);
@@ -197,32 +209,36 @@ public class ClipboardSQLiteDao {
             }
             long i = database.insert(CLIPBOARD_RECENT_TABLE, null, contentValues);
             HSLog.d(TAG, "addItem   " + item + "   to bottom of RecentTable");
-            if(onDataBaseOperateFinishListener!=null) {
+            if (onDataBaseOperateFinishListener != null) {
                 onDataBaseOperateFinishListener.addRecentItemSuccess();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
+            Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail, Toast.LENGTH_SHORT).show();
         }
     }
-    boolean queryItemExistsInRecentTable(String item){
-       SQLiteDatabase database = openClipboardDatabase();
-       Cursor cursor = null;
-       try {
-           cursor = database.query(CLIPBOARD_RECENT_TABLE, new String[]{CLIPBOARD_RECENT_CONTENT_COLUMN_NAME}, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item}, null, null, null);
-           boolean itemExists = cursor.moveToNext() && item.equals(cursor.getString(cursor.getColumnIndex(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME)));
-           HSLog.d(TAG, "query      " + item + "      isExistsInRecentTable    " + itemExists);
-           return itemExists;
-       }catch (Exception e) {
-           e.printStackTrace();
-           Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
-       } finally {
-           if (null != cursor) cursor.close();
-       }
-       return false;
 
-   }
-     boolean queryItemExistsInPinsTable(String item){
+    @Override
+    public boolean queryItemExistsInRecentTable(String item) {
+        SQLiteDatabase database = openClipboardDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = database.query(CLIPBOARD_RECENT_TABLE, new String[]{CLIPBOARD_RECENT_CONTENT_COLUMN_NAME}, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item}, null, null, null);
+            boolean itemExists = cursor.moveToNext() && item.equals(cursor.getString(cursor.getColumnIndex(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME)));
+            HSLog.d(TAG, "query      " + item + "      isExistsInRecentTable    " + itemExists);
+            return itemExists;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail, Toast.LENGTH_SHORT).show();
+        } finally {
+            if (null != cursor) cursor.close();
+        }
+        return false;
+
+    }
+
+    @Override
+    public boolean queryItemExistsInPinsTable(String item) {
 
         SQLiteDatabase database = openClipboardDatabase();
         Cursor cursor = null;
@@ -231,16 +247,16 @@ public class ClipboardSQLiteDao {
             boolean itemExists = cursor.moveToNext() && item.equals(cursor.getString(cursor.getColumnIndex(CLIPBOARD_PINS_CONTENT_COLUMN_NAME)));
             HSLog.d(TAG, "query     " + item + "       isExistsInPinsTable       " + itemExists);
             return itemExists;
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
+            Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail, Toast.LENGTH_SHORT).show();
         } finally {
             if (null != cursor) cursor.close();
         }
         return false;
     }
 
-
+    @Override
     //实时监听用户新增复制内容时的操作
     public void clipDataOperateAddRecent(String item) {
         //用户新增recent数据，小于最大条数并且内容未与recent重复增加新内容,添加并置顶
@@ -253,6 +269,7 @@ public class ClipboardSQLiteDao {
         }
     }
 
+    @Override
     public void deleteRecentItemAndSetItemPositionToBottomInPins(String item) {
         SQLiteDatabase database = openClipboardDatabase();
         int isDelete = -1;
@@ -269,18 +286,19 @@ public class ClipboardSQLiteDao {
             }
             long i = database.insert(CLIPBOARD_PINS_TABLE, null, contentValues);
             HSLog.d(TAG, "addItem   " + item + "   to bottom of PinsTable");
-            if(onDataBaseOperateFinishListener!=null) {
+            if (onDataBaseOperateFinishListener != null) {
                 onDataBaseOperateFinishListener.deleteRecentItemAndSetItemPositionToBottomInPins();
             }
             database.setTransactionSuccessful();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(HSApplication.getContext(),R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
-        }finally {
+            Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail, Toast.LENGTH_SHORT).show();
+        } finally {
             database.endTransaction();
         }
     }
 
+    @Override
     public void deleteRecentItemAndAddToPins(String item) {
         SQLiteDatabase database = openClipboardDatabase();
         int isDelete = -1;
@@ -295,18 +313,19 @@ public class ClipboardSQLiteDao {
             }
             long i = database.insert(CLIPBOARD_PINS_TABLE, null, contentValues);
             HSLog.d(TAG, "addItem   " + item + "   to bottom of PinsTable");
-            if(onDataBaseOperateFinishListener!=null) {
+            if (onDataBaseOperateFinishListener != null) {
                 onDataBaseOperateFinishListener.deleteRecentItemAndAddToPins();
             }
             database.setTransactionSuccessful();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(HSApplication.getContext(),R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
-        }finally {
+            Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail, Toast.LENGTH_SHORT).show();
+        } finally {
             database.endTransaction();
         }
     }
 
+    @Override
     public void deletePinsItemAndUpdateRecentItemNoPined(String item) {
         SQLiteDatabase database = openClipboardDatabase();
         int isDelete = -1;
@@ -319,34 +338,19 @@ public class ClipboardSQLiteDao {
             values.put(CLIPBOARD_RECENT_ISPINED_COLUMN_NAME, 0);
             database.update(CLIPBOARD_RECENT_TABLE, values, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item});
             HSLog.d(TAG, item + "    updateRecentItem   " + item + "    NoPinedInPinsTable    ");
-            if(onDataBaseOperateFinishListener!=null) {
+            if (onDataBaseOperateFinishListener != null) {
                 onDataBaseOperateFinishListener.deletePinsItemAndUpdateRecentItemNoPined();
             }
             database.setTransactionSuccessful();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(HSApplication.getContext(),R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
-        }finally {
+            Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail, Toast.LENGTH_SHORT).show();
+        } finally {
             database.endTransaction();
         }
     }
 
-    public interface OnDataBaseOperateFinishListener {
-
-        void addRecentItemSuccess();
-
-        void setRecentItemToTopSuccess();
-
-        void deletePinsItemSuccess();
-
-
-        void deleteRecentItemAndSetItemPositionToBottomInPins();
-
-        void deleteRecentItemAndAddToPins();
-
-        void deletePinsItemAndUpdateRecentItemNoPined();
-    }
-    void setOnDataBaseOperateFinishListener(OnDataBaseOperateFinishListener onDataBaseOperateFinishListener){
-      this.onDataBaseOperateFinishListener=  onDataBaseOperateFinishListener;
+    void setOnDataBaseOperateFinishListener(OnClipboardDataBaseOperateFinishListener onDataBaseOperateFinishListener) {
+        this.onDataBaseOperateFinishListener = onDataBaseOperateFinishListener;
     }
 }

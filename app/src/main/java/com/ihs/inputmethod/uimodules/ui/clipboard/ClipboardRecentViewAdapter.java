@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRecentViewAdapter.ViewHolder> {
 
 
@@ -31,11 +30,12 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
     private final String TAG = ClipboardRecentViewAdapter.class.getSimpleName();
     private Drawable saveToPinsDrawable;
     private Drawable saveToPinsNoPinedDrawable;
+
     ClipboardRecentViewAdapter(List<ClipboardRecentMessage> list, SaveRecentItemToPinsListener saveRecentItemToPinsListener) {
         clipRecentData.addAll(list);
         this.saveRecentItemToPinsListener = saveRecentItemToPinsListener;
-        saveToPinsDrawable = VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.clipboard_save_to_pins_pined,null);
-        saveToPinsNoPinedDrawable = VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.clipboard_save_to_pins_no_pined,null);
+        saveToPinsDrawable = VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.clipboard_save_to_pins_pined, null);
+        saveToPinsNoPinedDrawable = VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.clipboard_save_to_pins_no_pined, null);
         HSLog.d(TAG, "create ClipboardRecentViewAdapter , clipRecentData  is" + clipRecentData.toString());
     }
 

@@ -8,8 +8,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 
 
-
-
 public class ClipboardMonitor {
 
     private static ClipboardMonitor instance = null;

@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPinsViewAdapter.ViewHolder> {
 
 
@@ -28,11 +27,12 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
     private List<String> pinsDataList = new ArrayList<String>();
     private final String TAG = ClipboardPinsViewAdapter.class.getSimpleName();
     private Drawable deletePin;
+
     ClipboardPinsViewAdapter(List<String> list, DeleteFromPinsToRecentListener deleteFromPinsToRecentListener) {
         this.deleteFromPinsToRecentListener = deleteFromPinsToRecentListener;
         this.pinsDataList.addAll(list);
         HSLog.d(TAG, "create ClipboardPinsViewAdapter , pinsDataList  is " + pinsDataList.toString());
-        deletePin = VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.clipboard_delete_pin_item,null);
+        deletePin = VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.clipboard_delete_pin_item, null);
     }
 
     @Override

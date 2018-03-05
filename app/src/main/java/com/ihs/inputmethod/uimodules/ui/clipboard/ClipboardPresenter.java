@@ -8,93 +8,86 @@ import com.ihs.app.framework.HSApplication;
 import java.util.List;
 
 
-public class ClipboardPresenter implements ClipboardSQLiteDao.OnDataBaseOperateFinishListener {
+public class ClipboardPresenter implements OnClipboardDataBaseOperateFinishListener {
     static final int RECENT_TABLE_SIZE = 10;
     static final int PINS_TABLE_SIZE = 30;
     private ClipboardMainViewListener clipboardMainViewListener;
 
-    public ClipboardPresenter() {
+    ClipboardPresenter() {
         ClipboardSQLiteDao.getInstance().setOnDataBaseOperateFinishListener(this);
     }
 
 
-    public void notifyRecentDataChange() {
+    private void updateRecentView() {
         if (clipboardMainViewListener != null) {
-            clipboardMainViewListener.notifyRecentChange();
+            clipboardMainViewListener.notifyRecentDataSetChange();
         }
     }
 
-    public void notifyPinsDataChange() {
+    private void updatePinsView() {
         if (clipboardMainViewListener != null) {
-            clipboardMainViewListener.notifyPinsChange();
+            clipboardMainViewListener.notifyPinsDataSetChange();
         }
     }
-
 
 
     @Override
     public void addRecentItemSuccess() {
-
-        notifyRecentDataChange();
+        updateRecentView();
+        clipboardMainViewListener.changeToShowRecentView();
     }
-
 
 
     @Override
     public void setRecentItemToTopSuccess() {
 
-        notifyRecentDataChange();
+        updateRecentView();
+        clipboardMainViewListener.changeToShowRecentView();
     }
-
 
 
     @Override
     public void deletePinsItemSuccess() {
-        notifyPinsDataChange();
+        updatePinsView();
     }
-
 
 
     @Override
     public void deleteRecentItemAndSetItemPositionToBottomInPins() {
-        notifyRecentDataChange();
-        notifyPinsDataChange();
+        updateRecentView();
+        updatePinsView();
+        clipboardMainViewListener.changeToShowPinsView();
     }
 
     @Override
     public void deleteRecentItemAndAddToPins() {
-        notifyRecentDataChange();
-        notifyPinsDataChange();
+        updateRecentView();
+        updatePinsView();
+        clipboardMainViewListener.changeToShowPinsView();
     }
 
     @Override
     public void deletePinsItemAndUpdateRecentItemNoPined() {
-        notifyRecentDataChange();
-        notifyPinsDataChange();
+        updateRecentView();
+        updatePinsView();
+        clipboardMainViewListener.changeToShowRecentView();
     }
 
     List<ClipboardRecentViewAdapter.ClipboardRecentMessage> getclipRecentData() {
         return ClipboardSQLiteDao.getInstance().getRecentAllContentFromTable();
     }
 
-    List<String> getclipPinsData() {
+    List<String> getClipPinsData() {
         return ClipboardSQLiteDao.getInstance().getPinsAllContentFromTable();
     }
 
-
-    //MainView创建后presenter获得该接口实例，将adapter创建完成后回传给MainView，mainView再将adapter贴上去
-    public interface ClipboardMainViewListener {
-        void notifyPinsChange();
-
-        void notifyRecentChange();
-    }
 
     void setClipboardMainViewListener(ClipboardMainViewListener clipboardMainViewListener) {
         this.clipboardMainViewListener = clipboardMainViewListener;
     }
 
     //实时监听用户点击Recent页面的收藏按钮时的数据操作
-     void clipDataOperateSaveToPins(String item) {
+    void clipDataOperateSaveToPins(String item) {
         //recent里点击收藏,收藏内容已经有30条，recent页面点击收藏时，收藏里还没有，提示不能再添加
         if (ClipboardSQLiteDao.getInstance().getPinsAllContentFromTable().size() == PINS_TABLE_SIZE & !ClipboardSQLiteDao.getInstance().queryItemExistsInPinsTable(item)) {
             Toast.makeText(HSApplication.getContext(), "You can add at most 30 message", Toast.LENGTH_LONG).show();
@@ -111,7 +104,7 @@ public class ClipboardPresenter implements ClipboardSQLiteDao.OnDataBaseOperateF
     }
 
     //实时监听用户点击Pins页面的删除按钮时的数据操作
-     void clipDataOperateDeletePins(String item) {
+    void clipDataOperateDeletePins(String item) {
         //用户删除PINS数据，recent里没有
         if (!ClipboardSQLiteDao.getInstance().queryItemExistsInRecentTable(item)) {
             ClipboardSQLiteDao.getInstance().deleteItemInPinsTable(item);
