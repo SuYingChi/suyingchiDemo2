@@ -34,8 +34,6 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     private RecyclerView currentView = null;
     int keyboardHeight = HSResourceUtils.getDefaultKeyboardHeight(getResources());
     private KCAlert deleteAlert;
-    private List<ClipboardRecentViewAdapter.ClipboardRecentMessage> clipRecentData = new ArrayList<ClipboardRecentViewAdapter.ClipboardRecentMessage>();
-    private List<String> clipPinsData = new ArrayList<String>();
     public final static String PANEL_RECENT = "Recent";
     public final static String PANEL_PIN = "Pins";
     List<String> tabNameList = new ArrayList<String>();
@@ -58,8 +56,6 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
         //初始的时候recent在显示，相应按钮设为被选中
         actionBar.selectedViewBtn((String) currentView.getTag());
         clipboardPresenter.setClipboardMainViewListener(this);
-        clipRecentData = ClipboardSQLiteDao.getInstance().getRecentAllContentFromTable();
-        clipPinsData = ClipboardSQLiteDao.getInstance().getPinsAllContentFromTable();
     }
 
 
@@ -101,21 +97,16 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
 
     }
 
-
+    @Override
+    public void notifyRecentChange() {
+        clipboardRecentViewAdapter.dataChangeAndRefresh(clipboardPresenter.getclipRecentData());
+    }
 
     @Override
     public void notifyPinsChange() {
-        clipPinsData.clear();
-        clipPinsData .addAll(ClipboardSQLiteDao.getInstance().getPinsAllContentFromTable());
-        clipboardPinsViewAdapter.dataChangeAndRefresh(clipPinsData);
+        clipboardPinsViewAdapter.dataChangeAndRefresh(clipboardPresenter.getclipPinsData());
     }
 
-    @Override
-    public void notifyRecentChange() {
-        clipRecentData.clear();
-        clipRecentData.addAll(ClipboardSQLiteDao.getInstance().getRecentAllContentFromTable());
-        clipboardRecentViewAdapter.dataChangeAndRefresh(clipRecentData);
-    }
 
     public void showDeletedSuggestionAlert(String pinsContentItem) {
         if(deleteAlert == null) {
@@ -157,9 +148,9 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
         clipboardPanelPinsView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerViewGroup.addView(clipboardPanelRecentView, new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         recyclerViewGroup.addView(clipboardPanelPinsView, new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        HSLog.d(ClipboardMainView.class.getSimpleName(), "clipboard mainView created  clipboardRecentData = " + clipRecentData.toString() + "    clipboardPinsData  = " + clipPinsData.toString());
-        clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(clipRecentData,this);
-        clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(clipPinsData,this);
+        HSLog.d(ClipboardMainView.class.getSimpleName(), "clipboard mainView created  clipboardRecentData = " + clipboardPresenter.getclipRecentData() + "    clipboardPinsData  = " + clipboardPresenter.getclipPinsData().toString());
+        clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(clipboardPresenter.getclipRecentData(),this);
+        clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(clipboardPresenter.getclipPinsData(),this);
         clipboardPanelRecentView.setAdapter(clipboardRecentViewAdapter);
         clipboardPanelPinsView.setAdapter(clipboardPinsViewAdapter);
         clipboardPanelRecentView.setTag(PANEL_RECENT);

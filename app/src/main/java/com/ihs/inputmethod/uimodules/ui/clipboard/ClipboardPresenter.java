@@ -5,6 +5,8 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 
+import java.util.List;
+
 
 public class ClipboardPresenter implements ClipboardSQLiteDao.OnDataBaseOperateFinishListener {
     static final int RECENT_TABLE_SIZE = 10;
@@ -69,6 +71,14 @@ public class ClipboardPresenter implements ClipboardSQLiteDao.OnDataBaseOperateF
     public void deletePinsItemAndUpdateRecentItemNoPined() {
         notifyRecentDataChange();
         notifyPinsDataChange();
+    }
+
+    List<ClipboardRecentViewAdapter.ClipboardRecentMessage> getclipRecentData() {
+        return ClipboardSQLiteDao.getInstance().getRecentAllContentFromTable();
+    }
+
+    List<String> getclipPinsData() {
+        return ClipboardSQLiteDao.getInstance().getPinsAllContentFromTable();
     }
 
 

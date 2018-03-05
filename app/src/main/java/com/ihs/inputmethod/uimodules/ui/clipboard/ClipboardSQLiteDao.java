@@ -134,7 +134,9 @@ public class ClipboardSQLiteDao {
         try {
             isDelete = database.delete(CLIPBOARD_PINS_TABLE, CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{item});
             HSLog.d(TAG, "   deleteItem   =" + item + "        InPinsTable" + "       deleteResult   ==== " + isDelete);
-            onDataBaseOperateFinishListener.deletePinsItemSuccess();
+            if(onDataBaseOperateFinishListener!=null){
+                onDataBaseOperateFinishListener.deletePinsItemSuccess();
+            }
         }catch (Exception e){
             e.printStackTrace();
             Toast.makeText(HSApplication.getContext(),R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
@@ -146,7 +148,9 @@ public class ClipboardSQLiteDao {
               deleteItemInRecentTable(item);
               addItemToBottomInRecentTable(item);
               HSLog.d(TAG, " change " + item + "posion to the bottom of recentTable");
+          if(onDataBaseOperateFinishListener!=null) {
               onDataBaseOperateFinishListener.setRecentItemToTopSuccess();
+          }
       } catch (Exception e) {
           e.printStackTrace();
           Toast.makeText(HSApplication.getContext(),R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
@@ -193,7 +197,9 @@ public class ClipboardSQLiteDao {
             }
             long i = database.insert(CLIPBOARD_RECENT_TABLE, null, contentValues);
             HSLog.d(TAG, "addItem   " + item + "   to bottom of RecentTable");
-            onDataBaseOperateFinishListener.addRecentItemSuccess();
+            if(onDataBaseOperateFinishListener!=null) {
+                onDataBaseOperateFinishListener.addRecentItemSuccess();
+            }
         }catch (Exception e){
             e.printStackTrace();
             Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
@@ -263,7 +269,9 @@ public class ClipboardSQLiteDao {
             }
             long i = database.insert(CLIPBOARD_PINS_TABLE, null, contentValues);
             HSLog.d(TAG, "addItem   " + item + "   to bottom of PinsTable");
-            onDataBaseOperateFinishListener.deleteRecentItemAndSetItemPositionToBottomInPins();
+            if(onDataBaseOperateFinishListener!=null) {
+                onDataBaseOperateFinishListener.deleteRecentItemAndSetItemPositionToBottomInPins();
+            }
             database.setTransactionSuccessful();
         }catch (Exception e){
             e.printStackTrace();
@@ -287,13 +295,15 @@ public class ClipboardSQLiteDao {
             }
             long i = database.insert(CLIPBOARD_PINS_TABLE, null, contentValues);
             HSLog.d(TAG, "addItem   " + item + "   to bottom of PinsTable");
-            onDataBaseOperateFinishListener.deleteRecentItemAndAddToPins();
-            database.endTransaction();
+            if(onDataBaseOperateFinishListener!=null) {
+                onDataBaseOperateFinishListener.deleteRecentItemAndAddToPins();
+            }
+            database.setTransactionSuccessful();
         }catch (Exception e){
             e.printStackTrace();
             Toast.makeText(HSApplication.getContext(),R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
         }finally {
-            database.setTransactionSuccessful();
+            database.endTransaction();
         }
     }
 
@@ -309,8 +319,10 @@ public class ClipboardSQLiteDao {
             values.put(CLIPBOARD_RECENT_ISPINED_COLUMN_NAME, 0);
             database.update(CLIPBOARD_RECENT_TABLE, values, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item});
             HSLog.d(TAG, item + "    updateRecentItem   " + item + "    NoPinedInPinsTable    ");
-            onDataBaseOperateFinishListener.deletePinsItemAndUpdateRecentItemNoPined();
-            database.endTransaction();
+            if(onDataBaseOperateFinishListener!=null) {
+                onDataBaseOperateFinishListener.deletePinsItemAndUpdateRecentItemNoPined();
+            }
+            database.setTransactionSuccessful();
         }catch (Exception e){
             e.printStackTrace();
             Toast.makeText(HSApplication.getContext(),R.string.clipboard_database_operate_fail,Toast.LENGTH_SHORT).show();
