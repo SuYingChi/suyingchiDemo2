@@ -20,7 +20,7 @@ public class ClipboardMonitor {
     }
 
     private ClipboardMonitor() {
-        clipboardSQLiteOperate = ClipboardSQLiteDao.getInstance();
+        clipboardSQLiteOperate = ClipboardDataBaseOperateImpl.getInstance();
     }
 
     public void registerClipboardMonitor() {

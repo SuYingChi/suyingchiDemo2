@@ -1,7 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.clipboard;
 
 
-public interface ClipboardMainViewListener {
+public interface ClipboardMainViewProxy {
     void notifyPinsDataSetChange();
 
     void notifyRecentDataSetChange();

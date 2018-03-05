@@ -32,12 +32,12 @@ public class ClipboardSQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        ClipboardSQLiteDao.getInstance().createAllTable(db);
+        ClipboardDataBaseOperateImpl.getInstance().createAllTable(db);
         HSLog.d("ClipboardSQLiteOpenHelper", "creat  " + CLIPBOARD_DATABASE_NAME + "   database ");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        ClipboardSQLiteDao.getInstance().createAllTable(db);
+        ClipboardDataBaseOperateImpl.getInstance().createAllTable(db);
     }
 }

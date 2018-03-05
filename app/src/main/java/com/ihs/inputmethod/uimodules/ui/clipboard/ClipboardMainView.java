@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public final class ClipboardMainView extends LinearLayout implements ClipboardActionBar.ClipboardTabChangeListener, ClipboardMainViewListener, ClipboardRecentViewAdapter.SaveRecentItemToPinsListener, ClipboardPinsViewAdapter.DeleteFromPinsToRecentListener {
+public final class ClipboardMainView extends LinearLayout implements ClipboardActionBar.ClipboardTabChangeListener, ClipboardMainViewProxy, ClipboardRecentViewAdapter.SaveRecentItemToPinsListener, ClipboardPinsViewAdapter.DeleteFromPinsToRecentListener {
 
     private ClipboardRecentViewAdapter clipboardRecentViewAdapter;
     private ClipboardPinsViewAdapter clipboardPinsViewAdapter;
@@ -56,7 +56,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
         actionBar.relateToActionBar(tabNameList);
         //初始的时候recent在显示，相应按钮设为被选中
         actionBar.selectedViewBtn((String) currentView.getTag());
-        clipboardPresenter.setClipboardMainViewListener(this);
+        clipboardPresenter.setClipboardMainViewProxy(this);
     }
 
 

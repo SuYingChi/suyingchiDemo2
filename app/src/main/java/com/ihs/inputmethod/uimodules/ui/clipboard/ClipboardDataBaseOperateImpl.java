@@ -17,7 +17,7 @@ import static com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPresenter.RECE
 
 
 //
-public class ClipboardSQLiteDao implements ClipboardSQLiteOperate {
+public class ClipboardDataBaseOperateImpl implements ClipboardSQLiteOperate {
 
     private static final String CLIPBOARD_RECENT_TABLE = "clipboard_recent_table";
     private static final String CLIPBOARD_PINS_TABLE = "clipboard_pins_table";
@@ -25,19 +25,19 @@ public class ClipboardSQLiteDao implements ClipboardSQLiteOperate {
     private static final String CLIPBOARD_RECENT_CONTENT_COLUMN_NAME = "clipboard_recent_content";
     private static final String CLIPBOARD_RECENT_ISPINED_COLUMN_NAME = "clipboard_recent_isPined";
     private static final String CLIPBOARD_PINS_CONTENT_COLUMN_NAME = "clipboard_PinS_content";
-    private static volatile ClipboardSQLiteDao clipboardSQLiteDao;
-    private final static String TAG = ClipboardSQLiteDao.class.getSimpleName();
+    private static volatile ClipboardDataBaseOperateImpl clipboardDataBaseOperateImpl;
+    private final static String TAG = ClipboardDataBaseOperateImpl.class.getSimpleName();
     private OnClipboardDataBaseOperateFinishListener onDataBaseOperateFinishListener;
 
-    public static ClipboardSQLiteDao getInstance() {
-        if (clipboardSQLiteDao == null) {
-            synchronized (ClipboardSQLiteDao.class) {
-                if (null == clipboardSQLiteDao) {
-                    clipboardSQLiteDao = new ClipboardSQLiteDao();
+    public static ClipboardDataBaseOperateImpl getInstance() {
+        if (clipboardDataBaseOperateImpl == null) {
+            synchronized (ClipboardDataBaseOperateImpl.class) {
+                if (null == clipboardDataBaseOperateImpl) {
+                    clipboardDataBaseOperateImpl = new ClipboardDataBaseOperateImpl();
                 }
             }
         }
-        return clipboardSQLiteDao;
+        return clipboardDataBaseOperateImpl;
     }
 
     //创建所有表
@@ -248,11 +248,11 @@ public class ClipboardSQLiteDao implements ClipboardSQLiteOperate {
     public void clipDataOperateAddRecent(String item) {
         //用户新增recent数据，小于最大条数并且内容未与recent重复增加新内容,添加并置顶
         if (getRecentAllContentFromTable().size() <= RECENT_TABLE_SIZE & !queryItemExistsInRecentTable(item)) {
-            ClipboardSQLiteDao.getInstance().addItemToBottomInRecentTable(item);
+            ClipboardDataBaseOperateImpl.getInstance().addItemToBottomInRecentTable(item);
         }
         //用户新增recent数据，与recent已有内容重复，则置顶重复内容
         else if (queryItemExistsInRecentTable(item)) {
-            ClipboardSQLiteDao.getInstance().setItemPositionToBottomInRecentTable(item);
+            ClipboardDataBaseOperateImpl.getInstance().setItemPositionToBottomInRecentTable(item);
         }
     }
 
