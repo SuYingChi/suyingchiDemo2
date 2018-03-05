@@ -166,19 +166,6 @@ public class ClipboardSQLiteDao implements ClipboardSQLiteOperate {
     }
 
     @Override
-    public void setItemPositionToBottomInPinsTable(String item) {
-        SQLiteDatabase database = openClipboardDatabase();
-        try {
-            deleteItemInPinsTable(item);
-            addItemToBottomInPinsTable(item);
-            HSLog.d(TAG, " change " + item + "posion to the bottom of recentTable");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
     public void addItemToBottomInPinsTable(String item) {
         SQLiteDatabase database = openClipboardDatabase();
         try {
@@ -350,7 +337,7 @@ public class ClipboardSQLiteDao implements ClipboardSQLiteOperate {
         }
     }
 
-    void setOnDataBaseOperateFinishListener(OnClipboardDataBaseOperateFinishListener onDataBaseOperateFinishListener) {
+    public void setOnDataBaseOperateFinishListener(OnClipboardDataBaseOperateFinishListener onDataBaseOperateFinishListener) {
         this.onDataBaseOperateFinishListener = onDataBaseOperateFinishListener;
     }
 }

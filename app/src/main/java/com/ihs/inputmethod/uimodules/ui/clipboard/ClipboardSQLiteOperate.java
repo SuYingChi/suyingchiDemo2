@@ -14,8 +14,6 @@ public interface ClipboardSQLiteOperate {
 
     void setItemPositionToBottomInRecentTable(String item);
 
-    void setItemPositionToBottomInPinsTable(String item);
-
     void addItemToBottomInPinsTable(String item);
 
     void addItemToBottomInRecentTable(String item);
@@ -31,4 +29,6 @@ public interface ClipboardSQLiteOperate {
     void deleteRecentItemAndAddToPins(String item);
 
     void deletePinsItemAndUpdateRecentItemNoPined(String item);
+
+    void setOnDataBaseOperateFinishListener(OnClipboardDataBaseOperateFinishListener OnClipboardDataBaseOperateFinishListener);
 }

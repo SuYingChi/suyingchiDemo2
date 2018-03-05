@@ -12,9 +12,11 @@ public class ClipboardPresenter implements OnClipboardDataBaseOperateFinishListe
     static final int RECENT_TABLE_SIZE = 10;
     static final int PINS_TABLE_SIZE = 30;
     private ClipboardMainViewListener clipboardMainViewListener;
+    ClipboardSQLiteOperate clipboardSQLiteOperate;
 
     ClipboardPresenter() {
-        ClipboardSQLiteDao.getInstance().setOnDataBaseOperateFinishListener(this);
+        clipboardSQLiteOperate = ClipboardSQLiteDao.getInstance();
+        clipboardSQLiteOperate.setOnDataBaseOperateFinishListener(this);
     }
 
 
