@@ -20,59 +20,65 @@ public class ClipboardPresenter implements OnClipboardDataBaseOperateFinishListe
     }
 
 
-    private void updateRecentView() {
-        if (clipboardMainViewProxy != null) {
+    @Override
+    public void addRecentItemSuccess() {
+        updateRecentViewAndChangeToShowRecentView();
+    }
+
+    private void updateRecentViewAndChangeToShowRecentView() {
+        if(clipboardMainViewProxy!=null) {
+            clipboardMainViewProxy.changeToShowRecentView();
             clipboardMainViewProxy.notifyRecentDataSetChange();
         }
     }
-
-    private void updatePinsView() {
+    private void updatePinsViewAndChangeToShowRecentView() {
         if (clipboardMainViewProxy != null) {
+            clipboardMainViewProxy.changeToShowPinsView();
+            clipboardMainViewProxy.notifyPinsDataSetChange();
+        }
+    }
+    private void updateRecentAndPinsView() {
+        if(clipboardMainViewProxy!=null) {
+            clipboardMainViewProxy.notifyRecentDataSetChange();
             clipboardMainViewProxy.notifyPinsDataSetChange();
         }
     }
 
-
-    @Override
-    public void addRecentItemSuccess() {
-        updateRecentView();
-        clipboardMainViewProxy.changeToShowRecentView();
-    }
-
-
     @Override
     public void setRecentItemToTopSuccess() {
 
-        updateRecentView();
-        clipboardMainViewProxy.changeToShowRecentView();
+        updateRecentViewAndChangeToShowRecentView();
     }
 
 
     @Override
     public void deletePinsItemSuccess() {
-        updatePinsView();
+        updatePinsViewAndChangeToShowRecentView();
     }
 
 
     @Override
     public void deleteRecentItemAndSetItemPositionToBottomInPins() {
-        updateRecentView();
-        updatePinsView();
-        clipboardMainViewProxy.changeToShowPinsView();
+        if(clipboardMainViewProxy!=null) {
+            updateRecentAndPinsView();
+            clipboardMainViewProxy.changeToShowPinsView();
+        }
     }
 
     @Override
     public void deleteRecentItemAndAddToPins() {
-        updateRecentView();
-        updatePinsView();
-        clipboardMainViewProxy.changeToShowPinsView();
+        if(clipboardMainViewProxy!=null){
+            updateRecentAndPinsView();
+            clipboardMainViewProxy.changeToShowPinsView();
+        }
     }
 
     @Override
     public void deletePinsItemAndUpdateRecentItemNoPined() {
-        updateRecentView();
-        updatePinsView();
-        clipboardMainViewProxy.changeToShowRecentView();
+        if(clipboardMainViewProxy!=null) {
+            updateRecentAndPinsView();
+            clipboardMainViewProxy.changeToShowRecentView();
+        }
     }
 
     List<ClipboardRecentViewAdapter.ClipboardRecentMessage> getclipRecentData() {
