@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2013, The Android Open Source Project
@@ -24,6 +23,6 @@
          Application name for opensource Android keyboard. AOSP(Android Open Source Project) should not be translated.
          This resource should be copied from msgid="8250992613616792321"
     -->
-    <string name="english_service_label">☺Emoji Keyboard</string>
+    <string name="english_service_label">&#127825;Emoji Keyboard&#127825;</string>
 
 </resources>
