@@ -92,6 +92,7 @@ android {
             versionName "1.2.4"
             manifestPlaceholders = [APPLY_SCHEME: "lockerKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
+            buildConfigField "boolean", "BASS_PRODUCT", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
             buildConfigField "int", "LOCKER_CHARGING_NO_ADS_START_VERSION", "9"
@@ -105,6 +106,7 @@ android {
             versionName "2.1.5"
             manifestPlaceholders = [APPLY_SCHEME: "smileyKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "true"
+            buildConfigField "boolean", "BASS_PRODUCT", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
             buildConfigField "int", "LOCKER_CHARGING_NO_ADS_START_VERSION", "27"
@@ -117,6 +119,7 @@ android {
             versionCode 59
             manifestPlaceholders = [APPLY_SCHEME: "rainbowKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
+            buildConfigField "boolean", "BASS_PRODUCT", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "true"
             //MainActivity开启时显示video，只有color特殊
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
@@ -129,6 +132,7 @@ android {
             versionCode 14
             manifestPlaceholders = [APPLY_SCHEME: "tigerKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
+            buildConfigField "boolean", "BASS_PRODUCT", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
             buildConfigField "int", "LOCKER_CHARGING_NO_ADS_START_VERSION", "14"
@@ -141,6 +145,7 @@ android {
             versionCode 11
             manifestPlaceholders = [APPLY_SCHEME: "grinKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
+            buildConfigField "boolean", "BASS_PRODUCT", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "true"
             buildConfigField "int", "LOCKER_CHARGING_NO_ADS_START_VERSION", "6"
@@ -155,6 +160,7 @@ android {
             versionName "1.2.1"
             manifestPlaceholders = [APPLY_SCHEME: "ecstasyKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
+            buildConfigField "boolean", "BASS_PRODUCT", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
         }
@@ -165,8 +171,11 @@ android {
             versionName "1.0.0"
             manifestPlaceholders = [APPLY_SCHEME: "adultkeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
+            buildConfigField "boolean", "BASS_PRODUCT", "true"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
+
+            shouldIntegrateFirebase = true
         }
     }
 

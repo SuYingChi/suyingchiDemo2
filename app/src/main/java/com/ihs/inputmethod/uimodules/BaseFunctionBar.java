@@ -75,6 +75,8 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
 
 
     private void initFunctionBar() {
+        this.setBackgroundDrawable(getTransparentRippleBackground());
+
         settingsButton = new SettingsButton(getContext());
         baseFunction = new BaseFunction(HSApplication.getContext());
         baseFunction.setId(R.id.func_setting_button);
@@ -84,43 +86,42 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         updateFunctionAndSettingButtonSize();
         functionLayout.addView(baseFunction);
 
-        ClothButton clothButton = new ClothButton(getContext());
-        clothView = new BaseFunction(getContext());
-        clothView.setId(R.id.func_cloth_button);
-        clothView.setFunctionView(clothButton);
-        clothView.setOnClickListener(this);
+        if (!BuildConfig.BASS_PRODUCT) {
+            ClothButton clothButton = new ClothButton(getContext());
+            clothView = new BaseFunction(getContext());
+            clothView.setId(R.id.func_cloth_button);
+            clothView.setFunctionView(clothButton);
+            clothView.setOnClickListener(this);
+            functionLayout.addView(clothView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        this.setBackgroundDrawable(getTransparentRippleBackground());
+            //站位View
+            View emptyView = new View(HSApplication.getContext());
+            LayoutParams emptyViewLayoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 0);
+            emptyViewLayoutParams.weight = 1;
+            functionLayout.addView(emptyView, emptyViewLayoutParams);
 
-        functionLayout.addView(clothView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            //search view
+            webSeachButton = new BaseFunction(getContext());
+            ImageView webIcon = new ImageView(getContext());
+            refreshDrawable(webIcon, "menu_search.png", R.drawable.web_search_icon_funcbar);
+            webIcon.setScaleType(ImageView.ScaleType.CENTER);
+            webSeachButton.setFunctionView(webIcon);
+            webSeachButton.setId(R.id.web_search_icon);
+            webSeachButton.setOnClickListener(this);
 
-        //站位View
-        View emptyView = new View(HSApplication.getContext());
-        LayoutParams emptyViewLayoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 0);
-        emptyViewLayoutParams.weight = 1;
-        functionLayout.addView(emptyView, emptyViewLayoutParams);
+            LayoutParams param = new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.MATCH_PARENT, 1.0f);
+            functionLayout.addView(new View(getContext()), param);
 
-                //search view
-        webSeachButton = new BaseFunction(getContext());
-        ImageView webIcon = new ImageView(getContext());
-        refreshDrawable(webIcon, "menu_search.png", R.drawable.web_search_icon_funcbar);
-        webIcon.setScaleType(ImageView.ScaleType.CENTER);
-        webSeachButton.setFunctionView(webIcon);
-        webSeachButton.setId(R.id.web_search_icon);
-        webSeachButton.setOnClickListener(this);
+            if (HSDisplayUtils.getRotation(getContext()) == Surface.ROTATION_0) {
+                functionLayout.addView(webSeachButton, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            }
 
-        LayoutParams param = new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT, 1.0f);
-        functionLayout.addView(new View(getContext()), param);
 
-        if (HSDisplayUtils.getRotation(getContext()) == Surface.ROTATION_0) {
-            functionLayout.addView(webSeachButton, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            softGameButton = new SoftGameButton(getContext());
+            functionLayout.addView(softGameButton, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));
         }
-
-
-        softGameButton = new SoftGameButton(getContext());
-        functionLayout.addView(softGameButton, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));
 
         plusButton = new PlusButton(getContext());
         functionLayout.addView(plusButton, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));

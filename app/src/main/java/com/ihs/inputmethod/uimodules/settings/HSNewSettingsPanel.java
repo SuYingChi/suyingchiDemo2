@@ -20,6 +20,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
+import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
@@ -105,7 +106,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 KCAnalytics.logEvent("keyboard_setting_fonts_clicked");
             }
         }));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && !BuildConfig.BASS_PRODUCT) {
             items.add(ViewItemBuilder.getLuckyItem());
         }
         items.add(ViewItemBuilder.getSoundsPositionItem());

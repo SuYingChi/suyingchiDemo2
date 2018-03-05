@@ -11,6 +11,7 @@
     <string name="home_hot_themes">Hot Themes</string>
     <string name="home_hot_keyboard_background">Hot Keyboard Background</string>
     <string name="home_recommend_stickers">Recommend Stickers</string>
+    <string name="home_diy_keyboard">DIY My Keyboard</string>
 
     <string name="home_menu_keyboard_themes">Keyboard\nThemes</string>
     <string name="home_menu_adult_stickers">Adult\nStickers</string>
@@ -31,4 +32,5 @@
 
     <string name="setting_category_general">General</string>
     <string name="setting_category_more">More</string>
+
 </resources>
