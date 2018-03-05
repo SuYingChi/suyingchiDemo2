@@ -85,7 +85,8 @@ public final class ClipboardActionBar extends LinearLayout implements View.OnCli
                 tabView.setSelected(false);
                 tabView.setTextColor(Color.WHITE);
                 tabView.setTextColor(Color.argb(128, 255, 255, 255));
-                tabView.setBackgroundColor(Color.argb(180, 0, 0, 0));
+                int color = HSKeyboardThemeManager.getCurrentTheme().getDominantColor();
+                tabView.setBackgroundColor(Color.argb(0, Color.red(color), Color.green(color), Color.blue(color)));
             }
         }
         TextView selectedTabView  = tabViewList.get(actionbarTabsNames.indexOf(tabName));
@@ -94,7 +95,8 @@ public final class ClipboardActionBar extends LinearLayout implements View.OnCli
         }
         if (selectedTabView != null) {
             selectedTabView.setTextColor(Color.WHITE);
-            selectedTabView.setBackgroundColor(Color.argb(0, 0, 0, 0));
+            int color = HSKeyboardThemeManager.getCurrentTheme().getDominantColor();
+            selectedTabView.setBackgroundColor(Color.argb(180, Color.red(color), Color.green(color), Color.blue(color)));
         }
     }
 
