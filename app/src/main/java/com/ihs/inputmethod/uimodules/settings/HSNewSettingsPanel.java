@@ -78,7 +78,7 @@ public class HSNewSettingsPanel extends BasePanel {
                         Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
                         KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "time out");
                         boolean tskCancelResult = fetchLocationAsyncTask.cancel(true);
-                        HSLog.d(LOCATION_LOG_TAG, "fetchLocationAsyncTask.cancel  at " + "----tskCancelResult----" + tskCancelResult + System.currentTimeMillis());
+                        HSLog.d(LOCATION_LOG_TAG, "fetchLocationAsyncTask.cancel  at " + "----tskCancelResult----" + tskCancelResult );
                         isFetchingLocationInfo = false;
                     }
                     break;
