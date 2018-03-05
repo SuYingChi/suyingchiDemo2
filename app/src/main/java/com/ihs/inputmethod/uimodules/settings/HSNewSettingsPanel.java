@@ -64,7 +64,7 @@ public class HSNewSettingsPanel extends BasePanel {
     private List<ViewItem> items;
     private SettingsViewPager settingsViewPager;
     private static boolean isLocationInfoFetching = false;
-    private static AsyncTask<Location, Void, Address> locationVoidAddressAsyncTask;
+    private static AsyncTask<Location, Void, Address> locationAsyncTask;
     private static final int REQUEST_LOCATION_TOTAL_TIMEOUT_MILLIS = 10000;
     private static final int GET_LATITUDE_LONGITUDE_RESULT_INTERVAL_TIME = 300;
     private static final String LOCATION_LOG_TAG = "fetchLocation";
@@ -74,11 +74,11 @@ public class HSNewSettingsPanel extends BasePanel {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case LOCATION_TIMEOUT_MESSAGE:
-                    if (isLocationInfoFetching && locationVoidAddressAsyncTask != null) {
+                    if (isLocationInfoFetching && locationAsyncTask != null) {
                         Toast.makeText(HSApplication.getContext(), R.string.request_location_timeout, Toast.LENGTH_SHORT).show();
                         KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "time out");
-                        boolean tskCancelResult = locationVoidAddressAsyncTask.cancel(true);
-                        HSLog.d(LOCATION_LOG_TAG, "locationVoidAddressAsyncTask.cancel  at " + "----tskCancelResult----" + tskCancelResult + System.currentTimeMillis());
+                        boolean tskCancelResult = locationAsyncTask.cancel(true);
+                        HSLog.d(LOCATION_LOG_TAG, "locationAsyncTask.cancel  at " + "----tskCancelResult----" + tskCancelResult + System.currentTimeMillis());
                         isLocationInfoFetching = false;
                     }
                     break;
@@ -182,7 +182,7 @@ public class HSNewSettingsPanel extends BasePanel {
                         } else {
                             HSLog.d(LOCATION_LOG_TAG, "onLocationFetched");
                             EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
-                            locationVoidAddressAsyncTask = new LocationReverseAsyncTask(editorInfo).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, locationManager.getLocation());
+                            locationAsyncTask = new LocationReverseAsyncTask(editorInfo).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, locationManager.getLocation());
                         }
                     }
 
