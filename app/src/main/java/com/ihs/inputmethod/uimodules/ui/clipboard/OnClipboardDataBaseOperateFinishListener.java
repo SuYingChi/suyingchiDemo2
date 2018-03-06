@@ -2,16 +2,18 @@ package com.ihs.inputmethod.uimodules.ui.clipboard;
 
 
 public interface OnClipboardDataBaseOperateFinishListener {
+
     void addRecentItemSuccess();
 
-    void setRecentItemToTopSuccess();
+    void setRecentItemToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage,int position);
 
     void deletePinsItemSuccess();
 
-
-    void deleteRecentItemAndSetItemPositionToBottomInPins();
+    void deleteRecentItemAndSetItemPositionToBottomInPins(int lastPosition);
 
     void deleteRecentItemAndAddToPins();
 
-    void deletePinsItemAndUpdateRecentItemNoPined();
+    void deletePinsItemAndUpdateRecentItemNoPined(int position);
+
+    void clipboardDataBaseOperateFail();
 }

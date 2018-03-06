@@ -7,11 +7,14 @@ import android.text.TextUtils;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 
+import static com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPresenter.RECENT_TABLE_SIZE;
+
 
 public class ClipboardMonitor {
 
     private static ClipboardMonitor instance = null;
     private ClipboardSQLiteOperate clipboardSQLiteOperate;
+
     public static ClipboardMonitor getInstance() {
         if (instance == null) {
             instance = new ClipboardMonitor();
@@ -32,11 +35,16 @@ public class ClipboardMonitor {
                     if (!TextUtils.isEmpty(text)) {
                         String data = text.toString();
                         HSLog.d(ClipboardMonitor.class.getSimpleName(), "     ClipboardMonitor    add  new data      " + data);
-                        clipboardSQLiteOperate.clipDataOperateAddRecent(data);
+                        if (clipboardSQLiteOperate.getRecentAllContentFromTable().size() <= RECENT_TABLE_SIZE & !clipboardSQLiteOperate.queryItemExistsInRecentTable(data)) {
+                            clipboardSQLiteOperate.addItemToBottomInRecentTable(data);
+                        }
+                        //用户新增recent数据，与recent已有内容重复，则置顶重复内容
+                        else if (clipboardSQLiteOperate.queryItemExistsInRecentTable(data)) {
+                            clipboardSQLiteOperate.setItemPositionToBottomInRecentTable(data);
+                        }
                     }
                 }
             });
         }
     }
-
 }

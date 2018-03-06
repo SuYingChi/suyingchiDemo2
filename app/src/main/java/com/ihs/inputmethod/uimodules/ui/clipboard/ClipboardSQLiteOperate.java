@@ -14,15 +14,12 @@ public interface ClipboardSQLiteOperate {
 
     void setItemPositionToBottomInRecentTable(String item);
 
-    void addItemToBottomInPinsTable(String item);
-
     void addItemToBottomInRecentTable(String item);
 
     boolean queryItemExistsInRecentTable(String item);
 
     boolean queryItemExistsInPinsTable(String item);
 
-    void clipDataOperateAddRecent(String item);
 
     void deleteRecentItemAndSetItemPositionToBottomInPins(String item);
 
@@ -31,4 +28,8 @@ public interface ClipboardSQLiteOperate {
     void deletePinsItemAndUpdateRecentItemNoPined(String item);
 
     void setOnDataBaseOperateFinishListener(OnClipboardDataBaseOperateFinishListener OnClipboardDataBaseOperateFinishListener);
+
+    int queryItemInRecentTableReversePosition(String item);
+
+    int queryItemInPinsTableReversePosition(String item);
 }

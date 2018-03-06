@@ -42,7 +42,7 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String pinsContent = pinsDataList.get(position);
+        String pinsContent = pinsDataList.get(holder.getAdapterPosition());
         holder.tv.setText(pinsContent);
         holder.tv.setTextColor(HSKeyboardThemeManager.getCurrentTheme().getKeyTextColor(Color.WHITE));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +55,7 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteFromPinsToRecentListener.deletePinsItem(pinsContent);
+                deleteFromPinsToRecentListener.deletePinsItem(pinsContent,holder.getAdapterPosition());
                 HSLog.d(TAG, "  delete pins item  " + pinsContent);
             }
         });
@@ -67,11 +67,26 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
         return pinsDataList.size();
     }
 
-    void dataChangeAndRefresh(List<String> clipPinsData) {
-        pinsDataList.clear();
-        pinsDataList.addAll(clipPinsData);
-        HSLog.d(TAG, "notifyDataSetChanged  pinsAdapter,     current pinsDataList  is   " + pinsDataList.toString());
-        notifyDataSetChanged();
+
+    public void insertDataChangeAndRefresh(String clipPinsData) {
+
+        pinsDataList.add(0,clipPinsData);
+        HSLog.d(TAG, "notifyDataSetChanged  recentAdapter,     current pinsDataList  is   " + clipPinsData.toString());
+        notifyItemInserted(0);
+    }
+
+    public void setPinsItemToTopAndRefresh(String clipPinsItem,int pinItemPosition) {
+        deleteDataChangeAndRefresh(pinItemPosition);
+        insertDataChangeAndRefresh(clipPinsItem);
+    }
+
+    public void deleteDataChangeAndRefresh(int pinItemPosition) {
+        pinsDataList.remove(pinItemPosition);
+        notifyItemRemoved(pinItemPosition);
+        if(pinItemPosition != pinsDataList.size()){ // 如果移除的是最后一个，忽略
+            //对于被删掉的元素的后边的view进行重新onBindViewHolder
+            notifyItemRangeChanged(pinItemPosition, pinsDataList.size() - pinItemPosition);
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -87,6 +102,6 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
 
 
     public interface DeleteFromPinsToRecentListener {
-        void deletePinsItem(String pinsContentItem);
+        void deletePinsItem(String pinsContentItem,int position);
     }
 }

@@ -4,6 +4,7 @@ import android.widget.Toast;
 
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.utils.HSLog;
 
 import java.util.List;
 
@@ -19,74 +20,66 @@ public class ClipboardPresenter implements OnClipboardDataBaseOperateFinishListe
         clipboardSQLiteOperate.setOnDataBaseOperateFinishListener(this);
     }
 
-
     @Override
     public void addRecentItemSuccess() {
-        updateRecentViewAndChangeToShowRecentView();
+        if (clipboardMainViewProxy != null) {
+            clipboardMainViewProxy.notifyAddRecentDataItemToTopChange();
+        }
     }
 
-    private void updateRecentViewAndChangeToShowRecentView() {
-        if(clipboardMainViewProxy!=null) {
-            clipboardMainViewProxy.changeToShowRecentView();
-            clipboardMainViewProxy.notifyRecentDataSetChange();
-        }
-    }
-    private void updatePinsViewAndChangeToShowRecentView() {
-        if (clipboardMainViewProxy != null) {
-            clipboardMainViewProxy.changeToShowPinsView();
-            clipboardMainViewProxy.notifyPinsDataSetChange();
-        }
-    }
-    private void updateRecentAndPinsView() {
-        if(clipboardMainViewProxy!=null) {
-            clipboardMainViewProxy.notifyRecentDataSetChange();
-            clipboardMainViewProxy.notifyPinsDataSetChange();
-        }
-    }
 
     @Override
-    public void setRecentItemToTopSuccess() {
-
-        updateRecentViewAndChangeToShowRecentView();
+    public void setRecentItemToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage,int position) {
+        if (clipboardMainViewProxy != null) {
+            clipboardMainViewProxy.notifySetRecentItemToTopDataSetChange(clipboardRecentMessage,position);
+        }
     }
 
 
     @Override
     public void deletePinsItemSuccess() {
-        updatePinsViewAndChangeToShowRecentView();
+        if (clipboardMainViewProxy != null) {
+            clipboardMainViewProxy.notifyDeletePinsDataItem();
+        }
     }
+
 
 
     @Override
-    public void deleteRecentItemAndSetItemPositionToBottomInPins() {
-        if(clipboardMainViewProxy!=null) {
-            updateRecentAndPinsView();
-            clipboardMainViewProxy.changeToShowPinsView();
+    public void deleteRecentItemAndSetItemPositionToBottomInPins(int lastPosition) {
+        if (clipboardMainViewProxy != null) {
+            clipboardMainViewProxy.notifyDeleteRecentAndSetPinsItemToTopDataSetChange(lastPosition);
         }
     }
+
+
 
     @Override
     public void deleteRecentItemAndAddToPins() {
-        if(clipboardMainViewProxy!=null){
-            updateRecentAndPinsView();
-            clipboardMainViewProxy.changeToShowPinsView();
+        if (clipboardMainViewProxy != null) {
+            clipboardMainViewProxy.notifyDeleteRecentAndAddPinsDataItemToTopChange();
+        }
+    }
+    @Override
+    public void deletePinsItemAndUpdateRecentItemNoPined(int position) {
+        if (clipboardMainViewProxy != null) {
+
+            clipboardMainViewProxy.notifyUpdateRecentNoPined(position);
         }
     }
 
     @Override
-    public void deletePinsItemAndUpdateRecentItemNoPined() {
-        if(clipboardMainViewProxy!=null) {
-            updateRecentAndPinsView();
-            clipboardMainViewProxy.changeToShowRecentView();
-        }
+    public void clipboardDataBaseOperateFail() {
+        clipboardMainViewProxy.clipboardDataBaseOperateFail();
     }
 
+
     List<ClipboardRecentViewAdapter.ClipboardRecentMessage> getclipRecentData() {
-        return ClipboardDataBaseOperateImpl.getInstance().getRecentAllContentFromTable();
+        return clipboardSQLiteOperate.getRecentAllContentFromTable();
     }
 
     List<String> getClipPinsData() {
-        return ClipboardDataBaseOperateImpl.getInstance().getPinsAllContentFromTable();
+        return clipboardSQLiteOperate.getPinsAllContentFromTable();
     }
 
 
@@ -97,16 +90,16 @@ public class ClipboardPresenter implements OnClipboardDataBaseOperateFinishListe
     //实时监听用户点击Recent页面的收藏按钮时的数据操作
     void clipDataOperateSaveToPins(String item) {
         //recent里点击收藏,收藏内容已经有30条，recent页面点击收藏时，收藏里还没有，提示不能再添加
-        if (ClipboardDataBaseOperateImpl.getInstance().getPinsAllContentFromTable().size() == PINS_TABLE_SIZE & !ClipboardDataBaseOperateImpl.getInstance().queryItemExistsInPinsTable(item)) {
+        if (clipboardSQLiteOperate.getPinsAllContentFromTable().size() == PINS_TABLE_SIZE & !clipboardSQLiteOperate.queryItemExistsInPinsTable(item)) {
             Toast.makeText(HSApplication.getContext(), "You can add at most 30 message", Toast.LENGTH_LONG).show();
             return;
         }
         //recent里点击收藏，收藏里已经有了，则在recent里去除本条，收藏里置顶该条
-        if (ClipboardDataBaseOperateImpl.getInstance().queryItemExistsInPinsTable(item)) {
-            ClipboardDataBaseOperateImpl.getInstance().deleteRecentItemAndSetItemPositionToBottomInPins(item);
+        if (clipboardSQLiteOperate.queryItemExistsInPinsTable(item)) {
+            clipboardSQLiteOperate.deleteRecentItemAndSetItemPositionToBottomInPins(item);
         }//recent 里点击收藏，收藏里还没有，并且收藏内容小于30条，则添加内容并置顶到收藏，并在recent里删除该条。
-        else if (ClipboardDataBaseOperateImpl.getInstance().getPinsAllContentFromTable().size() < PINS_TABLE_SIZE & !ClipboardDataBaseOperateImpl.getInstance().queryItemExistsInPinsTable(item)) {
-            ClipboardDataBaseOperateImpl.getInstance().deleteRecentItemAndAddToPins(item);
+        else if (clipboardSQLiteOperate.getPinsAllContentFromTable().size() < PINS_TABLE_SIZE & !clipboardSQLiteOperate.queryItemExistsInPinsTable(item)) {
+            clipboardSQLiteOperate.deleteRecentItemAndAddToPins(item);
         }
 
     }
@@ -114,11 +107,11 @@ public class ClipboardPresenter implements OnClipboardDataBaseOperateFinishListe
     //实时监听用户点击Pins页面的删除按钮时的数据操作
     void clipDataOperateDeletePins(String item) {
         //用户删除PINS数据，recent里没有
-        if (!ClipboardDataBaseOperateImpl.getInstance().queryItemExistsInRecentTable(item)) {
-            ClipboardDataBaseOperateImpl.getInstance().deleteItemInPinsTable(item);
+        if (!clipboardSQLiteOperate.queryItemExistsInRecentTable(item)) {
+            clipboardSQLiteOperate.deleteItemInPinsTable(item);
         }//用户删除PINS数据，recent里有,标明recent里该项内容已不被收藏
-        else if (ClipboardDataBaseOperateImpl.getInstance().queryItemExistsInRecentTable(item)) {
-            ClipboardDataBaseOperateImpl.getInstance().deletePinsItemAndUpdateRecentItemNoPined(item);
+        else if (clipboardSQLiteOperate.queryItemExistsInRecentTable(item)) {
+            clipboardSQLiteOperate.deletePinsItemAndUpdateRecentItemNoPined(item);
         }
     }
 }

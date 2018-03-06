@@ -2,11 +2,18 @@ package com.ihs.inputmethod.uimodules.ui.clipboard;
 
 
 public interface ClipboardMainViewProxy {
-    void notifyPinsDataSetChange();
 
-    void notifyRecentDataSetChange();
+    void notifyDeleteRecentAndSetPinsItemToTopDataSetChange(int lastPosition);
 
-    void changeToShowPinsView();
+    void notifySetRecentItemToTopDataSetChange(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage, int position);
 
-    void changeToShowRecentView();
+    void notifyAddRecentDataItemToTopChange();
+
+    void notifyDeleteRecentAndAddPinsDataItemToTopChange();
+
+    void notifyDeletePinsDataItem();
+
+    void notifyUpdateRecentNoPined(int position);
+
+    void clipboardDataBaseOperateFail();
 }
