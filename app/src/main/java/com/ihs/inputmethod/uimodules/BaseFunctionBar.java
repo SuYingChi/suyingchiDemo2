@@ -133,7 +133,9 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     }
 
     public void checkNewGame() {
-        softGameButton.checkNewGame();
+        if (softGameButton != null) {
+            softGameButton.checkNewGame();
+        }
     }
 
     public void setOnFunctionBarClickListener(OnFunctionBarItemClickListener onFunctionBarClickListener) {
