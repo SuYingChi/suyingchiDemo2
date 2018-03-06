@@ -38,7 +38,7 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:background="@drawable/create_theme_bg"
-        android:drawableRight="@drawable/tv_enable_keyboard_arrow"
+        android:drawableRight="@drawable/tv_diy_keyboard_arrow"
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
