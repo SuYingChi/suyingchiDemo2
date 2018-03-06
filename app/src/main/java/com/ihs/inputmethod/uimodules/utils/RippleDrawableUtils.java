@@ -23,6 +23,7 @@ import java.util.Arrays;
 public class RippleDrawableUtils {
 
     private static final float DEFAULT_RIPPLE_COLOR_LEVEL = 0.8f;
+
     /**
      * for general button with ripple above 5.0 and selector lower than.
      *
@@ -90,6 +91,16 @@ public class RippleDrawableUtils {
         }
     }
 
+    public static Drawable getCompatGradientRippleDrawableContainDisableStatus(int startColor, int endColor, int disableColor, float radius) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return new RippleDrawable(ColorStateList.valueOf(getRippleColor(startColor, 0.5f))
+                    , getStateListDrawable(startColor, endColor, -1, disableColor, radius)
+                    , getRippleMask(startColor, radius));
+        } else {
+            return getStateListDrawable(startColor, endColor, getRippleColor(startColor, 0.5f), disableColor, radius);
+        }
+    }
+
     private static int getRippleColor(int normalColor, float level) {
         int r = (int) (((normalColor >> 16) & 0xFF) * level);
         int g = (int) (((normalColor >> 8) & 0xFF) * level);
@@ -106,6 +117,7 @@ public class RippleDrawableUtils {
         shapeDrawable.getPaint().setColor(color);
         return shapeDrawable;
     }
+
     private static Drawable getCircleRippleMask(int color, float radius) {
         GradientDrawable shape = new GradientDrawable();
         shape.setShape(GradientDrawable.OVAL);
@@ -130,6 +142,26 @@ public class RippleDrawableUtils {
         }
         states.addState(new int[]{},
                 getShapeDrawable(normalColor, radius));
+        return states;
+    }
+
+    public static StateListDrawable getStateListDrawable(
+            int startColor, int endColor, int pressedColor, int disableColor, float radius) {
+        StateListDrawable states = new StateListDrawable();
+        if (disableColor != -1) {
+            states.addState(new int[]{-android.R.attr.state_enabled},
+                    getShapeDrawable(disableColor, radius));
+        }
+        if (pressedColor != -1) {
+            states.addState(new int[]{android.R.attr.state_pressed},
+                    getShapeDrawable(pressedColor, radius));
+            states.addState(new int[]{android.R.attr.state_focused},
+                    getShapeDrawable(pressedColor, radius));
+            states.addState(new int[]{android.R.attr.state_activated},
+                    getShapeDrawable(pressedColor, radius));
+        }
+        states.addState(new int[]{},
+                getShapeDrawable(startColor, endColor, radius));
         return states;
     }
 
@@ -159,10 +191,20 @@ public class RippleDrawableUtils {
         shape.setColor(color);
         return shape;
     }
+
+
+    private static GradientDrawable getShapeDrawable(int startColor, int endColor, float radius) {
+        int[] colors = {startColor, endColor};
+        GradientDrawable shape = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+        shape.setCornerRadius(radius);
+        return shape;
+    }
+
     private static GradientDrawable getCircleShapeDrawable(int color, float radius) {
         GradientDrawable shape = new GradientDrawable();
         shape.setShape(GradientDrawable.OVAL);
         shape.setColor(color);
         return shape;
     }
+
 }

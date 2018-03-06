@@ -17,6 +17,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -393,12 +394,11 @@ public class MainActivity extends HSAppCompatActivity {
         bt_step_one = this.findViewById(R.id.bt_step_one);
         bt_step_two = this.findViewById(R.id.bt_step_two);
         accessibilityButtonContainer = findViewById(R.id.accessibility_button_container);
-        bt_step_one.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
-                getResources().getDimension(R.dimen.guide_bg_radius)));
-        bt_step_two.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
-                getResources().getDimension(R.dimen.guide_bg_radius)));
-        accessibilityButtonContainer.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
-                getResources().getDimension(R.dimen.guide_bg_radius)));
+
+        bt_step_one.setBackgroundDrawable(getGuideBtnBg());
+        bt_step_two.setBackgroundDrawable(getGuideBtnBg());
+        accessibilityButtonContainer.setBackgroundDrawable(getGuideBtnBg());
+
         RelativeLayout.LayoutParams stepOneLayoutParams = (RelativeLayout.LayoutParams) bt_step_one.getLayoutParams();
         RelativeLayout.LayoutParams stepTwoLayoutParams = (RelativeLayout.LayoutParams) bt_step_two.getLayoutParams();
         RelativeLayout.LayoutParams accessibilityLayoutParams = (RelativeLayout.LayoutParams) accessibilityButtonContainer.getLayoutParams();
@@ -484,6 +484,15 @@ public class MainActivity extends HSAppCompatActivity {
         refreshUIState();
     }
 
+    private Drawable getGuideBtnBg() {
+        if (BuildConfig.BASS_PRODUCT) {
+            return RippleDrawableUtils.getCompatGradientRippleDrawableContainDisableStatus(0xff8f56ff, 0xffae6cff, getResources().getColor(R.color.guide_bg_disable_color),
+                    getResources().getDimension(R.dimen.guide_bg_radius));
+        } else {
+            return RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
+                    getResources().getDimension(R.dimen.guide_bg_radius));
+        }
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
