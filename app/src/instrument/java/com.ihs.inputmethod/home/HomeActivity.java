@@ -53,6 +53,7 @@ import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
+import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.callflash.CallFlashListActivity;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
@@ -189,8 +190,28 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         @Override
         public void onReceive(Context context, Intent intent) {
             if (TextUtils.equals(intent.getAction(), Intent.ACTION_INPUT_METHOD_CHANGED)) {
-                boolean isKeyboardSelected = HSInputMethodListManager.isMyInputMethodSelected();
-                enableTipTV.setVisibility(isKeyboardSelected ? View.GONE : View.VISIBLE);
+                myInputMethodSelected = HSInputMethodListManager.isMyInputMethodSelected();
+                enableTipTV.setVisibility(myInputMethodSelected ? View.GONE : View.VISIBLE);
+                updateRecyclerViewPadding();
+            }
+        }
+    };
+
+    private boolean myInputMethodSelected = HSInputMethodListManager.isMyInputMethodSelected();
+    private int activateKeyboardTipViewHeight = HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.activate_keyboard_tip_height);
+    private float dismissActivateKeyboardTipViewPercent = 1.0f;
+    private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            int scrollOffset = recyclerView.computeVerticalScrollOffset();
+            if (scrollOffset > activateKeyboardTipViewHeight * dismissActivateKeyboardTipViewPercent) {
+                enableTipTV.setVisibility(View.GONE);
+            } else {
+                if (!myInputMethodSelected) {
+                    enableTipTV.setAlpha(1 - (float) (scrollOffset * 1.0 / activateKeyboardTipViewHeight));
+                    enableTipTV.setVisibility(View.VISIBLE);
+                }
             }
         }
     };
@@ -298,7 +319,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
 
         enableTipTV = findViewById(R.id.tv_enable_keyboard);
         ((TextView) enableTipTV).setText(getString(R.string.tv_enable_keyboard_tip, getString(R.string.app_name)));
-        enableTipTV.setVisibility(HSInputMethodListManager.isMyInputMethodSelected() ? View.GONE : View.VISIBLE);
+        enableTipTV.setVisibility(myInputMethodSelected ? View.GONE : View.VISIBLE);
         enableTipTV.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, KeyboardActivationGuideActivity.class);
             startActivityForResult(intent, KEYBOARD_ACTIVATION_FROM_ENABLE_TIP);
@@ -319,7 +340,14 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
 
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(homeAdapter);
+        recyclerView.addOnScrollListener(onScrollListener);
+        updateRecyclerViewPadding();
     }
+
+    private void updateRecyclerViewPadding() {
+        recyclerView.setPadding(recyclerView.getPaddingLeft(), HSDisplayUtils.dip2px(10) + (myInputMethodSelected ? 0 : getResources().getDimensionPixelSize(R.dimen.activate_keyboard_tip_height)), recyclerView.getPaddingRight(), recyclerView.getPaddingBottom());
+    }
+
 
     private List<HomeModel> getHomeData() {
         List<HomeModel> homeModelList = new ArrayList<>();

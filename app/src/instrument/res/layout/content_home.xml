@@ -9,17 +9,17 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="50dp"
-        android:clipToPadding="false"
+        android:background="@color/white"
         android:clipChildren="false"
-        android:background="@color/white" />
+        android:clipToPadding="false"
+        android:paddingBottom="50dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp" />
 
     <TextView
         android:id="@+id/tv_enable_keyboard"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/activate_keyboard_tip_height"
         android:background="@drawable/button_activation_tip"
         android:drawableRight="@drawable/tv_enable_keyboard_arrow"
         android:gravity="center_vertical"
@@ -39,13 +39,12 @@
         android:layout_gravity="bottom"
         android:background="@drawable/create_theme_bg"
         android:drawableRight="@drawable/tv_enable_keyboard_arrow"
-        android:drawableTint="@color/white"
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:textSize="16sp"
-        android:text="@string/theme_store_background_title"
+        android:text="@string/home_diy_keyboard"
         android:textColor="#ffffff"
+        android:textSize="16sp"
         app:typeface="@string/typeface_asap_regular" />
 
 </FrameLayout>
