@@ -26,8 +26,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -190,11 +188,12 @@ public class StickerUtils {
         BitmapFactory.Options option = new BitmapFactory.Options();
         option.inJustDecodeBounds = true;
         // 获取PNG图片的宽高信息
-        if (sticker.isAssetUri()) {
-            String stickerAssetPath = getStickerAssetsPath(sticker);
+        boolean isAssetFile = sticker.isAssetUri();
+        String stickerPath = isAssetFile ? getStickerAssetsPath(sticker) : getStickerFilePath(sticker);
+        if (isAssetFile) {
             InputStream inputStream;
             try {
-                inputStream = HSApplication.getContext().getAssets().open(stickerAssetPath);
+                inputStream = HSApplication.getContext().getAssets().open(stickerPath);
                 BitmapFactory.decodeStream(inputStream, null, option);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -202,8 +201,7 @@ public class StickerUtils {
                 return;
             }
         } else if (sticker.isFileUri()) {
-            String stickerDownloadedPath = getStickerFilePath(sticker);
-            BitmapFactory.decodeFile(stickerDownloadedPath, option);
+            BitmapFactory.decodeFile(stickerPath, option);
         }
         int height = option.outHeight;
         int width = option.outWidth;
@@ -212,7 +210,7 @@ public class StickerUtils {
         Bitmap backgroundBitmap = createBitmapAndGcIfNecessary(backgroundWidth, height); //创建背景图
         Bitmap stickerShareBitmapTemp = null;
         try {
-            stickerShareBitmapTemp = BitmapUtils.decodeImage(sticker.getStickerUri(),sticker.isAssetUri() ? BitmapUtils.ASSET_URI : BitmapUtils.FILE_URI);
+            stickerShareBitmapTemp = BitmapUtils.decodeImage(stickerPath, isAssetFile ? BitmapUtils.ASSET_URI : BitmapUtils.FILE_URI);
         } catch (IOException e) {
         }
         if (stickerShareBitmapTemp == null) {
