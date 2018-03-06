@@ -8,10 +8,6 @@ import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.utils.PreferenceUtils;
-
-import java.util.Date;
 
 /**
  * Created by jixiang on 16/4/20.

@@ -195,12 +195,12 @@ public class FacemojiManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (null == uri) {
             editor.remove(FACE_PICTURE_URI);
-            editor.commit();
+            editor.apply();
             originFace = null;
             return;
         } else {
             editor.putString(FACE_PICTURE_URI, currentFacePicUri.toString());
-            editor.commit();
+            editor.apply();
 
             try {
                 originFace = MediaStore.Images.Media.getBitmap(HSApplication.getContext().getContentResolver(), currentFacePicUri);
@@ -237,7 +237,7 @@ public class FacemojiManager {
             currentFacePicUri = faces.get(1).getUri();
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(FACE_PICTURE_URI, currentFacePicUri.toString());
-            editor.commit();
+            editor.apply();
             return FacemojiManager.currentFacePicUri;
         }
 
