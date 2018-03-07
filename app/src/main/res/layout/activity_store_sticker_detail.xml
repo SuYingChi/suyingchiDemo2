@@ -25,7 +25,7 @@
                     android:id="@+id/sticker_detail_preview_iv"
                     android:adjustViewBounds="true"
                     android:background="@color/store_image_placeholder"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     app:layout_aspectRatio="190%"
                     app:layout_widthPercent="100%" />
 
