@@ -55,7 +55,7 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteFromPinsToRecentListener.deletePinsItem(pinsContent,holder.getAdapterPosition());
+                deleteFromPinsToRecentListener.deletePinsItem(pinsContent, holder.getAdapterPosition());
                 HSLog.d(TAG, "  delete pins item  " + pinsContent);
             }
         });
@@ -68,22 +68,22 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
     }
 
 
-    public void insertDataChangeAndRefresh(String clipPinsData) {
+    void insertDataChangeAndRefresh(String clipPinsData) {
 
-        pinsDataList.add(0,clipPinsData);
+        pinsDataList.add(0, clipPinsData);
         HSLog.d(TAG, "notifyDataSetChanged  recentAdapter,     current pinsDataList  is   " + clipPinsData.toString());
         notifyItemInserted(0);
     }
 
-    public void setPinsItemToTopAndRefresh(String clipPinsItem,int pinItemPosition) {
+    void setPinsItemToTopAndRefresh(String clipPinsItem, int pinItemPosition) {
         deleteDataChangeAndRefresh(pinItemPosition);
         insertDataChangeAndRefresh(clipPinsItem);
     }
 
-    public void deleteDataChangeAndRefresh(int pinItemPosition) {
+    void deleteDataChangeAndRefresh(int pinItemPosition) {
         pinsDataList.remove(pinItemPosition);
         notifyItemRemoved(pinItemPosition);
-        if(pinItemPosition != pinsDataList.size()){ // 如果移除的是最后一个，忽略
+        if (pinItemPosition != pinsDataList.size()) { // 如果移除的是最后一个，忽略
             //对于被删掉的元素的后边的view进行重新onBindViewHolder
             notifyItemRangeChanged(pinItemPosition, pinsDataList.size() - pinItemPosition);
         }
@@ -102,6 +102,6 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
 
 
     public interface DeleteFromPinsToRecentListener {
-        void deletePinsItem(String pinsContentItem,int position);
+        void deletePinsItem(String pinsContentItem, int position);
     }
 }

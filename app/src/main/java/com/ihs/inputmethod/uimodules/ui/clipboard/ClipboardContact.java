@@ -38,7 +38,8 @@ public interface ClipboardContact {
 
         ClipboardRecentViewAdapter.ClipboardRecentMessage getRecentItemFromTable(String item);
     }
-//视图层接口
+
+    //视图层接口
     interface ClipboardView {
 
         void notifyDeleteRecentAndSetPinsItemToTopDataSetChange(int pinsLastPosition);

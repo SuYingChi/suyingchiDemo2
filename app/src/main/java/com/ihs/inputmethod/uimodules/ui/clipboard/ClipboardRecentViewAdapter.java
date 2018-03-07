@@ -58,7 +58,7 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
             @Override
             public void onClick(View v) {
                 //添加到pins页面
-                saveRecentItemToPinsListener.saveToPins(recentClipItemContent.recentClipItemContent,holder.getAdapterPosition());
+                saveRecentItemToPinsListener.saveToPins(recentClipItemContent.recentClipItemContent, holder.getAdapterPosition());
                 HSLog.d(TAG, "save recentItem content to pins  " + recentClipItemContent.recentClipItemContent);
             }
         });
@@ -80,23 +80,23 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
     public void deleteDataChangeAndRefresh(int recentItemPosition) {
         clipRecentData.remove(recentItemPosition);
         notifyItemRemoved(recentItemPosition);
-        if(recentItemPosition != clipRecentData.size()){ // 如果移除的是最后一个，忽略
+        if (recentItemPosition != clipRecentData.size()) { // 如果移除的是最后一个，忽略
             //对于被删掉的元素的后边的view进行重新onBindViewHolder
             notifyItemRangeChanged(recentItemPosition, clipRecentData.size() - recentItemPosition);
         }
 
     }
 
-    public void setRecentItemToTopAndRefresh(ClipboardRecentMessage clipboardRecentMessage ,int recentItemPosition) {
+    void setRecentItemToTopAndRefresh(ClipboardRecentMessage clipboardRecentMessage, int recentItemPosition) {
         deleteDataChangeAndRefresh(recentItemPosition);
         insertDataChangeAndRefresh(clipboardRecentMessage);
 
     }
 
-    public void notifyItemChangedAndRefresh(int position) {
-       clipRecentData.clear();
-       clipRecentData.addAll(ClipboardDataBaseOperateImpl.getInstance().getRecentAllContentFromTable());
-       notifyItemChanged(position);
+    void notifyItemChangedAndRefresh(int position) {
+        clipRecentData.clear();
+        clipRecentData.addAll(ClipboardDataBaseOperateImpl.getInstance().getRecentAllContentFromTable());
+        notifyItemChanged(position);
     }
 
 
@@ -114,8 +114,9 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
     public interface SaveRecentItemToPinsListener {
         void saveToPins(String itemRecentContent, int position);
     }
+
     void insertDataChangeAndRefresh(ClipboardRecentMessage clipRecentMessage) {
-        clipRecentData.add(0,clipRecentMessage);
+        clipRecentData.add(0, clipRecentMessage);
         HSLog.d(TAG, "notifyDataSetChanged  recentAdapter,     current pinsDataList  is   " + clipRecentData.toString());
         notifyItemInserted(0);
     }
@@ -125,7 +126,7 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
         String recentClipItemContent;
         int isPined;
 
-        public ClipboardRecentMessage(String recentClipItemContent, int isPined) {
+        ClipboardRecentMessage(String recentClipItemContent, int isPined) {
             this.recentClipItemContent = recentClipItemContent;
             this.isPined = isPined;
         }
@@ -134,6 +135,7 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
         public String toString() {
             return "  recentClipItemContent  =" + recentClipItemContent + "  isPined =" + isPined;
         }
+
         @Override
         public boolean equals(Object obj) {
             if (this == obj)
@@ -149,7 +151,7 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
         public int hashCode() {
             int result = 17;
             result = result * 31 + recentClipItemContent.hashCode();
-            result = result * 31 +isPined;
+            result = result * 31 + isPined;
             return result;
         }
     }
