@@ -22,8 +22,9 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
     private static final String CLIPBOARD_RECENT_CONTENT_COLUMN_NAME = "clipboard_recent_content";
     private static final String CLIPBOARD_RECENT_ISPINED_COLUMN_NAME = "clipboard_recent_isPined";
     private static final String CLIPBOARD_PINS_CONTENT_COLUMN_NAME = "clipboard_PinS_content";
-    private static volatile ClipboardDataBaseOperateImpl clipboardDataBaseOperateImpl;
+    private static ClipboardDataBaseOperateImpl clipboardDataBaseOperateImpl;
     private final static String TAG = ClipboardDataBaseOperateImpl.class.getSimpleName();
+    private  SQLiteDatabase database;
 
     public static ClipboardDataBaseOperateImpl getInstance() {
         if (clipboardDataBaseOperateImpl == null) {
@@ -35,6 +36,13 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
         }
         return clipboardDataBaseOperateImpl;
     }
+
+   private ClipboardDataBaseOperateImpl(){
+
+       ClipboardSQLiteOpenHelper mDbHelper = ClipboardSQLiteOpenHelper.getInstance();
+       database = mDbHelper.getWritableDatabase();
+   }
+
 
     //创建所有表
     void createAllTable(SQLiteDatabase db) {
@@ -57,7 +65,6 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
     //获取Recent表的被反转的list,
     public List<ClipboardRecentViewAdapter.ClipboardRecentMessage> getRecentAllContentFromTable() {
         List<ClipboardRecentViewAdapter.ClipboardRecentMessage> all = new ArrayList<ClipboardRecentViewAdapter.ClipboardRecentMessage>();
-        SQLiteDatabase database = openClipboardDatabase();
         Cursor cursor = null;
         String recentContentItem;
         int isPined;
@@ -86,7 +93,6 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
     @Override
     public List<String> getPinsAllContentFromTable() {
         List<String> all = new ArrayList<>();
-        SQLiteDatabase database = openClipboardDatabase();
         Cursor cursor = null;
         String pinsContentItem;
         try {
@@ -107,16 +113,9 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
         return all;
     }
 
-    private SQLiteDatabase openClipboardDatabase() {
-
-        ClipboardSQLiteOpenHelper mDbHelper = ClipboardSQLiteOpenHelper.getInstance();
-        return mDbHelper.getWritableDatabase();
-
-    }
 
     @Override
     public boolean deleteItemInPinsTable(String item) {
-        SQLiteDatabase database = openClipboardDatabase();
         int isDelete = -1;
         try {
             isDelete = database.delete(CLIPBOARD_PINS_TABLE, CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{item});
@@ -135,7 +134,6 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
 
     @Override
     public boolean setItemPositionToBottomInRecentTable(String item, int isPined) {
-        SQLiteDatabase database = openClipboardDatabase();
         database.beginTransaction();
         try {
             int deleteRow = -1;
@@ -164,7 +162,6 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
 
     public int queryItemInRecentTableReversePosition(String item) {
 
-        SQLiteDatabase database = openClipboardDatabase();
         Cursor cursor = null;
         String recentContentItem = "";
         int position = 0;
@@ -190,7 +187,6 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
 
     public int queryItemInPinsTableReversePosition(String item) {
 
-        SQLiteDatabase database = openClipboardDatabase();
         Cursor cursor = null;
         String pinsContentItem = "";
         int position = 0;
@@ -216,7 +212,6 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
 
     @Override
     public ClipboardRecentViewAdapter.ClipboardRecentMessage getRecentItemFromTable(String item) {
-        SQLiteDatabase database = openClipboardDatabase();
         Cursor cursor = null;
         try {
             cursor = database.query(CLIPBOARD_RECENT_TABLE, new String[]{CLIPBOARD_RECENT_CONTENT_COLUMN_NAME, CLIPBOARD_RECENT_ISPINED_COLUMN_NAME}, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item}, null, null, null);
@@ -234,7 +229,6 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
     }
 
     boolean addItemToBottomInRecentTable(String item, int isPined, int currentRecentSize) {
-        SQLiteDatabase database = openClipboardDatabase();
         database.beginTransaction();
         try {
             if (currentRecentSize == RECENT_TABLE_SIZE) {
@@ -264,7 +258,6 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
 
     @Override
     public boolean queryItemExistsInRecentTable(String item) {
-        SQLiteDatabase database = openClipboardDatabase();
         Cursor cursor = null;
         try {
             cursor = database.query(CLIPBOARD_RECENT_TABLE, new String[]{CLIPBOARD_RECENT_CONTENT_COLUMN_NAME}, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item}, null, null, null);
@@ -282,8 +275,6 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
 
     @Override
     public int queryItemExistsInPinsTable(String item) {
-
-        SQLiteDatabase database = openClipboardDatabase();
         Cursor cursor = null;
         try {
             cursor = database.query(CLIPBOARD_PINS_TABLE, new String[]{CLIPBOARD_PINS_CONTENT_COLUMN_NAME}, CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{item}, null, null, null);
@@ -300,7 +291,6 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
 
     @Override
     public boolean deleteRecentItemAndSetItemPositionToBottomInPins(String item) {
-        SQLiteDatabase database = openClipboardDatabase();
         int isDeleteRECENT = -1;
         int isDeletePins = -1;
         database.beginTransaction();
@@ -334,7 +324,6 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
 
     @Override
     public boolean deleteRecentItemAndAddToPins(String item) {
-        SQLiteDatabase database = openClipboardDatabase();
         int isDelete = -1;
         database.beginTransaction();
         try {
@@ -362,7 +351,6 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
 
     @Override
     public boolean deletePinsItemAndUpdateRecentItemNoPined(String item) {
-        SQLiteDatabase database = openClipboardDatabase();
         int isDelete = -1;
         database.beginTransaction();
         try {
