@@ -40,7 +40,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     public final static String PANEL_PIN = "Pins";
     private final static int SHOW_VIEW_DURATION = 600;
     List<String> tabNameList = new ArrayList<String>();
-    private int selectRecentpinItemPosition;
+    private int selectRecentPinItemPosition;
     private int selectedRecentItemPosition;
     private Handler uiHandler = new Handler();
     private String selectedRecentItem;
@@ -222,7 +222,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     //点击pins的条目的删除按钮时的回调
     @Override
     public void deletePinsItem(String pinsContentItem, int position) {
-        selectRecentpinItemPosition = position;
+        selectRecentPinItemPosition = position;
         selectedPinsItem = pinsContentItem;
         showDeletedSuggestionAlert();
         KCAnalytics.logEvent("keyboard_clipboard_OneDeleted");
@@ -275,13 +275,13 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     @Override
     public void notifyDeletePinsDataItem() {
         changeToShowPinsView();
-        clipboardPinsViewAdapter.deleteDataChangeAndRefresh(selectRecentpinItemPosition);
+        clipboardPinsViewAdapter.deleteDataChangeAndRefresh(selectRecentPinItemPosition);
     }
 
     @Override
     public void notifyDeletePinsItemUpdateRecentNoPined(int RecentPosition) {
         changeToShowPinsView();
-        clipboardPinsViewAdapter.deleteDataChangeAndRefresh(selectRecentpinItemPosition);
+        clipboardPinsViewAdapter.deleteDataChangeAndRefresh(selectRecentPinItemPosition);
         uiHandler.postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -195,7 +195,7 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
             while (cursor.moveToNext()) {
                 pinsContentItem = cursor.getString(cursor.getColumnIndex(CLIPBOARD_PINS_CONTENT_COLUMN_NAME));
                 if (item.equals(pinsContentItem)) {
-                    position = getRecentAllContentFromTable().size() - position - 1;
+                    position = getPinsAllContentFromTable().size() - position - 1;
                     HSLog.d(TAG, "queryItemInPinsTableReversePosition-----" + "----item---" + item + "------position-----" + position);
                     return position;
                 }
