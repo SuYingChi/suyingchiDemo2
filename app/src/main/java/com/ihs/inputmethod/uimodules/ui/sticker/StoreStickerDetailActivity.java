@@ -87,7 +87,7 @@ public class StoreStickerDetailActivity extends HSAppCompatActivity {
         setContentView(R.layout.activity_store_sticker_detail);
 
         stickerDetailImage = (ImageView) findViewById(R.id.sticker_detail_preview_iv);
-        ImageLoader.getInstance().displayImage(stickerGroup.getDetailPreviewUrl(),
+        ImageLoader.getInstance().displayImage(stickerGroup.getStickerGroupDownloadPreviewImageUri(),
                 new ImageViewAware(stickerDetailImage), displayImageOptions);
         TextView stickerGroupName = (TextView) findViewById(R.id.sticker_group_name_tv);
         stickerGroupName.setText(stickerGroup.getDownloadDisplayName());

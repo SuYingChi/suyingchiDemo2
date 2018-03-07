@@ -42,8 +42,7 @@ public class StickerGroup implements Parcelable {
     private List<Sticker> stickerList = new ArrayList<>();
     public static final String ASSETS_STICKER_FILE_NAME = "Stickers";
     private static final String STICKER_TAB_IMAGE_SUFFIX = "-tab.png";
-    private static final String STICKER_DOWNLOAD_IMAGE_SUFFIX = "-preview.png";
-    private static final String STICKER_DETAIL_PREVIEW = "-detail.png";
+    private static final String STICKER_DOWNLOAD_IMAGE_SUFFIX = "-detail.png";
     private static final String STICKER_DOWNLOAD_ZIP_SUFFIX = ".zip";
     // --Commented out by Inspection (18/1/11 下午2:41):private static final String STICKER_IMAGE_PNG_SUFFIX = ".png";
     private static final String STICKER_CONFIG_FILE_SUFFIX = "/contents.json";
@@ -351,11 +350,6 @@ public class StickerGroup implements Parcelable {
             return new StickerGroup[size];
         }
     };
-
-    public String getDetailPreviewUrl() {
-        return new StringBuilder(getStickerDownloadBaseUrl())
-                .append(stickerGroupName).append("/").append(stickerGroupName).append(STICKER_DETAIL_PREVIEW).toString();
-    }
 
     public static String getSingleImageUrl(int position, String stickerGroupName, String fileFormat){
         String stickerImageSerialNumber;
