@@ -134,5 +134,23 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
         public String toString() {
             return "  recentClipItemContent  =" + recentClipItemContent + "  isPined =" + isPined;
         }
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if ((obj == null) || (obj.getClass() != this.getClass()))
+                return false;
+            // object must be Test at this point
+            ClipboardRecentMessage clipboardRecentMessage = (ClipboardRecentMessage) obj;
+            return recentClipItemContent.equals(clipboardRecentMessage.recentClipItemContent) && isPined == clipboardRecentMessage.isPined;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = 17;
+            result = result * 31 + recentClipItemContent.hashCode();
+            result = result * 31 +isPined;
+            return result;
+        }
     }
 }
