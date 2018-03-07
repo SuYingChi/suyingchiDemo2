@@ -371,7 +371,7 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
                 return false;
             }
             ContentValues values = new ContentValues();
-            values.put(CLIPBOARD_RECENT_ISPINED_COLUMN_NAME, item);
+            values.put(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME, item);
             values.put(CLIPBOARD_RECENT_ISPINED_COLUMN_NAME, 0);
             int updateResult = database.update(CLIPBOARD_RECENT_TABLE, values, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item});
             if (updateResult < 0) {

@@ -9,7 +9,6 @@ import java.util.List;
 public interface ClipboardContact {
 
     //由于数据操作都是同步操作，中间层可直接拿到数据层的数据处理结果，暂时不需要中间层接口，
-
     //数据层接口
     interface ClipboardSQLiteOperate {
         List<ClipboardRecentViewAdapter.ClipboardRecentMessage> getRecentAllContentFromTable();
