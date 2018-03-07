@@ -44,8 +44,12 @@ public class ClipboardMonitor {
                                 return;
                             }
                             if (isSuccess) {
-                                ClipboardRecentViewAdapter.ClipboardRecentMessage addRecent = clipboardDataBaseOperateImpl.getRecentItemFromTable(item);
-                                onClipboardMonitorOperateDatabaseFinish.addRecentItemToTopSuccess(addRecent);
+                                if(currentRecentSize == RECENT_TABLE_SIZE){
+                                    onClipboardMonitorOperateDatabaseFinish.notifyDeleteLastRecentItemAndAddToTopSuccess(clipboardDataBaseOperateImpl.getRecentItemFromTable(item));
+                                }else {
+                                    ClipboardRecentViewAdapter.ClipboardRecentMessage addRecent = clipboardDataBaseOperateImpl.getRecentItemFromTable(item);
+                                    onClipboardMonitorOperateDatabaseFinish.notifyAddRecentItemToTopSuccess(addRecent);
+                                }
                             } else {
                                 int isPined = clipboardDataBaseOperateImpl.queryItemExistsInPinsTable(item);
                                 onClipboardMonitorOperateDatabaseFinish.addItemToRecentTopFail(new ClipboardRecentViewAdapter.ClipboardRecentMessage(item, isPined));
@@ -61,7 +65,7 @@ public class ClipboardMonitor {
                                     return;
                                 }
                                 if (isSuccess) {
-                                    onClipboardMonitorOperateDatabaseFinish.setRecentItemToTopSuccess(lastRecent, lastPosition);
+                                    onClipboardMonitorOperateDatabaseFinish.notifySetRecentItemToTopSuccess(lastRecent, lastPosition);
                                 } else {
                                     onClipboardMonitorOperateDatabaseFinish.setRecentItemToTopFail(lastRecent, lastPosition);
                                 }
@@ -78,12 +82,14 @@ public class ClipboardMonitor {
     }
 
     public interface OnClipboardMonitorOperateDatabaseFinish {
-        void addRecentItemToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
+        void notifyAddRecentItemToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
 
-        void setRecentItemToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage, int position);
+        void notifySetRecentItemToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage lastClipboardRecentMessage, int position);
 
         void addItemToRecentTopFail(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
 
         void setRecentItemToTopFail(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage, int position);
+
+        void notifyDeleteLastRecentItemAndAddToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
     }
 }

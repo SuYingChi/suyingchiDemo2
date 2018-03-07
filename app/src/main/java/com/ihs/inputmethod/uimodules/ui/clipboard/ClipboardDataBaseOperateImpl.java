@@ -196,7 +196,7 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
                 pinsContentItem = cursor.getString(cursor.getColumnIndex(CLIPBOARD_PINS_CONTENT_COLUMN_NAME));
                 if (item.equals(pinsContentItem)) {
                     position = getPinsAllContentFromTable().size() - position - 1;
-                    HSLog.d(TAG, "queryItemInPinsTableReversePosition-----" + "----item---" + item + "------position-----" + position);
+                    HSLog.d(TAG, "database    queryItemInPinsTableReversePosition-----" + "----item---" + item + "------position-----" + position);
                     return position;
                 }
                 position++;
@@ -230,11 +230,19 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
 
     boolean addItemToBottomInRecentTable(String item, int isPined, int currentRecentSize) {
         database.beginTransaction();
+        Cursor cursor = null;
         try {
+            //删除表里第一条数据
             if (currentRecentSize == RECENT_TABLE_SIZE) {
-                int isDelete = database.delete(CLIPBOARD_RECENT_TABLE, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item});
-                HSLog.d(TAG, "   deleteItem  =" + item + "      InRecentTable" + "  deleteResult   ==== " + isDelete);
-                if (isDelete == 0) {
+                cursor = database.query(CLIPBOARD_RECENT_TABLE,null,null,null,null,null,null);
+                if(cursor.moveToFirst()){
+                   String firstItem = cursor.getString(cursor.getColumnIndex(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME));
+                    int isDelete = database.delete(CLIPBOARD_RECENT_TABLE, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{firstItem});
+                    HSLog.d(TAG, "   deleteItem  =" + item + "      InRecentTable" + "  deleteResult   ==== " + isDelete);
+                    if (isDelete == 0) {
+                        return false;
+                    }
+                }else{
                     return false;
                 }
             }
@@ -252,6 +260,9 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
             e.printStackTrace();
             return false;
         } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
             database.endTransaction();
         }
     }

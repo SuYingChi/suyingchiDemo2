@@ -23,6 +23,8 @@ import com.kc.utils.KCAnalytics;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPresenter.RECENT_TABLE_SIZE;
+
 
 public final class ClipboardMainView extends LinearLayout implements ClipboardActionBar.ClipboardTabChangeListener, ClipboardContact.ClipboardView, ClipboardRecentViewAdapter.SaveRecentItemToPinsListener, ClipboardPinsViewAdapter.DeleteFromPinsToRecentListener, ClipboardMonitor.OnClipboardMonitorOperateDatabaseFinish {
 
@@ -231,16 +233,22 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
 
     //UI更新接口
     @Override
-    public void addRecentItemToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage) {
+    public void notifyAddRecentItemToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage) {
         changeToShowRecentView();
         clipboardRecentViewAdapter.insertDataChangeAndRefresh(clipboardRecentMessage);
         clipboardPanelRecentView.scrollToPosition(0);
     }
-
     @Override
-    public void setRecentItemToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage, int position) {
+    public void notifyDeleteLastRecentItemAndAddToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage) {
         changeToShowRecentView();
-        clipboardRecentViewAdapter.setRecentItemToTopAndRefresh(clipboardRecentMessage, position);
+        clipboardRecentViewAdapter.deleteDataChangeAndRefresh(RECENT_TABLE_SIZE-1);
+        clipboardRecentViewAdapter.insertDataChangeAndRefresh(clipboardRecentMessage);
+        clipboardPanelRecentView.scrollToPosition(0);
+    }
+    @Override
+    public void notifySetRecentItemToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage lastClipboardRecentMessage, int position) {
+        changeToShowRecentView();
+        clipboardRecentViewAdapter.setRecentItemToTopAndRefresh(lastClipboardRecentMessage, position);
         clipboardPanelRecentView.scrollToPosition(0);
     }
 
@@ -266,6 +274,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
             @Override
             public void run() {
                 changeToShowPinsView();
+                HSLog.d("suyingchi","mainview pinsLastPosition-----"+pinsLastPosition+"----selectedRecentItem---"+selectedRecentItem);
                 clipboardPinsViewAdapter.setPinsItemToTopAndRefresh(selectedRecentItem, pinsLastPosition);
                 clipboardPanelPinsView.scrollToPosition(0);
             }
@@ -300,6 +309,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     public void setRecentItemToTopFail(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage, int position) {
         Toast.makeText(HSApplication.getContext(), R.string.clipboard_database_operate_fail, Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     public void deletePinsDataItemFail() {

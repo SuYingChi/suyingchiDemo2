@@ -4,6 +4,7 @@ import android.widget.Toast;
 
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 
 import java.util.List;
@@ -41,12 +42,13 @@ class ClipboardPresenter {
         }
         //recent里点击收藏，收藏里已经有了，则在recent里去除本条，收藏里置顶该条
         if (clipboardSQLiteOperate.queryItemExistsInPinsTable(item) == 1) {
-            boolean isSuccess = clipboardSQLiteOperate.deleteRecentItemAndSetItemPositionToBottomInPins(item);
             int pinsLastPosition = clipboardSQLiteOperate.queryItemInPinsTableReversePosition(item);
+            boolean isSuccess = clipboardSQLiteOperate.deleteRecentItemAndSetItemPositionToBottomInPins(item);
             if (ClipboardView == null) {
                 return;
             }
             if (isSuccess) {
+                HSLog.d("suyingchi","presenter pinsLastPosition    "+pinsLastPosition);
                 ClipboardView.notifyDeleteRecentAndSetPinsItemToTopDataSetChange(pinsLastPosition);
             } else {
                 ClipboardView.deleteRecentAndSetPinsItemToTopFail(pinsLastPosition);

@@ -75,12 +75,14 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
         notifyItemInserted(0);
     }
 
-    void setPinsItemToTopAndRefresh(String clipPinsItem, int pinItemPosition) {
-        deleteDataChangeAndRefresh(pinItemPosition);
+    void setPinsItemToTopAndRefresh(String clipPinsItem, int lastPinItemPosition) {
+        HSLog.d("suyingchi","adapter setPinsItemToTopAndRefresh  lastPinItemPosition-------"+lastPinItemPosition+"-------clipPinsItem-------"+clipPinsItem);
+        deleteDataChangeAndRefresh(lastPinItemPosition);
         insertDataChangeAndRefresh(clipPinsItem);
     }
 
     void deleteDataChangeAndRefresh(int pinItemPosition) {
+        HSLog.d("suyingchi","adapter  deleteDataChangeAndRefresh  pinItemPosition "+pinItemPosition);
         pinsDataList.remove(pinItemPosition);
         notifyItemRemoved(pinItemPosition);
         if (pinItemPosition != pinsDataList.size()) { // 如果移除的是最后一个，忽略
