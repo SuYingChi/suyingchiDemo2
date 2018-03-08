@@ -218,6 +218,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     @Override
     public void onExistRecentAdd(ClipboardRecentViewAdapter.ClipboardRecentMessage lastClipboardRecentMessage) {
         switchToRecentView();
+        //为防止数据库数据与adapter维护的list数据不一致，从adapter获取position和数据去更新UI
         int lastPosition = clipboardRecentViewAdapter.getClipRecentData().indexOf(lastClipboardRecentMessage);
         clipboardRecentViewAdapter.setRecentItemToTopAndRefresh(lastClipboardRecentMessage, lastPosition);
         clipboardPanelRecentView.scrollToPosition(0);
@@ -245,6 +246,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
             @Override
             public void run() {
                 switchToPinsView();
+                //为防止数据库数据与adapter维护的list数据不一致，从adapter获取position和数据去更新UI
                 int pinsLastPosition = clipboardPinsViewAdapter.getPinsDataList().indexOf(lastPinsItem);
                 HSLog.d(TAG, "clipboardMainView pinsLastPosition-----" + pinsLastPosition + "----selectedRecentItem---" + selectedRecentItem);
                 clipboardPinsViewAdapter.setPinsItemToTopAndRefresh(lastPinsItem, pinsLastPosition);
@@ -267,6 +269,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
             @Override
             public void run() {
                 switchToRecentView();
+                //为防止数据库数据与adapter维护的list数据不一致，从adapter获取position和数据去更新UI
                 int recentPosition = clipboardRecentViewAdapter.getClipRecentData().indexOf(new ClipboardRecentViewAdapter.ClipboardRecentMessage(recentItem.recentClipItemContent,1));
                 HSLog.d(TAG,"onDeletePinAndUnpinRecent  ====  "+"recentItem====="+recentItem+"---------recentPosition===="+recentPosition);
                 clipboardRecentViewAdapter.notifyItemChangedAndRefresh(recentItem,recentPosition);
@@ -277,36 +280,43 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     @Override
     public void onNewRecentAddFail(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage) {
         Toast.makeText(HSApplication.getContext(), R.string.clipboard_operate_fail, Toast.LENGTH_SHORT).show();
+        HSLog.d(TAG," Failure to add new recent item to the database.");
     }
 
     @Override
     public void onExistRecentAddFail(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage) {
         Toast.makeText(HSApplication.getContext(), R.string.clipboard_operate_fail, Toast.LENGTH_SHORT).show();
+        HSLog.d(TAG," Failure to move exist recent item to the bottom of database.");
     }
 
 
     @Override
     public void onDeletePinFail() {
         Toast.makeText(HSApplication.getContext(), R.string.clipboard_operate_fail, Toast.LENGTH_SHORT).show();
+        HSLog.d(TAG," Failure to delete pin item to the database.");
     }
 
     @Override
     public void onDeletePinAndUnpinRecentFail(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem) {
         Toast.makeText(HSApplication.getContext(), R.string.clipboard_operate_fail, Toast.LENGTH_SHORT).show();
+        HSLog.d(TAG," Failure to delete pin item and unpin recent to the database.");
     }
 
     @Override
     public void onDeleteRecentAndMovePinToTopFail(String lastPinsItem) {
         Toast.makeText(HSApplication.getContext(), R.string.clipboard_operate_fail, Toast.LENGTH_SHORT).show();
+        HSLog.d(TAG," Failure to delete recent item and move exist pin To bottom to the database.");
     }
 
     @Override
     public void onDeleteRecentAndAddPinFail() {
         Toast.makeText(HSApplication.getContext(), R.string.clipboard_operate_fail, Toast.LENGTH_SHORT).show();
+        HSLog.d(TAG," Failure to delete recent item and add Pin To bottom to the database.");
     }
 
     @Override
     public void onDeleteTheLastRecentAndNewRecentAddFail(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage) {
         Toast.makeText(HSApplication.getContext(), R.string.clipboard_operate_fail, Toast.LENGTH_SHORT).show();
+        HSLog.d(TAG," Failure to delete the last recent item and add recent To bottom to the database.");
     }
 }

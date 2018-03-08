@@ -45,13 +45,13 @@ public class ClipboardMonitor {
                                 return;
                             }
                             if (isSuccess) {
-                                if(currentRecentSize == RECENT_TABLE_SIZE){
+                                if (currentRecentSize == RECENT_TABLE_SIZE) {
                                     onClipboardRecentDataChangeListener.onDeleteTheLastRecentAndNewRecentAdd(recentItem);
-                                }else {
+                                } else {
                                     onClipboardRecentDataChangeListener.onNewRecentAdd(recentItem);
                                 }
                             } else {
-                                if(currentRecentSize == RECENT_TABLE_SIZE){
+                                if (currentRecentSize == RECENT_TABLE_SIZE) {
                                     onClipboardRecentDataChangeListener.onDeleteTheLastRecentAndNewRecentAddFail(recentItem);
                                 }
                                 int isPined = clipboardDataBaseOperateImpl.isPinItemExists(item);
@@ -83,15 +83,19 @@ public class ClipboardMonitor {
         this.onClipboardRecentDataChangeListener = onClipboardRecentDataChangeListener;
     }
 
+    //数据库操作失败的话回调fail接口，日后根据需要拓展
     public interface OnClipboardRecentDataChangeListener {
+        //添加新的recent数据并置顶，收藏图标会根据该数据是否已被收藏选择是否高亮，
         void onNewRecentAdd(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
 
         void onNewRecentAddFail(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
 
+        //添加了已有的recent数据时，将已有的recent数据置顶
         void onExistRecentAdd(ClipboardRecentViewAdapter.ClipboardRecentMessage lastClipboardRecentMessage);
 
         void onExistRecentAddFail(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
 
+        //当recent数据已有10条时，再添加新的recent数据时，删除最后一条，并添加新数据并置顶
         void onDeleteTheLastRecentAndNewRecentAdd(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
 
         void onDeleteTheLastRecentAndNewRecentAddFail(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
