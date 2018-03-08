@@ -16,15 +16,15 @@ import static com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPresenter.RECE
 //
 public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardSQLiteOperate {
 
-    private static final String CLIPBOARD_RECENT_TABLE = "clipboard_recent_table";
-    private static final String CLIPBOARD_PINS_TABLE = "clipboard_pins_table";
-    private static final String _ID = "_id";
-    private static final String CLIPBOARD_RECENT_CONTENT_COLUMN_NAME = "clipboard_recent_content";
-    private static final String CLIPBOARD_RECENT_ISPINED_COLUMN_NAME = "clipboard_recent_isPined";
-    private static final String CLIPBOARD_PINS_CONTENT_COLUMN_NAME = "clipboard_PinS_content";
+    static final String CLIPBOARD_RECENT_TABLE = "clipboard_recent_table";
+    static final String CLIPBOARD_PINS_TABLE = "clipboard_pins_table";
+    static final String _ID = "_id";
+    static final String CLIPBOARD_RECENT_CONTENT_COLUMN_NAME = "clipboard_recent_content";
+    static final String CLIPBOARD_RECENT_ISPINED_COLUMN_NAME = "clipboard_recent_isPined";
+    static final String CLIPBOARD_PINS_CONTENT_COLUMN_NAME = "clipboard_PinS_content";
     private static ClipboardDataBaseOperateImpl clipboardDataBaseOperateImpl;
     private final static String TAG = ClipboardDataBaseOperateImpl.class.getSimpleName();
-    private  SQLiteDatabase database;
+    private SQLiteDatabase database = ClipboardSQLiteOpenHelper.getInstance().getWritableDatabase();
 
     public static ClipboardDataBaseOperateImpl getInstance() {
         if (clipboardDataBaseOperateImpl == null) {
@@ -37,29 +37,6 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
         return clipboardDataBaseOperateImpl;
     }
 
-   private ClipboardDataBaseOperateImpl(){
-
-       ClipboardSQLiteOpenHelper mDbHelper = ClipboardSQLiteOpenHelper.getInstance();
-       database = mDbHelper.getWritableDatabase();
-   }
-
-
-    //创建所有表
-    void createAllTable(SQLiteDatabase db) {
-        String pinsSql = "CREATE TABLE IF NOT EXISTS " + CLIPBOARD_PINS_TABLE + " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + CLIPBOARD_PINS_CONTENT_COLUMN_NAME + " TEXT NOT NULL DEFAULT '' ," + "UNIQUE (" + CLIPBOARD_PINS_CONTENT_COLUMN_NAME + ")" + ");";
-        String recentSql = "CREATE TABLE IF NOT EXISTS " + CLIPBOARD_RECENT_TABLE + " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + " TEXT NOT NULL DEFAULT '' ,"
-                + CLIPBOARD_RECENT_ISPINED_COLUMN_NAME + " INTEGER NOT NULL DEFAULT 0 ," + "UNIQUE (" + CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + ")" + ");";
-        try {
-            db.execSQL(pinsSql);
-            db.execSQL(recentSql);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        HSLog.d(TAG, "create recent table and pins table");
-    }
 
     @Override
     //获取Recent表的被反转的list,
@@ -120,7 +97,7 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
         try {
             isDelete = database.delete(CLIPBOARD_PINS_TABLE, CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{deletePinItem});
             HSLog.d(TAG, "   deleteItem   =" + deletePinItem + "        InPinsTable" + "       deleteResult   ==== " + isDelete);
-            return isDelete >0;
+            return isDelete > 0;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -230,15 +207,15 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
         try {
             //删除表里第一条数据
             if (currentRecentSize == RECENT_TABLE_SIZE) {
-                cursor = database.query(CLIPBOARD_RECENT_TABLE,null,null,null,null,null,null);
-                if(cursor.moveToFirst()){
-                   String firstItem = cursor.getString(cursor.getColumnIndex(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME));
+                cursor = database.query(CLIPBOARD_RECENT_TABLE, null, null, null, null, null, null);
+                if (cursor.moveToFirst()) {
+                    String firstItem = cursor.getString(cursor.getColumnIndex(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME));
                     int isDelete = database.delete(CLIPBOARD_RECENT_TABLE, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{firstItem});
                     HSLog.d(TAG, "   deleteItem  =" + insertRecentItem + "      InRecentTable" + "  deleteResult   ==== " + isDelete);
                     if (isDelete == 0) {
                         return false;
                     }
-                }else{
+                } else {
                     return false;
                 }
             }
@@ -399,7 +376,6 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
 
     @Override
     public int getPinsSize() {
-
         Cursor cursor = null;
         try {
             cursor = database.query(CLIPBOARD_PINS_TABLE, null, null, null, null, null, null);
