@@ -11,51 +11,55 @@ public interface ClipboardContact {
     //由于数据操作都是同步操作，中间层可直接拿到数据层的数据处理结果，暂时不需要中间层接口，
     //数据层接口
     interface ClipboardSQLiteOperate {
-        List<ClipboardRecentViewAdapter.ClipboardRecentMessage> getRecentAllContentFromTable();
+        List<ClipboardRecentViewAdapter.ClipboardRecentMessage> getRecentAllContentList();
 
-        List<String> getPinsAllContentFromTable();
+        List<String> getPinsAllContentList();
+
+        ClipboardRecentViewAdapter.ClipboardRecentMessage getRecentItem(String recentStringItem);
+
+        int getRecentSize();
+
+        int getPinsSize();
+
+        boolean deletePinItem(String deletePinItem);
+
+        boolean moveExistRecentItemToBottom(String existRecentItem, int isPined);
+
+        boolean isRecentItemExists(String recentItem);
+
+        int isPinItemExists(String pinItem);
+
+        boolean insertRecentItem(String insertRecentItem, int isPined, int currentRecentSize);
+
+        boolean deleteRecentItemAndSetItemPositionToBottomInPins(String deleteRecentItem);
+
+        boolean deleteRecentItemAndAddToPins(String deleteRecentItem);
+
+        boolean deletePinItemAndUnpinRecentItem(String deletePinItem);
 
 
-        boolean deleteItemInPinsTable(String item);
-
-        boolean setItemPositionToBottomInRecentTable(String item, int isPined);
-
-        boolean queryItemExistsInRecentTable(String item);
-
-        int queryItemExistsInPinsTable(String item);
-
-
-        boolean deleteRecentItemAndSetItemPositionToBottomInPins(String item);
-
-        boolean deleteRecentItemAndAddToPins(String item);
-
-        boolean deletePinsItemAndUpdateRecentItemNoPined(String item);
-
-        int queryItemInRecentTableReversePosition(String item);
-
-        int queryItemInPinsTableReversePosition(String item);
-
-        ClipboardRecentViewAdapter.ClipboardRecentMessage getRecentItemFromTable(String item);
     }
 
     //视图层接口
     interface ClipboardView {
 
-        void notifyDeleteRecentAndSetPinsItemToTopDataSetChange(int pinsLastPosition);
+        void onDeleteRecentAndMovePinToTop(String lastPinItem);
 
-        void notifyDeleteRecentAndAddPinsDataItemToTopChange();
+        void onDeleteRecentAndMovePinToTopFail(String lastPinItem);
 
-        void notifyDeletePinsDataItem();
+        void onDeleteRecentAndAddPin();
 
-        void notifyDeletePinsItemUpdateRecentNoPined(int position);
+        void onDeleteRecentAndAddPinFail();
 
-        void deletePinsDataItemFail();
+        void onDeletePin();
 
-        void deletePinsItemUpdateRecentNoPinedFail(int recentPosition);
+        void onDeletePinFail();
 
-        void deleteRecentAndSetPinsItemToTopFail(int pinsLastPosition);
+        void onDeletePinAndUnpinRecent(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem);
 
-        void deleteRecentAndAddPinsDataItemToTopFail();
+        void onDeletePinAndUnpinRecentFail(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem);
+
+
     }
 
 }

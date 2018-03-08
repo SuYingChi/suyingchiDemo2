@@ -38,6 +38,5 @@ public class ClipboardSQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        ClipboardDataBaseOperateImpl.getInstance().createAllTable(db);
     }
 }

@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.settings;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -54,7 +53,7 @@ final class ViewItemBuilder {
 
     private final static String SETTINGS_KEY_MORE_SETTING = "ic_settings_key_more_setting";
 
-    private final static String SETTINGS_KEY_PINS = "ic_settings_key_pins";
+    private final static String SETTINGS_KEY_CLIPBOARD = "ic_settings_key_pins";
 
     private static final String SETTING_ON = "on";
     private static final String SETTING_OFF = "off";
@@ -89,7 +88,7 @@ final class ViewItemBuilder {
 
     static ViewItem getClipboardItem(ViewItem.ViewItemListener viewItemListener) {
         return new ViewItem(HSApplication.getContext().getResources().getString(R.string.setting_item_clipboard),
-                getStateListDrawable(SETTINGS_KEY_PINS,SETTINGS_KEY_PINS )
+                getStateListDrawable(SETTINGS_KEY_CLIPBOARD, SETTINGS_KEY_CLIPBOARD)
                 , viewItemListener, false);
     }
 

@@ -63,7 +63,7 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
 
     @Override
     //获取Recent表的被反转的list,
-    public List<ClipboardRecentViewAdapter.ClipboardRecentMessage> getRecentAllContentFromTable() {
+    public List<ClipboardRecentViewAdapter.ClipboardRecentMessage> getRecentAllContentList() {
         List<ClipboardRecentViewAdapter.ClipboardRecentMessage> all = new ArrayList<ClipboardRecentViewAdapter.ClipboardRecentMessage>();
         Cursor cursor = null;
         String recentContentItem;
@@ -91,7 +91,7 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
 
     //获取Pins表反转的list
     @Override
-    public List<String> getPinsAllContentFromTable() {
+    public List<String> getPinsAllContentList() {
         List<String> all = new ArrayList<>();
         Cursor cursor = null;
         String pinsContentItem;
@@ -115,17 +115,12 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
 
 
     @Override
-    public boolean deleteItemInPinsTable(String item) {
+    public boolean deletePinItem(String deletePinItem) {
         int isDelete = -1;
         try {
-            isDelete = database.delete(CLIPBOARD_PINS_TABLE, CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{item});
-            HSLog.d(TAG, "   deleteItem   =" + item + "        InPinsTable" + "       deleteResult   ==== " + isDelete);
-            if (isDelete == 0) {
-                return false;
-            } else if (isDelete == 1) {
-                return true;
-            }
-            return false;
+            isDelete = database.delete(CLIPBOARD_PINS_TABLE, CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{deletePinItem});
+            HSLog.d(TAG, "   deleteItem   =" + deletePinItem + "        InPinsTable" + "       deleteResult   ==== " + isDelete);
+            return isDelete >0;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -133,20 +128,20 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
     }
 
     @Override
-    public boolean setItemPositionToBottomInRecentTable(String item, int isPined) {
+    public boolean moveExistRecentItemToBottom(String existRecentItem, int isPined) {
         database.beginTransaction();
         try {
             int deleteRow = -1;
-            deleteRow = database.delete(CLIPBOARD_RECENT_TABLE, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item});
-            HSLog.d(TAG, "   deleteItem  =" + item + "      InRecentTable" + "  deleteResult   ==== " + deleteRow);
+            deleteRow = database.delete(CLIPBOARD_RECENT_TABLE, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{existRecentItem});
+            HSLog.d(TAG, "   deleteItem  =" + existRecentItem + "      InRecentTable" + "  deleteResult   ==== " + deleteRow);
             if (deleteRow == 0) {
                 return false;
             }
             ContentValues contentValues = new ContentValues();
-            contentValues.put(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME, item);
+            contentValues.put(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME, existRecentItem);
             contentValues.put(CLIPBOARD_RECENT_ISPINED_COLUMN_NAME, isPined);
             long insertResult = database.insert(CLIPBOARD_RECENT_TABLE, null, contentValues);
-            HSLog.d(TAG, "addItem   " + item + "   to bottom of RecentTable");
+            HSLog.d(TAG, "addItem   " + existRecentItem + "   to bottom of RecentTable");
             if (insertResult == -1) {
                 return false;
             }
@@ -160,7 +155,7 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
         }
     }
 
-    public int queryItemInRecentTableReversePosition(String item) {
+/*    public int queryItemInRecentTableReversePosition(String item) {
 
         Cursor cursor = null;
         String recentContentItem = "";
@@ -170,7 +165,7 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
             while (cursor.moveToNext()) {
                 recentContentItem = cursor.getString(cursor.getColumnIndex(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME));
                 if (item.equals(recentContentItem)) {
-                    position = getRecentAllContentFromTable().size() - position - 1;
+                    position = getRecentAllContentList().size() - position - 1;
                     HSLog.d(TAG, "queryItemInRecentTableReversePosition-----" + "----item---" + item + "------position-----" + position);
                     return position;
                 }
@@ -183,9 +178,9 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
             if (null != cursor) cursor.close();
         }
         return -1;
-    }
+    }*/
 
-    public int queryItemInPinsTableReversePosition(String item) {
+/*    public int queryItemInPinsTableReversePosition(String item) {
 
         Cursor cursor = null;
         String pinsContentItem = "";
@@ -195,7 +190,7 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
             while (cursor.moveToNext()) {
                 pinsContentItem = cursor.getString(cursor.getColumnIndex(CLIPBOARD_PINS_CONTENT_COLUMN_NAME));
                 if (item.equals(pinsContentItem)) {
-                    position = getPinsAllContentFromTable().size() - position - 1;
+                    position = getPinsAllContentList().size() - position - 1;
                     HSLog.d(TAG, "database    queryItemInPinsTableReversePosition-----" + "----item---" + item + "------position-----" + position);
                     return position;
                 }
@@ -208,16 +203,16 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
             if (null != cursor) cursor.close();
         }
         return -1;
-    }
+    }*/
 
     @Override
-    public ClipboardRecentViewAdapter.ClipboardRecentMessage getRecentItemFromTable(String item) {
+    public ClipboardRecentViewAdapter.ClipboardRecentMessage getRecentItem(String recentStringItem) {
         Cursor cursor = null;
         try {
-            cursor = database.query(CLIPBOARD_RECENT_TABLE, new String[]{CLIPBOARD_RECENT_CONTENT_COLUMN_NAME, CLIPBOARD_RECENT_ISPINED_COLUMN_NAME}, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item}, null, null, null);
+            cursor = database.query(CLIPBOARD_RECENT_TABLE, new String[]{CLIPBOARD_RECENT_CONTENT_COLUMN_NAME, CLIPBOARD_RECENT_ISPINED_COLUMN_NAME}, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{recentStringItem}, null, null, null);
             if (cursor.moveToNext()) {
                 int itemExists = cursor.getInt(cursor.getColumnIndex(CLIPBOARD_RECENT_ISPINED_COLUMN_NAME));
-                return new ClipboardRecentViewAdapter.ClipboardRecentMessage(item, itemExists);
+                return new ClipboardRecentViewAdapter.ClipboardRecentMessage(recentStringItem, itemExists);
             }
             return null;
         } catch (Exception e) {
@@ -228,7 +223,8 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
         }
     }
 
-    boolean addItemToBottomInRecentTable(String item, int isPined, int currentRecentSize) {
+    @Override
+    public boolean insertRecentItem(String insertRecentItem, int isPined, int currentRecentSize) {
         database.beginTransaction();
         Cursor cursor = null;
         try {
@@ -238,7 +234,7 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
                 if(cursor.moveToFirst()){
                    String firstItem = cursor.getString(cursor.getColumnIndex(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME));
                     int isDelete = database.delete(CLIPBOARD_RECENT_TABLE, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{firstItem});
-                    HSLog.d(TAG, "   deleteItem  =" + item + "      InRecentTable" + "  deleteResult   ==== " + isDelete);
+                    HSLog.d(TAG, "   deleteItem  =" + insertRecentItem + "      InRecentTable" + "  deleteResult   ==== " + isDelete);
                     if (isDelete == 0) {
                         return false;
                     }
@@ -247,10 +243,10 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
                 }
             }
             ContentValues contentValues = new ContentValues();
-            contentValues.put(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME, item);
+            contentValues.put(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME, insertRecentItem);
             contentValues.put(CLIPBOARD_RECENT_ISPINED_COLUMN_NAME, isPined);
             long insertResult = database.insert(CLIPBOARD_RECENT_TABLE, null, contentValues);
-            HSLog.d(TAG, "addItem   " + item + "   to bottom of RecentTable  " + "  insertResult " + insertResult);
+            HSLog.d(TAG, "addItem   " + insertRecentItem + "   to bottom of RecentTable  " + "  insertResult " + insertResult);
             if (insertResult == -1) {
                 return false;
             }
@@ -268,12 +264,12 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
     }
 
     @Override
-    public boolean queryItemExistsInRecentTable(String item) {
+    public boolean isRecentItemExists(String recentItem) {
         Cursor cursor = null;
         try {
-            cursor = database.query(CLIPBOARD_RECENT_TABLE, new String[]{CLIPBOARD_RECENT_CONTENT_COLUMN_NAME}, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item}, null, null, null);
-            boolean itemExists = cursor.moveToNext() && item.equals(cursor.getString(cursor.getColumnIndex(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME)));
-            HSLog.d(TAG, "query      " + item + "      isExistsInRecentTable    " + itemExists);
+            cursor = database.query(CLIPBOARD_RECENT_TABLE, new String[]{CLIPBOARD_RECENT_CONTENT_COLUMN_NAME}, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{recentItem}, null, null, null);
+            boolean itemExists = cursor.moveToNext() && recentItem.equals(cursor.getString(cursor.getColumnIndex(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME)));
+            HSLog.d(TAG, "query      " + recentItem + "      isExistsInRecentTable    " + itemExists);
             return itemExists;
         } catch (Exception e) {
             e.printStackTrace();
@@ -285,12 +281,12 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
     }
 
     @Override
-    public int queryItemExistsInPinsTable(String item) {
+    public int isPinItemExists(String pinItem) {
         Cursor cursor = null;
         try {
-            cursor = database.query(CLIPBOARD_PINS_TABLE, new String[]{CLIPBOARD_PINS_CONTENT_COLUMN_NAME}, CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{item}, null, null, null);
-            boolean itemExists = cursor.moveToNext() && item.equals(cursor.getString(cursor.getColumnIndex(CLIPBOARD_PINS_CONTENT_COLUMN_NAME)));
-            HSLog.d(TAG, "query     " + item + "       isExistsInPinsTable       " + itemExists);
+            cursor = database.query(CLIPBOARD_PINS_TABLE, new String[]{CLIPBOARD_PINS_CONTENT_COLUMN_NAME}, CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{pinItem}, null, null, null);
+            boolean itemExists = cursor.moveToNext() && pinItem.equals(cursor.getString(cursor.getColumnIndex(CLIPBOARD_PINS_CONTENT_COLUMN_NAME)));
+            HSLog.d(TAG, "query     " + pinItem + "       isExistsInPinsTable       " + itemExists);
             return itemExists ? 1 : 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -301,25 +297,25 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
     }
 
     @Override
-    public boolean deleteRecentItemAndSetItemPositionToBottomInPins(String item) {
+    public boolean deleteRecentItemAndSetItemPositionToBottomInPins(String deleteRecentItem) {
         int isDeleteRECENT = -1;
         int isDeletePins = -1;
         database.beginTransaction();
         try {
-            isDeleteRECENT = database.delete(CLIPBOARD_RECENT_TABLE, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item});
-            HSLog.d(TAG, "   deleteItem  =" + item + "      InRecentTable" + "  deleteResult   ==== " + isDeleteRECENT);
+            isDeleteRECENT = database.delete(CLIPBOARD_RECENT_TABLE, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{deleteRecentItem});
+            HSLog.d(TAG, "   deleteItem  =" + deleteRecentItem + "      InRecentTable" + "  deleteResult   ==== " + isDeleteRECENT);
             if (isDeleteRECENT == 0) {
                 return false;
             }
-            isDeletePins = database.delete(CLIPBOARD_PINS_TABLE, CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{item});
-            HSLog.d(TAG, "   deleteItem   =" + item + "        InPinsTable" + "       deleteResult   ==== " + isDeletePins);
+            isDeletePins = database.delete(CLIPBOARD_PINS_TABLE, CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{deleteRecentItem});
+            HSLog.d(TAG, "   deleteItem   =" + deleteRecentItem + "        InPinsTable" + "       deleteResult   ==== " + isDeletePins);
             if (isDeletePins == 0) {
                 return false;
             }
             ContentValues contentValues = new ContentValues();
-            contentValues.put(CLIPBOARD_PINS_CONTENT_COLUMN_NAME, item);
+            contentValues.put(CLIPBOARD_PINS_CONTENT_COLUMN_NAME, deleteRecentItem);
             long insertResult = database.insert(CLIPBOARD_PINS_TABLE, null, contentValues);
-            HSLog.d(TAG, "addItem   " + item + "   to bottom of PinsTable " + "  insertResult  " + insertResult);
+            HSLog.d(TAG, "addItem   " + deleteRecentItem + "   to bottom of PinsTable " + "  insertResult  " + insertResult);
             if (insertResult == -1) {
                 return false;
             }
@@ -334,19 +330,19 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
     }
 
     @Override
-    public boolean deleteRecentItemAndAddToPins(String item) {
+    public boolean deleteRecentItemAndAddToPins(String deleteRecentItem) {
         int isDelete = -1;
         database.beginTransaction();
         try {
-            isDelete = database.delete(CLIPBOARD_RECENT_TABLE, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item});
+            isDelete = database.delete(CLIPBOARD_RECENT_TABLE, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{deleteRecentItem});
             if (isDelete == 0) {
                 return false;
             }
-            HSLog.d(TAG, "   deleteItem  =" + item + "      InRecentTable" + "  deleteResult   ==== " + isDelete);
+            HSLog.d(TAG, "   deleteItem  =" + deleteRecentItem + "      InRecentTable" + "  deleteResult   ==== " + isDelete);
             ContentValues contentValues = new ContentValues();
-            contentValues.put(CLIPBOARD_PINS_CONTENT_COLUMN_NAME, item);
+            contentValues.put(CLIPBOARD_PINS_CONTENT_COLUMN_NAME, deleteRecentItem);
             long insertResult = database.insert(CLIPBOARD_PINS_TABLE, null, contentValues);
-            HSLog.d(TAG, "addItem   " + item + "   to bottom of PinsTable" + "insert result " + insertResult);
+            HSLog.d(TAG, "addItem   " + deleteRecentItem + "   to bottom of PinsTable" + "insert result " + insertResult);
             if (insertResult == -1) {
                 return false;
             }
@@ -361,23 +357,23 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
     }
 
     @Override
-    public boolean deletePinsItemAndUpdateRecentItemNoPined(String item) {
+    public boolean deletePinItemAndUnpinRecentItem(String deletePinItem) {
         int isDelete = -1;
         database.beginTransaction();
         try {
-            isDelete = database.delete(CLIPBOARD_PINS_TABLE, CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{item});
-            HSLog.d(TAG, "   deleteItem   =" + item + "        InPinsTable" + "       deleteResult   ==== " + isDelete);
+            isDelete = database.delete(CLIPBOARD_PINS_TABLE, CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{deletePinItem});
+            HSLog.d(TAG, "   deleteItem   =" + deletePinItem + "        InPinsTable" + "       deleteResult   ==== " + isDelete);
             if (isDelete == 0) {
                 return false;
             }
             ContentValues values = new ContentValues();
-            values.put(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME, item);
+            values.put(CLIPBOARD_RECENT_CONTENT_COLUMN_NAME, deletePinItem);
             values.put(CLIPBOARD_RECENT_ISPINED_COLUMN_NAME, 0);
-            int updateResult = database.update(CLIPBOARD_RECENT_TABLE, values, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{item});
+            int updateResult = database.update(CLIPBOARD_RECENT_TABLE, values, CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{deletePinItem});
             if (updateResult < 0) {
                 return false;
             }
-            HSLog.d(TAG, item + "    updateRecentItem   " + item + "    NoPinedInPinsTable    ");
+            HSLog.d(TAG, deletePinItem + "    updateRecentItem   " + deletePinItem + "    NoPinedInPinsTable    ");
             database.setTransactionSuccessful();
             return true;
         } catch (Exception e) {
@@ -385,6 +381,34 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
             return false;
         } finally {
             database.endTransaction();
+        }
+    }
+
+    public int getRecentSize() {
+        Cursor cursor = null;
+        try {
+            cursor = database.query(CLIPBOARD_RECENT_TABLE, null, null, null, null, null, null);
+            return cursor.getCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        } finally {
+            if (null != cursor) cursor.close();
+        }
+    }
+
+    @Override
+    public int getPinsSize() {
+
+        Cursor cursor = null;
+        try {
+            cursor = database.query(CLIPBOARD_PINS_TABLE, null, null, null, null, null, null);
+            return cursor.getCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        } finally {
+            if (null != cursor) cursor.close();
         }
     }
 }

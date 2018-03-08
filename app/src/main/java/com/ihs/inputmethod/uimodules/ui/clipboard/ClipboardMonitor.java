@@ -14,7 +14,7 @@ public class ClipboardMonitor {
 
     private static ClipboardMonitor instance = null;
     private ClipboardDataBaseOperateImpl clipboardDataBaseOperateImpl;
-    private OnClipboardMonitorOperateDatabaseFinish onClipboardMonitorOperateDatabaseFinish;
+    private OnClipboardRecentDataChangeListener onClipboardRecentDataChangeListener;
 
     public static ClipboardMonitor getInstance() {
         if (instance == null) {
@@ -35,39 +35,41 @@ public class ClipboardMonitor {
                     CharSequence text = clipboard.getText();
                     if (!TextUtils.isEmpty(text)) {
                         String item = text.toString();
-                        int currentRecentSize = clipboardDataBaseOperateImpl.getRecentAllContentFromTable().size();
+                        int currentRecentSize = clipboardDataBaseOperateImpl.getRecentSize();
+                        ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem = clipboardDataBaseOperateImpl.getRecentItem(item);
                         HSLog.d(ClipboardMonitor.class.getSimpleName(), "     ClipboardMonitor    add  new data      " + item);
                         //用户新增recent数据，与recent不重复，则添加并置顶
-                        if (currentRecentSize <= RECENT_TABLE_SIZE & !clipboardDataBaseOperateImpl.queryItemExistsInRecentTable(item)) {
-                            boolean isSuccess = clipboardDataBaseOperateImpl.addItemToBottomInRecentTable(item, clipboardDataBaseOperateImpl.queryItemExistsInPinsTable(item), currentRecentSize);
-                            if (onClipboardMonitorOperateDatabaseFinish == null) {
+                        if (currentRecentSize <= RECENT_TABLE_SIZE & !clipboardDataBaseOperateImpl.isRecentItemExists(item)) {
+                            boolean isSuccess = clipboardDataBaseOperateImpl.insertRecentItem(item, clipboardDataBaseOperateImpl.isPinItemExists(item), currentRecentSize);
+                            if (onClipboardRecentDataChangeListener == null) {
                                 return;
                             }
                             if (isSuccess) {
                                 if(currentRecentSize == RECENT_TABLE_SIZE){
-                                    onClipboardMonitorOperateDatabaseFinish.notifyDeleteLastRecentItemAndAddToTopSuccess(clipboardDataBaseOperateImpl.getRecentItemFromTable(item));
+                                    onClipboardRecentDataChangeListener.onDeleteTheLastRecentAndNewRecentAdd(recentItem);
                                 }else {
-                                    ClipboardRecentViewAdapter.ClipboardRecentMessage addRecent = clipboardDataBaseOperateImpl.getRecentItemFromTable(item);
-                                    onClipboardMonitorOperateDatabaseFinish.notifyAddRecentItemToTopSuccess(addRecent);
+                                    onClipboardRecentDataChangeListener.onNewRecentAdd(recentItem);
                                 }
                             } else {
-                                int isPined = clipboardDataBaseOperateImpl.queryItemExistsInPinsTable(item);
-                                onClipboardMonitorOperateDatabaseFinish.addItemToRecentTopFail(new ClipboardRecentViewAdapter.ClipboardRecentMessage(item, isPined));
+                                if(currentRecentSize == RECENT_TABLE_SIZE){
+                                    onClipboardRecentDataChangeListener.onDeleteTheLastRecentAndNewRecentAddFail(recentItem);
+                                }
+                                int isPined = clipboardDataBaseOperateImpl.isPinItemExists(item);
+                                onClipboardRecentDataChangeListener.onNewRecentAddFail(new ClipboardRecentViewAdapter.ClipboardRecentMessage(item, isPined));
                             }
                         }
                         //用户新增recent数据，与recent已有内容重复，则置顶重复内容
-                        else if (clipboardDataBaseOperateImpl.queryItemExistsInRecentTable(item)) {
-                            int lastPosition = clipboardDataBaseOperateImpl.queryItemInRecentTableReversePosition(item);
-                            ClipboardRecentViewAdapter.ClipboardRecentMessage lastRecent = clipboardDataBaseOperateImpl.getRecentItemFromTable(item);
-                            if (lastPosition >= 0 && lastRecent != null) {
-                                boolean isSuccess = clipboardDataBaseOperateImpl.setItemPositionToBottomInRecentTable(item, clipboardDataBaseOperateImpl.queryItemExistsInPinsTable(item));
-                                if (onClipboardMonitorOperateDatabaseFinish == null) {
+                        else if (clipboardDataBaseOperateImpl.isRecentItemExists(item)) {
+                           // int lastPosition = clipboardDataBaseOperateImpl.queryItemInRecentTableReversePosition(item);
+                            if (recentItem != null) {
+                                boolean isSuccess = clipboardDataBaseOperateImpl.moveExistRecentItemToBottom(item, clipboardDataBaseOperateImpl.isPinItemExists(item));
+                                if (onClipboardRecentDataChangeListener == null) {
                                     return;
                                 }
                                 if (isSuccess) {
-                                    onClipboardMonitorOperateDatabaseFinish.notifySetRecentItemToTopSuccess(lastRecent, lastPosition);
+                                    onClipboardRecentDataChangeListener.onExistRecentAdd(recentItem);
                                 } else {
-                                    onClipboardMonitorOperateDatabaseFinish.setRecentItemToTopFail(lastRecent, lastPosition);
+                                    onClipboardRecentDataChangeListener.onExistRecentAddFail(recentItem);
                                 }
                             }
                         }
@@ -77,19 +79,21 @@ public class ClipboardMonitor {
         }
     }
 
-    void setOnClipboardMonitorOperateDatabaseFinish(OnClipboardMonitorOperateDatabaseFinish onClipboardMonitorOperateDatabaseFinish) {
-        this.onClipboardMonitorOperateDatabaseFinish = onClipboardMonitorOperateDatabaseFinish;
+    void setOnClipboardRecentDataChangeListener(OnClipboardRecentDataChangeListener onClipboardRecentDataChangeListener) {
+        this.onClipboardRecentDataChangeListener = onClipboardRecentDataChangeListener;
     }
 
-    public interface OnClipboardMonitorOperateDatabaseFinish {
-        void notifyAddRecentItemToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
+    public interface OnClipboardRecentDataChangeListener {
+        void onNewRecentAdd(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
 
-        void notifySetRecentItemToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage lastClipboardRecentMessage, int position);
+        void onNewRecentAddFail(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
 
-        void addItemToRecentTopFail(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
+        void onExistRecentAdd(ClipboardRecentViewAdapter.ClipboardRecentMessage lastClipboardRecentMessage);
 
-        void setRecentItemToTopFail(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage, int position);
+        void onExistRecentAddFail(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
 
-        void notifyDeleteLastRecentItemAndAddToTopSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
+        void onDeleteTheLastRecentAndNewRecentAdd(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
+
+        void onDeleteTheLastRecentAndNewRecentAddFail(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage);
     }
 }

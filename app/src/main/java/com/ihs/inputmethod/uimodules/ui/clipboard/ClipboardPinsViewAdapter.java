@@ -106,4 +106,8 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
     public interface DeleteFromPinsToRecentListener {
         void deletePinsItem(String pinsContentItem, int position);
     }
+
+    public List<String> getPinsDataList() {
+        return pinsDataList;
+    }
 }
