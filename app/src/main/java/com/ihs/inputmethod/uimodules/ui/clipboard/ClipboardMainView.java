@@ -97,7 +97,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
         if (deleteAlert == null) {
             deleteAlert = new KCAlert.Builder(HSApplication.getContext())
                     .setTitle(getResources().getString(R.string.clipboard_delete_title))
-                    .setMessage(getResources().getString(R.string.clipboard_disable_suggestion_detail))
+                    .setMessage(getResources().getString(R.string.clipboard_delete_message))
                     .setPositiveButton(getResources().getString(R.string.cancel), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -105,7 +105,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
                             KCAnalytics.logEvent("keyboard_clipboard_pin_cancelled");
                         }
                     })
-                    .setNegativeButton(getResources().getString(R.string.clipboard_delete_pin), new View.OnClickListener() {
+                    .setNegativeButton(getResources().getString(R.string.clipboard_delete_pin_confirm), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             clipboardPresenter.clipDataOperateDeletePins(selectedPinsItem);
