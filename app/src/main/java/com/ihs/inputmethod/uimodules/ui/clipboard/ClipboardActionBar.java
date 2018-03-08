@@ -3,15 +3,18 @@ package com.ihs.inputmethod.uimodules.ui.clipboard;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.util.AttributeSet;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -25,47 +28,36 @@ public  class ClipboardActionBar extends LinearLayout implements View.OnClickLis
 
     private onClipboardTabChangeListener onClipboardTabChangeListener;
     private Map<String,TextView> tabViewsMap = new HashMap<String,TextView>();
-    private int backgroundColor;
-
+    private final int DOMINANT_COLOR = HSKeyboardThemeManager.getCurrentTheme().getDominantColor();
+    private final int ACTION_BAR_HEIGHT = getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
+    private final int  TEXT_COLOR = HSKeyboardThemeManager.getCurrentTheme().isDarkBg()?Color.WHITE:Color.BLACK;
     public ClipboardActionBar(Context context) {
-        this(context, null);
+        super(context);
+        setOrientation(HORIZONTAL);
+        setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ACTION_BAR_HEIGHT ));
     }
 
-    public ClipboardActionBar(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public ClipboardActionBar(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
 
     void setOnClipboardTabChangeListener(onClipboardTabChangeListener onClipboardTabChangeListener) {
         this.onClipboardTabChangeListener = onClipboardTabChangeListener;
     }
 
     public void setActionBarTabName(List<String> tabNameList) {
-        backgroundColor = HSKeyboardThemeManager.getCurrentTheme().getDominantColor();
         final int actionBarTabSize = tabNameList.size();
         for (int i = 0; i < actionBarTabSize; i++) {
             final String tabName = tabNameList.get(i);
-            final LayoutParams params = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1.0f);
+            final LayoutParams params = new LayoutParams(0, ACTION_BAR_HEIGHT, 1.0f);
             TextView clipActionBarBtnView =  new TextView(getContext());
             clipActionBarBtnView.setGravity(Gravity.CENTER);
-            clipActionBarBtnView.setTag(tabName);
+            clipActionBarBtnView.setText(tabName);
             clipActionBarBtnView.setOnClickListener(this);
-            clipActionBarBtnView.setTextColor(Color.WHITE);
-            clipActionBarBtnView.setBackgroundColor(backgroundColor);
+            clipActionBarBtnView.setTextColor(Color.argb(128, 255, 255, 255));
+            clipActionBarBtnView.setTextColor(Color.argb(128, 255, 255, 255));
+            clipActionBarBtnView.setBackgroundColor(Color.argb(0, Color.red(DOMINANT_COLOR), Color.green(DOMINANT_COLOR), Color.blue(DOMINANT_COLOR)));
+            clipActionBarBtnView.setTag(tabName);
             addView(clipActionBarBtnView, params);
             tabViewsMap.put(tabName,clipActionBarBtnView);
         }
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-         final int clipboardActionBarWidth = HSApplication.getContext().getResources().getDisplayMetrics().widthPixels;
-         final int clipboardActionBarHeight = HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
-        setMeasuredDimension(clipboardActionBarWidth, clipboardActionBarHeight);
     }
 
     @Override
@@ -85,18 +77,14 @@ public  class ClipboardActionBar extends LinearLayout implements View.OnClickLis
         for (TextView tabView : tabViewsMap.values()) {
             if (tabView != null) {
                 tabView.setSelected(false);
-                tabView.setTextColor(Color.WHITE);
                 tabView.setTextColor(Color.argb(128, 255, 255, 255));
-                tabView.setBackgroundColor(Color.argb(0, Color.red(backgroundColor), Color.green(backgroundColor), Color.blue(backgroundColor)));
+                tabView.setBackgroundColor(Color.argb(0, Color.red(DOMINANT_COLOR), Color.green(DOMINANT_COLOR), Color.blue(DOMINANT_COLOR)));
             }
         }
         TextView currentTabView = tabViewsMap.get(tabName);
         if (currentTabView != null) {
-            currentTabView.setSelected(true);
-        }
-        if (currentTabView != null) {
-            currentTabView.setTextColor(Color.WHITE);
-            currentTabView.setBackgroundColor(Color.argb(180, Color.red(backgroundColor), Color.green(backgroundColor), Color.blue(backgroundColor)));
+            currentTabView.setTextColor(TEXT_COLOR);
+            currentTabView.setBackgroundColor(Color.argb(180, Color.red(DOMINANT_COLOR), Color.green(DOMINANT_COLOR), Color.blue(DOMINANT_COLOR)));
         }
     }
     interface onClipboardTabChangeListener {

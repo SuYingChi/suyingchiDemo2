@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.clipboard;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -41,15 +42,17 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     List<String> tabNameList = new ArrayList<String>();
     private Handler uiHandler = new Handler();
     static final int KEYBOARD_HEIGHT = HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources());
+    final int BACKGROUND_COLOR = HSKeyboardThemeManager.getCurrentTheme().getDominantColor();
 
     public ClipboardMainView(Context context) {
         super(context);
         clipboardPresenter = new ClipboardPresenter(this);
-        setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
         setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, KEYBOARD_HEIGHT));
         setOrientation(VERTICAL);
+        setBackgroundColor(BACKGROUND_COLOR);
         addRecyclerViewGroup();
         addRecyclerViewToPanelViewGroup();
+        currentView = clipboardPanelRecentView;
         addBarView();
         tabNameList.add(ClipboardConstants.PANEL_RECENT);
         tabNameList.add(ClipboardConstants.PANEL_PIN);
@@ -75,6 +78,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
                 HSLog.e(ClipboardMainView.class.getSimpleName(), "selected clipboard view has been Showing");
             }else {
                 //如果此时选中的view没有在显示但是已经添加，并已有VIEW在显示，则隐藏原来的view 并显示选中的view，设置为currentView
+                HSLog.e(ClipboardMainView.class.getSimpleName(), "recyclerViewToShow   "+(String) recyclerViewToShow.getTag()+"currentView "+(String)currentView.getTag());
                 currentView.setVisibility(INVISIBLE);
                 recyclerViewToShow.setVisibility(VISIBLE);
                 currentView = recyclerViewToShow;
@@ -109,11 +113,13 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
 
     private void switchToPinsView() {
         showPanelView(clipboardPanelPinsView);
+        HSLog.d(TAG,"show clipboardPanelPinsView");
         actionBar.setCurrentTab((String) currentView.getTag());
     }
 
     private void switchToRecentView() {
         showPanelView(clipboardPanelRecentView);
+        HSLog.d(TAG,"show clipboardPanelRecentView");
         actionBar.setCurrentTab((String) currentView.getTag());
     }
 
@@ -126,9 +132,8 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
         clipboardPanelRecentView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(clipboardPresenter.getClipRecentData(), this);
         clipboardPanelRecentView.setTag(ClipboardConstants.PANEL_RECENT);
-        clipboardPanelRecentView.setVisibility(VISIBLE);
         clipboardPanelRecentView.setAdapter(clipboardRecentViewAdapter);
-
+        clipboardPanelRecentView.setVisibility(VISIBLE);
 
         LinearLayoutManager pinsLayoutManager = new LinearLayoutManager(getContext());
         pinsLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -137,22 +142,12 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
         clipboardPanelPinsView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(clipboardPresenter.getClipPinsData(), this);
         clipboardPanelPinsView.setTag(ClipboardConstants.PANEL_PIN);
-        clipboardPanelPinsView.setVisibility(INVISIBLE);
         clipboardPanelPinsView.setAdapter(clipboardPinsViewAdapter);
-
+        clipboardPanelPinsView.setVisibility(INVISIBLE);
 
         recyclerViewGroup.addView(clipboardPanelRecentView, new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         recyclerViewGroup.addView(clipboardPanelPinsView, new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        currentView = clipboardPanelRecentView;
-
-    }
-
-
-    private void addBarView() {
-        actionBar = new ClipboardActionBar(getContext());
-        actionBar.setOnClipboardTabChangeListener(this);
-        addView(actionBar,new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     private void addRecyclerViewGroup() {
@@ -163,6 +158,13 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
         addView(recyclerViewGroup, panelViewGroupLayoutParams);
     }
 
+    private void addBarView() {
+        actionBar = new ClipboardActionBar(getContext());
+        actionBar.setOnClipboardTabChangeListener(this);
+        addView(actionBar,new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height)));
+    }
+
+
     /**
      * 点击recent的条目的pins按钮时执行的回调
      * @param item 点击的recent Item的文本内容，在UI列表的position
@@ -171,7 +173,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     @Override
     public void onSaveRecentItemToPins(String item, int position) {
         clipboardPresenter.saveRecentItemToPins(item,position);
-        HSAnalytics.logEvent("keyboard_clipboard_save_recent_to_pins");
+        HSAnalytics.logEvent("keyboard_clipboard_save_recent_to_pins_clicked");
 
     }
 
@@ -183,7 +185,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     @Override
     public void onDeletePinsItem(String pinsContentItem, int position) {
         showDeletedSuggestionAlert(pinsContentItem,position);
-        HSAnalytics.logEvent("keyboard_clipboard_delete_pin_item");
+        HSAnalytics.logEvent("keyboard_clipboard_delete_pin_item_clicked");
     }
 
 
