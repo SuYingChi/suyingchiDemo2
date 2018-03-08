@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -23,10 +24,9 @@ import com.kc.utils.KCAnalytics;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPresenter.RECENT_TABLE_SIZE;
 
 
-public final class ClipboardMainView extends LinearLayout implements ClipboardActionBar.ClipboardTabChangeListener, ClipboardContact.ClipboardView, ClipboardRecentViewAdapter.SaveRecentItemToPinsListener, ClipboardPinsViewAdapter.DeleteFromPinsToRecentListener, ClipboardMonitor.OnClipboardRecentDataChangeListener {
+public final class ClipboardMainView extends LinearLayout implements ClipboardActionBar.onClipboardTabChangeListener, ClipboardContact.ClipboardView, ClipboardRecentViewAdapter.OnRecentItemPinClickedListener, ClipboardPinsViewAdapter.OnPinItemDeletedClickListener, ClipboardMonitor.OnClipboardRecentDataChangeListener {
 
     private static final String TAG = ClipboardMainView.class.getSimpleName();
     private ClipboardRecentViewAdapter clipboardRecentViewAdapter;
@@ -37,46 +37,34 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     private ClipboardPresenter clipboardPresenter;
     private FrameLayout recyclerViewGroup;
     private RecyclerView currentView = null;
-    int keyboardHeight = HSResourceUtils.getDefaultKeyboardHeight(getResources());
     private KCAlert deleteAlert;
-    public final static String PANEL_RECENT = "Recent";
-    public final static String PANEL_PIN = "Pins";
-    private final static int SHOW_VIEW_DURATION = 600;
     List<String> tabNameList = new ArrayList<String>();
-    private int selectRecentPinItemPosition;
-    private int selectedRecentItemPosition;
     private Handler uiHandler = new Handler();
-    private String selectedRecentItem;
-    private String selectedPinsItem;
+    static final int KEYBOARD_HEIGHT = HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources());
 
     public ClipboardMainView(Context context) {
         super(context);
-        clipboardPresenter = new ClipboardPresenter();
+        clipboardPresenter = new ClipboardPresenter(this);
         setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
-        setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, keyboardHeight));
+        setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, KEYBOARD_HEIGHT));
         setOrientation(VERTICAL);
-        //填充frameLayout(填充RecyclerView)到此LinearLayout
         addRecyclerViewGroup();
-        //填充RecyclerView到frameLayout
         addRecyclerViewToPanelViewGroup();
-        //填充底部actionbar到此LinearLayout
         addBarView();
-        //recyclerView与actionbar建立关联
-        tabNameList.add(PANEL_RECENT);
-        tabNameList.add(PANEL_PIN);
-        actionBar.relateToActionBar(tabNameList);
+        tabNameList.add(ClipboardConstants.PANEL_RECENT);
+        tabNameList.add(ClipboardConstants.PANEL_PIN);
+        actionBar.setActionBarTabName(tabNameList);
         //初始的时候recent在显示，相应按钮设为被选中
-        actionBar.selectedViewBtn((String) currentView.getTag());
-        clipboardPresenter.setClipboardView(this);
+        actionBar.setCurrentTab((String) currentView.getTag());
         ClipboardMonitor.getInstance().setOnClipboardRecentDataChangeListener(this);
     }
 
 
     @Override
-    public void onTabChange(String tabName) {
-        if (tabName.equals(PANEL_RECENT)) {
+    public void onClipboardTabChange(String tabName) {
+        if (tabName.equals(ClipboardConstants.PANEL_RECENT)) {
             switchToRecentView();
-        } else if (tabName.equals(PANEL_PIN)) {
+        } else if (tabName.equals(ClipboardConstants.PANEL_PIN)) {
             switchToPinsView();
         }
     }
@@ -93,7 +81,9 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
             }
     }
 
-    public void showDeletedSuggestionAlert() {
+    public void showDeletedSuggestionAlert(String selectedPinsItem,int selectPinItemPosition) {
+        String pinsItem = selectedPinsItem;
+        int pinItemPosition = selectPinItemPosition;
         if (deleteAlert == null) {
             deleteAlert = new KCAlert.Builder(HSApplication.getContext())
                     .setTitle(getResources().getString(R.string.clipboard_delete_title))
@@ -102,13 +92,13 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
                         @Override
                         public void onClick(View view) {
                             deleteAlert.dismiss();
-                            KCAnalytics.logEvent("keyboard_clipboard_pin_cancelled");
                         }
                     })
                     .setNegativeButton(getResources().getString(R.string.clipboard_delete_pin_confirm), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            clipboardPresenter.clipDataOperateDeletePins(selectedPinsItem);
+                            clipboardPresenter.deletePinItem(pinsItem,pinItemPosition);
+                            KCAnalytics.logEvent("keyboard_clipboard_pin_delete");
                             deleteAlert.dismiss();
                         }
                     }).build();
@@ -119,162 +109,159 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
 
     private void switchToPinsView() {
         showPanelView(clipboardPanelPinsView);
-        actionBar.selectedViewBtn((String) currentView.getTag());
+        actionBar.setCurrentTab((String) currentView.getTag());
     }
 
     private void switchToRecentView() {
         showPanelView(clipboardPanelRecentView);
-        actionBar.selectedViewBtn((String) currentView.getTag());
+        actionBar.setCurrentTab((String) currentView.getTag());
     }
 
     private void addRecyclerViewToPanelViewGroup() {
+
         LinearLayoutManager recentLayoutManager = new LinearLayoutManager(getContext());
         recentLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        clipboardPanelRecentView = new RecyclerView(getContext());
+        clipboardPanelRecentView.setLayoutManager(recentLayoutManager);
+        clipboardPanelRecentView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(clipboardPresenter.getClipRecentData(), this);
+        clipboardPanelRecentView.setTag(ClipboardConstants.PANEL_RECENT);
+        clipboardPanelRecentView.setVisibility(VISIBLE);
+        clipboardPanelRecentView.setAdapter(clipboardRecentViewAdapter);
+
+
         LinearLayoutManager pinsLayoutManager = new LinearLayoutManager(getContext());
         pinsLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        clipboardPanelRecentView = new RecyclerView(getContext());
         clipboardPanelPinsView = new RecyclerView(getContext());
-        clipboardPanelRecentView.setLayoutManager(recentLayoutManager);
         clipboardPanelPinsView.setLayoutManager(pinsLayoutManager);
-        clipboardPanelRecentView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         clipboardPanelPinsView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(clipboardPresenter.getClipPinsData(), this);
+        clipboardPanelPinsView.setTag(ClipboardConstants.PANEL_PIN);
+        clipboardPanelPinsView.setVisibility(INVISIBLE);
+        clipboardPanelPinsView.setAdapter(clipboardPinsViewAdapter);
+
+
         recyclerViewGroup.addView(clipboardPanelRecentView, new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         recyclerViewGroup.addView(clipboardPanelPinsView, new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        HSLog.d(ClipboardMainView.class.getSimpleName(), "clipboard mainView created  clipboardRecentData = " + clipboardPresenter.getclipRecentData() + "    clipboardPinsData  = " + clipboardPresenter.getClipPinsData().toString());
-        clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(clipboardPresenter.getclipRecentData(), this);
-        clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(clipboardPresenter.getClipPinsData(), this);
-        clipboardPanelRecentView.setAdapter(clipboardRecentViewAdapter);
-        clipboardPanelPinsView.setAdapter(clipboardPinsViewAdapter);
-        clipboardPanelRecentView.setTag(PANEL_RECENT);
-        clipboardPanelPinsView.setTag(PANEL_PIN);
-        clipboardPanelRecentView.setVisibility(VISIBLE);
+
         currentView = clipboardPanelRecentView;
-        clipboardPanelPinsView.setVisibility(INVISIBLE);
 
     }
 
 
     private void addBarView() {
-        actionBar = (ClipboardActionBar) View.inflate(HSApplication.getContext(), R.layout.clipboard_action_bar, null);
-        actionBar.setClipboardTabChangeListener(this);
-        LinearLayout.LayoutParams actionBarLayoutParams = (LinearLayout.LayoutParams) actionBar.getLayoutParams();
-        if (actionBarLayoutParams == null) {
-            actionBarLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        }
-        addView(actionBar, actionBarLayoutParams);
+        actionBar = new ClipboardActionBar(getContext());
+        actionBar.setOnClipboardTabChangeListener(this);
+        addView(actionBar,new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     private void addRecyclerViewGroup() {
         recyclerViewGroup = new FrameLayout(this.getContext());
-        LinearLayout.LayoutParams panelViewGroupLayoutParams = (LinearLayout.LayoutParams) recyclerViewGroup.getLayoutParams();
-        if (panelViewGroupLayoutParams == null) {
-            panelViewGroupLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, keyboardHeight - getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height));
-
-        }
+        LayoutParams panelViewGroupLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, KEYBOARD_HEIGHT - HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height));
         //防止点击事件穿透
         recyclerViewGroup.setClickable(true);
         addView(recyclerViewGroup, panelViewGroupLayoutParams);
     }
-    //点击操作接口
 
-    //点击recent的条目的pins按钮时执行的回调
+    /**
+     * 点击recent的条目的pins按钮时执行的回调
+     * @param item 点击的recent Item的文本内容，在UI列表的position
+     * @param position 在UI列表的position
+     */
     @Override
-    public void saveToPins(String item, int position) {
-        selectedRecentItemPosition = position;
-        selectedRecentItem = item;
-        clipboardPresenter.clipDataOperateSaveToPins(item);
-        KCAnalytics.logEvent("keyboard_clipboard_pin_clicked");
+    public void onSaveRecentItemToPins(String item, int position) {
+        clipboardPresenter.saveRecentItemToPins(item,position);
+        HSAnalytics.logEvent("keyboard_clipboard_save_recent_to_pins");
 
     }
 
-    //点击pins的条目的删除按钮时的回调
+    /**
+     * 点击Pins的条目的删除按钮时执行的回调
+     * @param pinsContentItem 点击的pin Item的文本内容
+     * @param position 在UI列表的position
+     */
     @Override
-    public void deletePinsItem(String pinsContentItem, int position) {
-        selectRecentPinItemPosition = position;
-        selectedPinsItem = pinsContentItem;
-        showDeletedSuggestionAlert();
-        KCAnalytics.logEvent("keyboard_clipboard_OneDeleted");
+    public void onDeletePinsItem(String pinsContentItem, int position) {
+        showDeletedSuggestionAlert(pinsContentItem,position);
+        HSAnalytics.logEvent("keyboard_clipboard_delete_pin_item");
     }
 
 
     //UI更新接口
     @Override
-    public void onNewRecentAdd(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage) {
+    public void onNewRecentAddSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage) {
         switchToRecentView();
-        clipboardRecentViewAdapter.insertDataChangeAndRefresh(clipboardRecentMessage);
+        clipboardRecentViewAdapter.insertDataAndNotifyDataSetChange(clipboardRecentMessage);
         clipboardPanelRecentView.scrollToPosition(0);
     }
 
     @Override
-    public void onDeleteTheLastRecentAndNewRecentAdd(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage) {
+    public void onDeleteTheLastRecentAndNewRecentAddSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage) {
         switchToRecentView();
-        clipboardRecentViewAdapter.deleteDataChangeAndRefresh(RECENT_TABLE_SIZE - 1);
-        clipboardRecentViewAdapter.insertDataChangeAndRefresh(clipboardRecentMessage);
+        clipboardRecentViewAdapter.deleteDataChangeAndNotifyDataSetChange(ClipboardConstants.RECENT_TABLE_SIZE - 1);
+        clipboardRecentViewAdapter.insertDataAndNotifyDataSetChange(clipboardRecentMessage);
         clipboardPanelRecentView.scrollToPosition(0);
     }
 
 
     @Override
-    public void onExistRecentAdd(ClipboardRecentViewAdapter.ClipboardRecentMessage lastClipboardRecentMessage) {
+    public void onExistRecentAddSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage exitsClipboardRecentMessage) {
         switchToRecentView();
         //为防止数据库数据与adapter维护的list数据不一致，从adapter获取position和数据去更新UI
-        int lastPosition = clipboardRecentViewAdapter.getClipRecentData().indexOf(lastClipboardRecentMessage);
-        clipboardRecentViewAdapter.setRecentItemToTopAndRefresh(lastClipboardRecentMessage, lastPosition);
+        clipboardRecentViewAdapter.moveRecentItemToTopAndNotifyDataSetChange(exitsClipboardRecentMessage);
         clipboardPanelRecentView.scrollToPosition(0);
     }
 
     @Override
-    public void onDeleteRecentAndAddPin() {
+    public void onDeleteRecentAndAddPinSuccess(String selectedRecentItem, int selectedRecentItemPosition) {
         switchToRecentView();
-        clipboardRecentViewAdapter.deleteDataChangeAndRefresh(selectedRecentItemPosition);
+        clipboardRecentViewAdapter.deleteDataChangeAndNotifyDataSetChange(selectedRecentItemPosition);
         uiHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 switchToPinsView();
-                clipboardPinsViewAdapter.insertDataChangeAndRefresh(selectedRecentItem);
+                clipboardPinsViewAdapter.insertDataAndNotifyDataSetChange(selectedRecentItem);
                 clipboardPanelPinsView.scrollToPosition(0);
             }
-        }, SHOW_VIEW_DURATION);
+        }, ClipboardConstants.SHOW_VIEW_DURATION);
     }
 
     @Override
-    public void onDeleteRecentAndMovePinToTop(String lastPinsItem) {
+    public void onDeleteRecentAndMovePinToTopSuccess(String selectedRecentItem, int selectedRecentItemPosition) {
         switchToRecentView();
-        clipboardRecentViewAdapter.deleteDataChangeAndRefresh(selectedRecentItemPosition);
+        clipboardRecentViewAdapter.deleteDataChangeAndNotifyDataSetChange(selectedRecentItemPosition);
         uiHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 switchToPinsView();
                 //为防止数据库数据与adapter维护的list数据不一致，从adapter获取position和数据去更新UI
-                int pinsLastPosition = clipboardPinsViewAdapter.getPinsDataList().indexOf(lastPinsItem);
-                HSLog.d(TAG, "clipboardMainView pinsLastPosition-----" + pinsLastPosition + "----selectedRecentItem---" + selectedRecentItem);
-                clipboardPinsViewAdapter.setPinsItemToTopAndRefresh(lastPinsItem, pinsLastPosition);
+               // int pinsLastPosition = clipboardPinsViewAdapter.getPinsDataList().indexOf(selectedRecentItem);
+                HSLog.d(TAG, "clipboardMainView  "+"----selectedRecentItem---" + selectedRecentItem);
+                clipboardPinsViewAdapter.setPinsItemToTopAndNotifyDataSetChange(selectedRecentItem);
                 clipboardPanelPinsView.scrollToPosition(0);
             }
-        }, SHOW_VIEW_DURATION);
+        }, ClipboardConstants.SHOW_VIEW_DURATION);
     }
 
     @Override
-    public void onDeletePin() {
+    public void onDeletePinSuccess(int selectRecentPinItemPosition) {
         switchToPinsView();
-        clipboardPinsViewAdapter.deleteDataChangeAndRefresh(selectRecentPinItemPosition);
+        clipboardPinsViewAdapter.deleteDataAndNotifyDataSetChange(selectRecentPinItemPosition);
     }
 
     @Override
-    public void onDeletePinAndUnpinRecent(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem) {
+    public void onDeletePinAndUnpinRecentSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem, int selectPinItemPosition) {
         switchToPinsView();
-        clipboardPinsViewAdapter.deleteDataChangeAndRefresh(selectRecentPinItemPosition);
+        clipboardPinsViewAdapter.deleteDataAndNotifyDataSetChange(selectPinItemPosition);
         uiHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 switchToRecentView();
-                //为防止数据库数据与adapter维护的list数据不一致，从adapter获取position和数据去更新UI
-                int recentPosition = clipboardRecentViewAdapter.getClipRecentData().indexOf(new ClipboardRecentViewAdapter.ClipboardRecentMessage(recentItem.recentClipItemContent,1));
-                HSLog.d(TAG,"onDeletePinAndUnpinRecent  ====  "+"recentItem====="+recentItem+"---------recentPosition===="+recentPosition);
-                clipboardRecentViewAdapter.notifyItemChangedAndRefresh(recentItem,recentPosition);
+                //为防止数据库数据与adapter维护的list数据不一致，从adapter获取position和数据去更新UI,并不对外开放适配器的list
+                HSLog.d(TAG,"onDeletePinAndUnpinRecentSuccess  ====  "+"recentItem====="+recentItem);
+                clipboardRecentViewAdapter.itemChangedAndNotifyDataSetChange(recentItem);
             }
-        }, SHOW_VIEW_DURATION);
+        }, ClipboardConstants.SHOW_VIEW_DURATION);
     }
 
     @Override
@@ -291,25 +278,25 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
 
 
     @Override
-    public void onDeletePinFail() {
+    public void onDeletePinFail(int selectRecentPinItemPosition) {
         Toast.makeText(HSApplication.getContext(), R.string.clipboard_operate_fail, Toast.LENGTH_SHORT).show();
         HSLog.d(TAG," Failure to delete pin item to the database.");
     }
 
     @Override
-    public void onDeletePinAndUnpinRecentFail(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem) {
+    public void onDeletePinAndUnpinRecentFail(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem,int selectPinItemPosition) {
         Toast.makeText(HSApplication.getContext(), R.string.clipboard_operate_fail, Toast.LENGTH_SHORT).show();
         HSLog.d(TAG," Failure to delete pin item and unpin recent to the database.");
     }
 
     @Override
-    public void onDeleteRecentAndMovePinToTopFail(String lastPinsItem) {
+    public void onDeleteRecentAndMovePinToTopFail(String lastPinsItem,int exitsPinItemPosition) {
         Toast.makeText(HSApplication.getContext(), R.string.clipboard_operate_fail, Toast.LENGTH_SHORT).show();
         HSLog.d(TAG," Failure to delete recent item and move exist pin To bottom to the database.");
     }
 
     @Override
-    public void onDeleteRecentAndAddPinFail() {
+    public void onDeleteRecentAndAddPinFail(String selectedRecentItem,int selectedRecentItemPosition) {
         Toast.makeText(HSApplication.getContext(), R.string.clipboard_operate_fail, Toast.LENGTH_SHORT).show();
         HSLog.d(TAG," Failure to delete recent item and add Pin To bottom to the database.");
     }

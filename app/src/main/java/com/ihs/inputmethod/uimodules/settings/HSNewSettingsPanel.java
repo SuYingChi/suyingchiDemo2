@@ -11,6 +11,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -127,7 +128,7 @@ public class HSNewSettingsPanel extends BasePanel {
             @Override
             public void onItemClick(ViewItem item) {
                 getPanelActionListener().showChildPanel(ClipboardMainPanel.class, null);
-                KCAnalytics.logEvent("keyboard_settings_clipboard_clicked");
+                HSAnalytics.logEvent("keyboard_settings_clipboard_clicked");
             }
         }));
         items.add(ViewItemBuilder.getLanguageItem(new ViewItem.ViewItemListener() {

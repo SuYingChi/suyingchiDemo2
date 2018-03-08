@@ -23,16 +23,15 @@ import java.util.List;
 public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPinsViewAdapter.ViewHolder> {
 
 
-    private DeleteFromPinsToRecentListener deleteFromPinsToRecentListener;
+    private OnPinItemDeletedClickListener onPinItemDeletedClickListener;
+    //集合不对外开放，只在数据库的操作完之后的回调来更改数据，防止外界饶过数据库更改了集合导致UI与数据库显示不一致
     private List<String> pinsDataList = new ArrayList<String>();
     private final String TAG = ClipboardPinsViewAdapter.class.getSimpleName();
-    private Drawable deletePin;
 
-    ClipboardPinsViewAdapter(List<String> list, DeleteFromPinsToRecentListener deleteFromPinsToRecentListener) {
-        this.deleteFromPinsToRecentListener = deleteFromPinsToRecentListener;
+    ClipboardPinsViewAdapter(List<String> list, OnPinItemDeletedClickListener onPinItemDeletedClickListener) {
+        this.onPinItemDeletedClickListener = onPinItemDeletedClickListener;
         this.pinsDataList.addAll(list);
         HSLog.d(TAG, "create ClipboardPinsViewAdapter , pinsDataList  is " + pinsDataList.toString());
-        deletePin = VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.clipboard_delete_pin_item, null);
     }
 
     @Override
@@ -51,11 +50,11 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
                 HSInputMethod.inputText(pinsContent);
             }
         });
-        holder.img.setImageDrawable(deletePin);
+        holder.img.setImageDrawable(VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.clipboard_delete_pin_item, null));
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteFromPinsToRecentListener.deletePinsItem(pinsContent, holder.getAdapterPosition());
+                onPinItemDeletedClickListener.onDeletePinsItem(pinsContent, holder.getAdapterPosition());
                 HSLog.d(TAG, "  delete pins item  " + pinsContent);
             }
         });
@@ -68,21 +67,19 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
     }
 
 
-    void insertDataChangeAndRefresh(String clipPinsData) {
+    void insertDataAndNotifyDataSetChange(String clipPinsData) {
 
         pinsDataList.add(0, clipPinsData);
-        HSLog.d(TAG, "notifyDataSetChanged  recentAdapter,     current pinsDataList  is   " + clipPinsData.toString());
         notifyItemInserted(0);
     }
 
-    void setPinsItemToTopAndRefresh(String clipPinsItem, int lastPinItemPosition) {
-        HSLog.d("suyingchi","adapter setPinsItemToTopAndRefresh  lastPinItemPosition-------"+lastPinItemPosition+"-------clipPinsItem-------"+clipPinsItem);
-        deleteDataChangeAndRefresh(lastPinItemPosition);
-        insertDataChangeAndRefresh(clipPinsItem);
+    void setPinsItemToTopAndNotifyDataSetChange(String clipPinsItem) {
+        int  previousPinsPosition = pinsDataList.indexOf(clipPinsItem);
+        deleteDataAndNotifyDataSetChange(previousPinsPosition);
+        insertDataAndNotifyDataSetChange(clipPinsItem);
     }
 
-    void deleteDataChangeAndRefresh(int pinItemPosition) {
-        HSLog.d("suyingchi","adapter  deleteDataChangeAndRefresh  pinItemPosition "+pinItemPosition);
+    void deleteDataAndNotifyDataSetChange(int pinItemPosition) {
         pinsDataList.remove(pinItemPosition);
         notifyItemRemoved(pinItemPosition);
         if (pinItemPosition != pinsDataList.size()) { // 如果移除的是最后一个，忽略
@@ -103,11 +100,7 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
     }
 
 
-    public interface DeleteFromPinsToRecentListener {
-        void deletePinsItem(String pinsContentItem, int position);
-    }
-
-    public List<String> getPinsDataList() {
-        return pinsDataList;
+    public interface OnPinItemDeletedClickListener {
+        void onDeletePinsItem(String pinsContentItem, int position);
     }
 }

@@ -4,22 +4,28 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public final class ClipboardActionBar extends LinearLayout implements View.OnClickListener {
 
-    private ClipboardTabChangeListener clipboardTabChangeListener;
-    private List<TextView> tabViewList = new ArrayList<TextView>();
-    private List<String> actionbarTabsNames;
+public  class ClipboardActionBar extends LinearLayout implements View.OnClickListener {
+
+    private onClipboardTabChangeListener onClipboardTabChangeListener;
+    private Map<String,TextView> tabViewsMap = new HashMap<String,TextView>();
+    private int backgroundColor;
 
     public ClipboardActionBar(Context context) {
         this(context, null);
@@ -33,71 +39,68 @@ public final class ClipboardActionBar extends LinearLayout implements View.OnCli
         super(context, attrs, defStyleAttr);
     }
 
-    void setClipboardTabChangeListener(ClipboardTabChangeListener clipboardTabChangeListener) {
-        this.clipboardTabChangeListener = clipboardTabChangeListener;
+    void setOnClipboardTabChangeListener(onClipboardTabChangeListener onClipboardTabChangeListener) {
+        this.onClipboardTabChangeListener = onClipboardTabChangeListener;
     }
 
-    public void relateToActionBar(List<String> tabNameList) {
-        actionbarTabsNames = tabNameList;
-        final int height = getResources().getDimensionPixelSize(R.dimen.clipboard_panel_actionbar_height);
-        final int actionBarAmount = actionbarTabsNames.size();
-        for (int i = 0; i < actionBarAmount; i++) {
-            final String tabName = actionbarTabsNames.get(i);
-            final LayoutParams params = new LayoutParams(0, height, 1.0f);
-            TextView clipActionBarBtnView = (TextView) inflate(getContext(), R.layout.clipboard_bar_button, null);
-            ((TextView) clipActionBarBtnView.findViewById(R.id.tv_title)).setText(tabName);
+    public void setActionBarTabName(List<String> tabNameList) {
+        backgroundColor = HSKeyboardThemeManager.getCurrentTheme().getDominantColor();
+        final int actionBarTabSize = tabNameList.size();
+        for (int i = 0; i < actionBarTabSize; i++) {
+            final String tabName = tabNameList.get(i);
+            final LayoutParams params = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1.0f);
+            TextView clipActionBarBtnView =  new TextView(getContext());
+            clipActionBarBtnView.setGravity(Gravity.CENTER);
             clipActionBarBtnView.setTag(tabName);
             clipActionBarBtnView.setOnClickListener(this);
             clipActionBarBtnView.setTextColor(Color.WHITE);
-            clipActionBarBtnView.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
+            clipActionBarBtnView.setBackgroundColor(backgroundColor);
             addView(clipActionBarBtnView, params);
-            tabViewList.add(clipActionBarBtnView);
+            tabViewsMap.put(tabName,clipActionBarBtnView);
         }
-    }
-
-    interface ClipboardTabChangeListener {
-
-        void onTabChange(String tabName);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        final Resources res = getContext().getResources();
-        final int width = res.getDisplayMetrics().widthPixels;
-        final int height = res.getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
-        setMeasuredDimension(width, height);
+         final int clipboardActionBarWidth = HSApplication.getContext().getResources().getDisplayMetrics().widthPixels;
+         final int clipboardActionBarHeight = HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
+        setMeasuredDimension(clipboardActionBarWidth, clipboardActionBarHeight);
     }
 
     @Override
     public void onClick(View v) {
         String tabName = (String) v.getTag();
         if (!android.text.TextUtils.isEmpty(tabName)) {
-            clipboardTabChangeListener.onTabChange(tabName);
-            selectedViewBtn(tabName);
+            onClipboardTabChangeListener.onClipboardTabChange(tabName);
+            setCurrentTab(tabName);
+            if(tabName.equals(ClipboardConstants.PANEL_PIN)){
+                HSAnalytics.logEvent("keyboard_clipboard_pin_tab_clicked");
+            }
             HSLog.d(ClipboardActionBar.class.getSimpleName(), " to show " + tabName);
         }
     }
 
-    void selectedViewBtn(String tabName) {
-        for (TextView tabView : tabViewList) {
+    void setCurrentTab(String tabName) {
+        for (TextView tabView : tabViewsMap.values()) {
             if (tabView != null) {
                 tabView.setSelected(false);
                 tabView.setTextColor(Color.WHITE);
                 tabView.setTextColor(Color.argb(128, 255, 255, 255));
-                int color = HSKeyboardThemeManager.getCurrentTheme().getDominantColor();
-                tabView.setBackgroundColor(Color.argb(0, Color.red(color), Color.green(color), Color.blue(color)));
+                tabView.setBackgroundColor(Color.argb(0, Color.red(backgroundColor), Color.green(backgroundColor), Color.blue(backgroundColor)));
             }
         }
-        TextView selectedTabView = tabViewList.get(actionbarTabsNames.indexOf(tabName));
-        if (selectedTabView != null) {
-            selectedTabView.setSelected(true);
+        TextView currentTabView = tabViewsMap.get(tabName);
+        if (currentTabView != null) {
+            currentTabView.setSelected(true);
         }
-        if (selectedTabView != null) {
-            selectedTabView.setTextColor(Color.WHITE);
-            int color = HSKeyboardThemeManager.getCurrentTheme().getDominantColor();
-            selectedTabView.setBackgroundColor(Color.argb(180, Color.red(color), Color.green(color), Color.blue(color)));
+        if (currentTabView != null) {
+            currentTabView.setTextColor(Color.WHITE);
+            currentTabView.setBackgroundColor(Color.argb(180, Color.red(backgroundColor), Color.green(backgroundColor), Color.blue(backgroundColor)));
         }
     }
+    interface onClipboardTabChangeListener {
 
+        void onClipboardTabChange(String tabName);
+    }
 }

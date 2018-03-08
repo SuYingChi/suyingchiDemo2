@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.clipboard;
 
 
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,18 +22,15 @@ import java.util.List;
 
 public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRecentViewAdapter.ViewHolder> {
 
-
+    //集合不对外开放，只在数据库的操作完之后的回调来更改数据，防止外界饶过数据库更改了集合导致UI与数据库显示不一致
     private List<ClipboardRecentMessage> clipRecentData = new ArrayList<ClipboardRecentMessage>();
-    private SaveRecentItemToPinsListener saveRecentItemToPinsListener;
+    private OnRecentItemPinClickedListener onRecentItemPinClickedListener;
     private final String TAG = ClipboardRecentViewAdapter.class.getSimpleName();
-    private Drawable saveToPinsDrawable;
-    private Drawable saveToPinsNoPinedDrawable;
 
-    ClipboardRecentViewAdapter(List<ClipboardRecentMessage> list, SaveRecentItemToPinsListener saveRecentItemToPinsListener) {
+
+    ClipboardRecentViewAdapter(List<ClipboardRecentMessage> list, OnRecentItemPinClickedListener onRecentItemPinClickedListener) {
         clipRecentData.addAll(list);
-        this.saveRecentItemToPinsListener = saveRecentItemToPinsListener;
-        saveToPinsDrawable = VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.clipboard_save_to_pins_pined, null);
-        saveToPinsNoPinedDrawable = VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.clipboard_save_to_pins_no_pined, null);
+        this.onRecentItemPinClickedListener = onRecentItemPinClickedListener;
         HSLog.d(TAG, "create ClipboardRecentViewAdapter , clipRecentData  is" + clipRecentData.toString());
     }
 
@@ -49,16 +45,15 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
         holder.clipContent.setText(recentClipItemContent.recentClipItemContent);
         holder.clipContent.setTextColor(HSKeyboardThemeManager.getCurrentTheme().getKeyTextColor(Color.WHITE));
         if (recentClipItemContent.isPined == 1) {
-            holder.saveToPinsImageView.setImageDrawable(saveToPinsDrawable);
+            holder.saveToPinsImageView.setImageDrawable(VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.clipboard_save_to_pins_pined, null));
         } else if (recentClipItemContent.isPined == 0) {
-            holder.saveToPinsImageView.setImageDrawable(saveToPinsNoPinedDrawable);
+            holder.saveToPinsImageView.setImageDrawable(VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.clipboard_save_to_pins_no_pined, null));
         }
         holder.saveToPinsImageView.setClickable(true);
         holder.saveToPinsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //添加到pins页面
-                saveRecentItemToPinsListener.saveToPins(recentClipItemContent.recentClipItemContent, holder.getAdapterPosition());
+                onRecentItemPinClickedListener.onSaveRecentItemToPins(recentClipItemContent.recentClipItemContent, holder.getAdapterPosition());
                 HSLog.d(TAG, "save recentItem content to pins  " + recentClipItemContent.recentClipItemContent);
             }
         });
@@ -77,7 +72,7 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
     }
 
 
-    public void deleteDataChangeAndRefresh(int recentItemPosition) {
+    void deleteDataChangeAndNotifyDataSetChange(int recentItemPosition) {
         clipRecentData.remove(recentItemPosition);
         notifyItemRemoved(recentItemPosition);
         if (recentItemPosition != clipRecentData.size()) { // 如果移除的是最后一个，忽略
@@ -87,17 +82,19 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
 
     }
 
-    void setRecentItemToTopAndRefresh(ClipboardRecentMessage clipboardRecentMessage, int recentItemPosition) {
-        deleteDataChangeAndRefresh(recentItemPosition);
-        insertDataChangeAndRefresh(clipboardRecentMessage);
+    void moveRecentItemToTopAndNotifyDataSetChange(ClipboardRecentMessage clipboardRecentMessage) {
+        int recentItemPosition  = clipRecentData.indexOf(clipboardRecentMessage);
+        deleteDataChangeAndNotifyDataSetChange(recentItemPosition);
+        insertDataAndNotifyDataSetChange(clipboardRecentMessage);
 
     }
 
-    void notifyItemChangedAndRefresh(ClipboardRecentMessage recentItem,int position) {
-        clipRecentData.remove(position);
-        clipRecentData.add(position,recentItem);
-        HSLog.d(TAG,"clipRecentData.at "+"---position========="+clipRecentData.get(position));
-        notifyItemChanged(position);
+    void itemChangedAndNotifyDataSetChange(ClipboardRecentMessage recentItem) {
+        int previousPosition = clipRecentData.indexOf(new ClipboardRecentViewAdapter.ClipboardRecentMessage(recentItem.recentClipItemContent,1));
+        clipRecentData.remove(previousPosition);
+        clipRecentData.add(previousPosition,recentItem);
+        HSLog.d(TAG,"clipRecentData.at "+"---position========="+clipRecentData.get(previousPosition));
+        notifyItemChanged(previousPosition);
     }
 
 
@@ -112,11 +109,11 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
         }
     }
 
-    public interface SaveRecentItemToPinsListener {
-        void saveToPins(String itemRecentContent, int position);
+    public interface OnRecentItemPinClickedListener {
+        void onSaveRecentItemToPins(String itemRecentContent, int position);
     }
 
-    void insertDataChangeAndRefresh(ClipboardRecentMessage clipRecentMessage) {
+    void insertDataAndNotifyDataSetChange(ClipboardRecentMessage clipRecentMessage) {
         clipRecentData.add(0, clipRecentMessage);
         HSLog.d(TAG, "notifyDataSetChanged  recentAdapter,     current pinsDataList  is   " + clipRecentData.toString());
         notifyItemInserted(0);
@@ -157,7 +154,4 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
         }
     }
 
-    public List<ClipboardRecentMessage> getClipRecentData() {
-        return clipRecentData;
-    }
 }

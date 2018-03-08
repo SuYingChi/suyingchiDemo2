@@ -11,90 +11,84 @@ import java.util.List;
 
 
 class ClipboardPresenter {
-    static final int RECENT_TABLE_SIZE = 10;
-    private static final int PINS_TABLE_SIZE = 30;
+
     private static final String TAG = ClipboardPresenter.class.getSimpleName();
-    private ClipboardContact.ClipboardView ClipboardView;
+    private ClipboardContact.ClipboardView clipboardView;
     private ClipboardContact.ClipboardSQLiteOperate clipboardSQLiteOperate;
 
-    ClipboardPresenter() {
+    ClipboardPresenter(ClipboardContact.ClipboardView clipboardView) {
         clipboardSQLiteOperate = ClipboardDataBaseOperateImpl.getInstance();
+        this.clipboardView = clipboardView;
     }
 
-    List<ClipboardRecentViewAdapter.ClipboardRecentMessage> getclipRecentData() {
-        return clipboardSQLiteOperate.getRecentAllContentList();
-    }
-
-    List<String> getClipPinsData() {
-        return clipboardSQLiteOperate.getPinsAllContentList();
-    }
-
-
-    void setClipboardView(ClipboardContact.ClipboardView clipboardView) {
-        this.ClipboardView = clipboardView;
-    }
 
     //实时监听用户点击Recent页面的收藏按钮时的数据操作
-    void clipDataOperateSaveToPins(String item) {
+    void saveRecentItemToPins(String item, int position) {
         //recent里点击收藏,收藏内容已经有30条，recent页面点击收藏时，收藏里还没有，提示不能再添加
-        if (clipboardSQLiteOperate.getPinsSize() == PINS_TABLE_SIZE & clipboardSQLiteOperate.isPinItemExists(item) == 0) {
+        if (clipboardSQLiteOperate.getPinsSize() == ClipboardConstants.PINS_TABLE_SIZE && !clipboardSQLiteOperate.isPinItemExists(item)) {
             Toast.makeText(HSApplication.getContext(), R.string.clipboard_add_pins_up_to_maximum_value_tip, Toast.LENGTH_LONG).show();
             return;
         }
         //recent里点击收藏，收藏里已经有了，则在recent里去除本条，收藏里置顶该条
-        if (clipboardSQLiteOperate.isPinItemExists(item) == 1) {
-            //int pinsLastPosition = clipboardSQLiteOperate.queryItemInPinsTableReversePosition(item);
-            boolean isSuccess = clipboardSQLiteOperate.deleteRecentItemAndSetItemPositionToBottomInPins(item);
-            if (ClipboardView == null) {
+        if (clipboardSQLiteOperate.isPinItemExists(item)) {
+            boolean isSuccess = clipboardSQLiteOperate.deleteRecentItemAndMoveItemToBottomInPins(item);
+            if (clipboardView == null) {
                 return;
             }
             if (isSuccess) {
-                HSLog.d(TAG,"presenter pinsLastPosition    "+item);
-                ClipboardView.onDeleteRecentAndMovePinToTop(item);
+                clipboardView.onDeleteRecentAndMovePinToTopSuccess(item,position);
             } else {
-                ClipboardView.onDeleteRecentAndMovePinToTopFail(item);
+                clipboardView.onDeleteRecentAndMovePinToTopFail(item,position);
             }
         }//recent 里点击收藏，收藏里还没有，并且收藏内容小于30条，则添加内容并置顶到收藏，并在recent里删除该条。
-        else if (clipboardSQLiteOperate.getPinsAllContentList().size() < PINS_TABLE_SIZE & clipboardSQLiteOperate.isPinItemExists(item) == 0) {
-            boolean isSuccess = clipboardSQLiteOperate.deleteRecentItemAndAddToPins(item);
-            if (ClipboardView == null) {
+        else if (clipboardSQLiteOperate.getPinsAllContentList().size() < ClipboardConstants.PINS_TABLE_SIZE && !clipboardSQLiteOperate.isPinItemExists(item)) {
+            boolean isSuccess = clipboardSQLiteOperate.deleteRecentItemAndAddToBottomPins(item);
+            if (clipboardView == null) {
                 return;
             }
             if (isSuccess) {
-                ClipboardView.onDeleteRecentAndAddPin();
+                clipboardView.onDeleteRecentAndAddPinSuccess(item,position);
             } else {
-                ClipboardView.onDeleteRecentAndAddPinFail();
+                clipboardView.onDeleteRecentAndAddPinFail(item,position);
             }
         }
 
     }
 
     //实时监听用户点击Pins页面的删除按钮时的数据操作
-    void clipDataOperateDeletePins(String item) {
+    void deletePinItem(String item, int position) {
         //用户删除PINS数据，recent里没有
         if (!clipboardSQLiteOperate.isRecentItemExists(item)) {
             boolean isSuccess = clipboardSQLiteOperate.deletePinItem(item);
-            if (ClipboardView == null) {
+            if (clipboardView == null) {
                 return;
             }
             if (isSuccess) {
-                ClipboardView.onDeletePin();
+                clipboardView.onDeletePinSuccess(position);
             } else {
-                ClipboardView.onDeletePinFail();
+                clipboardView.onDeletePinFail(position);
             }
         }//用户删除PINS数据，recent里有,标明recent里该项内容已不被收藏
         else if (clipboardSQLiteOperate.isRecentItemExists(item)) {
             boolean isSuccess = clipboardSQLiteOperate.deletePinItemAndUnpinRecentItem(item);
-            if (ClipboardView == null) {
+            if (clipboardView == null) {
                 return;
             }
             ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem = new  ClipboardRecentViewAdapter.ClipboardRecentMessage(item,0);
             if (isSuccess) {
-                HSLog.d(TAG,"onDeletePinAndUnpinRecent  ============== "+recentItem);
-                ClipboardView.onDeletePinAndUnpinRecent(recentItem);
+                HSLog.d(TAG,"onDeletePinAndUnpinRecentSuccess  ============== "+recentItem);
+                clipboardView.onDeletePinAndUnpinRecentSuccess(recentItem,position);
             } else {
-                ClipboardView.onDeletePinAndUnpinRecentFail(recentItem);
+                clipboardView.onDeletePinAndUnpinRecentFail(recentItem,position);
             }
         }
+    }
+
+    List<ClipboardRecentViewAdapter.ClipboardRecentMessage> getClipRecentData() {
+        return clipboardSQLiteOperate.getRecentAllContentList();
+    }
+
+    List<String> getClipPinsData() {
+        return clipboardSQLiteOperate.getPinsAllContentList();
     }
 }
