@@ -80,6 +80,7 @@ public class HSNewSettingsPanel extends BasePanel {
                         boolean tskCancelResult = fetchLocationAsyncTask.cancel(true);
                         HSLog.d(LOCATION_LOG_TAG, "fetchLocationAsyncTask.cancel  at " + "----tskCancelResult----" + tskCancelResult );
                         isFetchingLocationInfo = false;
+                        fetchLocationAsyncTask  = null;
                     }
                     break;
             }
@@ -161,7 +162,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 if (!checkLocationPermission((LocationManager) context.getSystemService(Context.LOCATION_SERVICE))) {
                     Toast.makeText(HSApplication.getContext(), R.string.unable_location, Toast.LENGTH_SHORT).show();
                     KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "No network detected and no location permission");
-                    stopMonitorLocatingTimeoutState();
+                    stopLocating();
                     return;
                 }
                 isFetchingLocationInfo = true;
@@ -178,7 +179,7 @@ public class HSNewSettingsPanel extends BasePanel {
                             HSLog.d(LOCATION_LOG_TAG, "onLocationFetched fail");
                             Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
                             KCAnalytics.logEvent("keyboard_location_sendFailed", "reason", "null location");
-                            stopMonitorLocatingTimeoutState();
+                            stopLocating();
                         } else {
                             HSLog.d(LOCATION_LOG_TAG, "onLocationFetched");
                             EditorInfo editorInfo = HSUIInputMethodService.getInstance().getCurrentInputEditorInfo();
@@ -253,7 +254,7 @@ public class HSNewSettingsPanel extends BasePanel {
 
     }
 
-    private static void stopMonitorLocatingTimeoutState() {
+    private static void stopLocating() {
         reverseLocationHandler.removeMessages(LOCATION_TIMEOUT_MESSAGE);
         isFetchingLocationInfo = false;
     }
@@ -286,11 +287,11 @@ public class HSNewSettingsPanel extends BasePanel {
         protected void onPostExecute(Address address) {
             if (address != null && !TextUtils.isEmpty(address.getAddressLine(0))) {
                 KCAnalytics.logEvent("GeoCoder_keyboard_location_sendSuccess");
-                String streetName = address.getAddressLine(0);
-                if (!TextUtils.isEmpty(address.getPostalCode()) && streetName.contains(address.getPostalCode())) {
-                    locationText = streetName.replaceAll(address.getPostalCode(), "");
+                String fullAddress = address.getAddressLine(0);
+                if (!TextUtils.isEmpty(address.getPostalCode()) && fullAddress.contains(address.getPostalCode())) {
+                    locationText = fullAddress.replaceAll(address.getPostalCode(), "");
                 } else {
-                    locationText = streetName;
+                    locationText = fullAddress;
 
                 }
                 if (editorInfo != null && editorInfo.equals(HSUIInputMethodService.getInstance().getCurrentInputEditorInfo())) {
@@ -301,7 +302,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 Toast.makeText(HSApplication.getContext(), R.string.request_location_fail, Toast.LENGTH_SHORT).show();
                 KCAnalytics.logEvent("GeoCoder_keyboard_location_sendFailed", "reason", "Failed to get the location");
             }
-            stopMonitorLocatingTimeoutState();
+            stopLocating();
         }
     }
 
