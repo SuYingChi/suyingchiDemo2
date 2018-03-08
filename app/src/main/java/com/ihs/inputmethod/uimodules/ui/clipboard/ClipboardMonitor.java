@@ -36,11 +36,11 @@ public class ClipboardMonitor {
                     if (!TextUtils.isEmpty(text)) {
                         String item = text.toString();
                         int currentRecentSize = clipboardDataBaseOperateImpl.getRecentSize();
-                        ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem = clipboardDataBaseOperateImpl.getRecentItem(item);
                         HSLog.d(ClipboardMonitor.class.getSimpleName(), "     ClipboardMonitor    add  new data      " + item);
                         //用户新增recent数据，与recent不重复，则添加并置顶
                         if (currentRecentSize <= RECENT_TABLE_SIZE & !clipboardDataBaseOperateImpl.isRecentItemExists(item)) {
                             boolean isSuccess = clipboardDataBaseOperateImpl.insertRecentItem(item, clipboardDataBaseOperateImpl.isPinItemExists(item), currentRecentSize);
+                            ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem = clipboardDataBaseOperateImpl.getRecentItem(item);
                             if (onClipboardRecentDataChangeListener == null) {
                                 return;
                             }
@@ -60,16 +60,16 @@ public class ClipboardMonitor {
                         }
                         //用户新增recent数据，与recent已有内容重复，则置顶重复内容
                         else if (clipboardDataBaseOperateImpl.isRecentItemExists(item)) {
-                           // int lastPosition = clipboardDataBaseOperateImpl.queryItemInRecentTableReversePosition(item);
-                            if (recentItem != null) {
+                            ClipboardRecentViewAdapter.ClipboardRecentMessage lastRecentItem = clipboardDataBaseOperateImpl.getRecentItem(item);
+                            if (lastRecentItem != null) {
                                 boolean isSuccess = clipboardDataBaseOperateImpl.moveExistRecentItemToBottom(item, clipboardDataBaseOperateImpl.isPinItemExists(item));
                                 if (onClipboardRecentDataChangeListener == null) {
                                     return;
                                 }
                                 if (isSuccess) {
-                                    onClipboardRecentDataChangeListener.onExistRecentAdd(recentItem);
+                                    onClipboardRecentDataChangeListener.onExistRecentAdd(lastRecentItem);
                                 } else {
-                                    onClipboardRecentDataChangeListener.onExistRecentAddFail(recentItem);
+                                    onClipboardRecentDataChangeListener.onExistRecentAddFail(lastRecentItem);
                                 }
                             }
                         }
