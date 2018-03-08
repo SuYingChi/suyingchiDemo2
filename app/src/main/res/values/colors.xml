@@ -114,4 +114,5 @@
     <color name="selector_button_ic_light_press">#29A0CB</color>
 
     <color name="locker_guide_button_bg">#5978ff</color>
+    <color name="store_image_placeholder">#e8e8e8</color>
 </resources>

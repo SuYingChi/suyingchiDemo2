@@ -130,6 +130,12 @@ public class StickerDataManager {
             stickerGroup.needNewVersionToUnlock = HSYamlUtils.convertObjectToBool(map.get("needNewVersionToUnlock"));
             stickerGroup.rateToUnlock = HSYamlUtils.convertObjectToBool(map.get("rateToUnlock"));
             stickerGroup.shareToUnlock = HSYamlUtils.convertObjectToBool(map.get("shareToUnlock"));
+            if (map.get("showCount") != null) {
+                stickerGroup.setShowCount((Integer) map.get("showCount"));
+            }
+            if (map.get("format") != null) {
+                stickerGroup.setPicFormat("." + map.get("format"));
+            }
             if (showInKeyboard != null) {
                 stickerGroup.setShowInKeyboard(showInKeyboard);
             }

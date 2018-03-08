@@ -1,6 +1,8 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.content.res.AssetManager;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -22,7 +24,8 @@ import java.util.Map;
  * Created by yanxia on 2017/6/9.
  */
 
-public class StickerGroup {
+public class StickerGroup implements Parcelable {
+    public static final String STICKER_REMOTE_ROOT_DIR_NAME = "stickers";
 
     private final String stickerGroupName;
     private boolean showInKeyboard = false;
@@ -39,10 +42,39 @@ public class StickerGroup {
     private List<Sticker> stickerList = new ArrayList<>();
     public static final String ASSETS_STICKER_FILE_NAME = "Stickers";
     private static final String STICKER_TAB_IMAGE_SUFFIX = "-tab.png";
-    private static final String STICKER_DOWNLOAD_IMAGE_SUFFIX = "-preview.png";
+    private static final String STICKER_DOWNLOAD_IMAGE_SUFFIX = "-detail.png";
     private static final String STICKER_DOWNLOAD_ZIP_SUFFIX = ".zip";
     // --Commented out by Inspection (18/1/11 下午2:41):private static final String STICKER_IMAGE_PNG_SUFFIX = ".png";
     private static final String STICKER_CONFIG_FILE_SUFFIX = "/contents.json";
+    private boolean autoDownload = false;
+    private int showCount = 0;
+    private String picFormat = ".png";
+
+
+    public int getShowCount() {
+        return showCount;
+    }
+
+    public void setShowCount(int showCount) {
+        this.showCount = showCount;
+    }
+
+    public String getPicFormat() {
+        return picFormat;
+    }
+
+    public void setPicFormat(String picFormat) {
+        this.picFormat = picFormat;
+    }
+
+    public boolean isAutoDownload() {
+        return autoDownload;
+    }
+
+    public void setAutoDownload(boolean autoDownload) {
+        this.autoDownload = autoDownload;
+    }
+
 
     public StickerGroup(final String stickerGroupName) {
         this.isInternalStickerGroup = isStickerExistInAssets(stickerGroupName);
@@ -280,5 +312,54 @@ public class StickerGroup {
     @Override
     public int hashCode() {
         return stickerGroupName != null ? stickerGroupName.hashCode() : 0;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.stickerGroupName);
+        dest.writeString(this.downloadDisplayName);
+        dest.writeString(this.stickerGroupDownloadPreviewImageUri);
+        dest.writeString(this.stickerGroupDownloadUri);
+        dest.writeString(this.picFormat);
+        dest.writeInt(this.showCount);
+    }
+
+    protected StickerGroup(Parcel in) {
+        this.stickerGroupName = in.readString();
+        this.downloadDisplayName = in.readString();
+        this.stickerGroupDownloadPreviewImageUri = in.readString();
+        this.stickerGroupDownloadUri = in.readString();
+        this.picFormat = in.readString();
+        this.showCount = in.readInt();
+    }
+
+    public static final Parcelable.Creator<StickerGroup> CREATOR = new Parcelable.Creator<StickerGroup>() {
+        @Override
+        public StickerGroup createFromParcel(Parcel source) {
+            return new StickerGroup(source);
+        }
+
+        @Override
+        public StickerGroup[] newArray(int size) {
+            return new StickerGroup[size];
+        }
+    };
+
+    public static String getSingleImageUrl(int position, String stickerGroupName, String fileFormat){
+        String stickerImageSerialNumber;
+        if (position < 10) {
+            stickerImageSerialNumber = "-0" + position; // -00, -01, -02...
+        } else {
+            stickerImageSerialNumber = "-" + position;
+        }
+        StringBuilder stringBuilder = new StringBuilder(StickerUtils.getStickerDownloadBaseUrl()).append(stickerGroupName).append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(stickerImageSerialNumber).append(fileFormat);
+        return stringBuilder.toString();
+
     }
 }

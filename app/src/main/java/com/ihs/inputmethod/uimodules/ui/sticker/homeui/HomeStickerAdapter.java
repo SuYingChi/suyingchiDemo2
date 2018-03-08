@@ -1,5 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
+import android.app.Activity;
+
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate.StickerBigCreateFacemojiAdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate.StickerFacemojiAdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate.StickerHomeCardAdapterDelegate;
@@ -15,7 +17,7 @@ import com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate.StickerTitleAdap
 public class HomeStickerAdapter extends CommonStickerAdapter {
     private StickerFacemojiAdapterDelegate stickerFacemojiAdapterDelegate;
 
-    public HomeStickerAdapter(OnStickerItemClickListener onStickerItemClickListener) {
+    public HomeStickerAdapter(Activity activity, OnStickerItemClickListener onStickerItemClickListener) {
         super();
         stickerFacemojiAdapterDelegate = new StickerFacemojiAdapterDelegate(onStickerItemClickListener);
         delegatesManager.addDelegate(new StickerTitleAdapterDelegate())
@@ -23,7 +25,7 @@ public class HomeStickerAdapter extends CommonStickerAdapter {
                 .addDelegate(new StickerSamllCreateFacemojiAdapterDelegate())
                 .addDelegate(stickerFacemojiAdapterDelegate)
                 .addDelegate(new StickerMoreComingAdapterDelegate())
-                .addDelegate(new StickerHomeCardAdapterDelegate(onStickerItemClickListener));
+                .addDelegate(new StickerHomeCardAdapterDelegate(onStickerItemClickListener,activity));
     }
 
     public void setPlayStickerFacemoij(boolean playAnim){

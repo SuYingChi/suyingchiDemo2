@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate;
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -13,24 +14,35 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.CommonStickerAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
+import com.ihs.inputmethod.utils.DownloadUtils;
+import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
 import java.util.List;
 
 import pl.droidsonroids.gif.GifImageView;
 
+import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWNLOAD_ZIP_SUFFIX;
+
 
 public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<StickerHomeModel>> {
     private CommonStickerAdapter.OnStickerItemClickListener onStickerItemClickListener;
     private RequestOptions requestOptions;
+    private Activity activity;
+    public static final String NOTIFICATION_STICKER_DOWNLOADED = "notification_sticker_downloaded";
 
-    public StickerHomeCardAdapterDelegate(CommonStickerAdapter.OnStickerItemClickListener onStickerItemClickListener) {
+    public StickerHomeCardAdapterDelegate(CommonStickerAdapter.OnStickerItemClickListener onStickerItemClickListener, Activity activity) {
+        this.activity = activity;
         this.onStickerItemClickListener = onStickerItemClickListener;
         Resources resources = HSApplication.getContext().getResources();
         int imageWidth = (int) (resources.getDisplayMetrics().widthPixels / 2 - resources.getDimension(R.dimen.theme_card_recycler_view_card_margin) * 2);
@@ -68,24 +80,45 @@ public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<S
         }
 
         stickerCardViewHolder.downloadBtn.setVisibility(View.VISIBLE);
-        if (LockedCardActionUtils.shouldLock(stickerModel)){
+        if (LockedCardActionUtils.shouldLock(stickerModel)) {
             stickerCardViewHolder.downloadBtn.setImageResource(R.drawable.ic_theme_gift);
-        }else {
+        } else {
             stickerCardViewHolder.downloadBtn.setImageResource(R.drawable.ic_download_icon);
         }
         stickerCardViewHolder.downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onStickerItemClickListener != null){
-                    onStickerItemClickListener.onDownloadClick(stickerModel,stickerCardViewHolder.stickerRealImage.getDrawable());
-                }
+
+                final String stickerGroupName = stickerGroup.getStickerGroupName();
+                final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
+
+                // 移除点击过的new角标
+                StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
+                stickerCardViewHolder.stickerNewImage.setVisibility(View.GONE);
+                StickerUtils.recordStickerDownloadClicked(stickerGroupName, StickerUtils.STICKER_FROM_CARD);
+                DownloadUtils.getInstance().startForegroundDownloading(activity, stickerGroupName,
+                        stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
+                        stickerCardViewHolder.stickerRealImage.getDrawable(), new AdLoadingView.OnAdBufferingListener() {
+                            @Override
+                            public void onDismiss(boolean success, boolean manually) {
+                                if (success) {
+                                    StickerUtils.recordStickerDownloadSucceed(stickerGroupName, StickerUtils.STICKER_FROM_CARD);
+                                    StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
+
+                                    HSBundle bundle = new HSBundle();
+                                    bundle.putInt("position", position);
+                                    HSGlobalNotificationCenter.sendNotification(NOTIFICATION_STICKER_DOWNLOADED, bundle);
+                                }
+                            }
+
+                        });
             }
         });
         stickerCardViewHolder.stickerRealImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onStickerItemClickListener != null){
-                    onStickerItemClickListener.onCardClick(stickerModel,stickerCardViewHolder.stickerRealImage.getDrawable());
+                if (onStickerItemClickListener != null) {
+                    onStickerItemClickListener.onCardClick(stickerModel, stickerCardViewHolder.stickerRealImage.getDrawable());
                 }
             }
         });

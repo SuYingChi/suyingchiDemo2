@@ -31,4 +31,6 @@
     <string name="home_nav_font">Font</string>
     <string name="home_nav_my_download">My download</string>
     <string name="home_nav_settings">Settings</string>
+    <string name="preview_sticker_hint">Press and hold to preview</string>
+    <string name="stickers">Stickers</string>
 </resources>

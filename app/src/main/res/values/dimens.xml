@@ -231,6 +231,9 @@
 
     <dimen name="camera_capture_view_width">48dp</dimen>
     <dimen name="camera_capture_view_padding">5dp</dimen>
+    <dimen name="camera_detect_face_message_size">14sp</dimen>
+    <dimen name="transparent_button_frame_stoke_width">1dp</dimen>
+    <dimen name="store_sticker_grid_item_spacing">20dp</dimen>
 
     <dimen name="main_logo_title_textsize">24sp</dimen>
 </resources>

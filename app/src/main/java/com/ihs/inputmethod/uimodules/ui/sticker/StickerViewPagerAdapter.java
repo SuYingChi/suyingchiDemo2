@@ -36,11 +36,11 @@ import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWN
  */
 
 public class StickerViewPagerAdapter extends PagerAdapter {
-    private final String CLICK_FROM = "keyboard";
     private View firstView;
     private int lastDownloadPosition = -1;
     private List<StickerGroup> needDownloadStickerGroupList = new ArrayList<>();
     private LayoutInflater inflater;
+
     public StickerViewPagerAdapter(View firstView) {
         inflater = LayoutInflater.from(HSApplication.getContext());
         this.firstView = firstView;
@@ -126,7 +126,7 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                 }
             }).into(sticker_download_preview);
             TextView downloadButton = stickerDownloadView.findViewById(R.id.sticker_download_button);
-            StickerHomeModel  stickerHomeModel = new StickerHomeModel();
+            StickerHomeModel stickerHomeModel = new StickerHomeModel();
             stickerHomeModel.stickerGroup = stickerGroup;
             if (LockedCardActionUtils.shouldLock(stickerHomeModel)) {
                 downloadButton.setText(R.string.theme_card_menu_unlock_for_free);
@@ -136,9 +136,9 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                     return;
                 }
                 if (LockedCardActionUtils.shouldLock(stickerHomeModel)) {
-                    LockedCardActionUtils.handleLockAction(v.getContext(),LockedCardActionUtils.LOCKED_CARD_FROM_KEYBOARD_STICKER, stickerHomeModel, null);
+                    LockedCardActionUtils.handleLockAction(v.getContext(), LockedCardActionUtils.LOCKED_CARD_FROM_KEYBOARD_STICKER, stickerHomeModel, null);
                 } else {
-                    KCAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroup.getStickerGroupName(), "form", CLICK_FROM);
+                    StickerUtils.recordStickerDownloadClicked(stickerGroup.getStickerGroupName(), StickerUtils.STICKER_FROM_KEYBOARD);
                     final String stickerGroupName = stickerGroup.getStickerGroupName();
                     final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
                     DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
@@ -147,7 +147,7 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                                 HSPreferenceHelper.getDefault().putBoolean(KeyboardPanelManager.SHOW_EMOJI_PANEL, true);
                                 if (success) {
                                     lastDownloadPosition = position;
-                                    KCAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName, "from", CLICK_FROM);
+                                    StickerUtils.recordStickerDownloadSucceed(stickerGroupName, StickerUtils.STICKER_FROM_KEYBOARD);
                                     StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
                                 }
                             }, false);

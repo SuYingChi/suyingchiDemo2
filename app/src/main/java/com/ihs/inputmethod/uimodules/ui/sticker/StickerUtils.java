@@ -115,7 +115,7 @@ public class StickerUtils {
 
     private static Map<String, StickerGroup> cachedStickerGroupContents = new HashMap<>();
 
-    static StickerGroup getStickerGroupByName(String stickerGroupName) {
+    public static StickerGroup getStickerGroupByName(String stickerGroupName) {
         StickerGroup stickerGroupTemp = null;
         if (cachedStickerGroupContents.containsKey(stickerGroupName)) {
             stickerGroupTemp = cachedStickerGroupContents.get(stickerGroupName);
@@ -281,5 +281,17 @@ public class StickerUtils {
             HSLog.e("tag sticker suggestion name wrong format");
             return null;
         }
+    }
+
+    public static final String STICKER_FROM_DETAIL = "detailPage";
+    public static final String STICKER_FROM_KEYBOARD = "keyboard";
+    public static final String STICKER_FROM_CARD = "card";
+
+    public static void recordStickerDownloadClicked(String stickerGroupName, String from) {
+        KCAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroupName, "from", from);
+    }
+
+    public static void recordStickerDownloadSucceed(String stickerGroupName, String from) {
+        KCAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName, "from", from);
     }
 }
