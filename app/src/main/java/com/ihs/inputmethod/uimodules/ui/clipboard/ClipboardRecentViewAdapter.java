@@ -93,9 +93,10 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
 
     }
 
-    void notifyItemChangedAndRefresh(int position) {
-        clipRecentData.clear();
-        clipRecentData.addAll(ClipboardDataBaseOperateImpl.getInstance().getRecentAllContentList());
+    void notifyItemChangedAndRefresh(ClipboardRecentMessage recentItem,int position) {
+        clipRecentData.remove(position);
+        clipRecentData.add(position,recentItem);
+        HSLog.d(TAG,"clipRecentData.at "+"---position========="+clipRecentData.get(position));
         notifyItemChanged(position);
     }
 

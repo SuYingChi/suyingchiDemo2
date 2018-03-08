@@ -85,11 +85,12 @@ class ClipboardPresenter {
         }//用户删除PINS数据，recent里有,标明recent里该项内容已不被收藏
         else if (clipboardSQLiteOperate.isRecentItemExists(item)) {
             boolean isSuccess = clipboardSQLiteOperate.deletePinItemAndUnpinRecentItem(item);
-            ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem = clipboardSQLiteOperate.getRecentItem(item);
             if (ClipboardView == null) {
                 return;
             }
+            ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem = new  ClipboardRecentViewAdapter.ClipboardRecentMessage(item,0);
             if (isSuccess) {
+                HSLog.d(TAG,"onDeletePinAndUnpinRecent  ============== "+recentItem);
                 ClipboardView.onDeletePinAndUnpinRecent(recentItem);
             } else {
                 ClipboardView.onDeletePinAndUnpinRecentFail(recentItem);

@@ -247,7 +247,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
                 switchToPinsView();
                 int pinsLastPosition = clipboardPinsViewAdapter.getPinsDataList().indexOf(lastPinsItem);
                 HSLog.d(TAG, "clipboardMainView pinsLastPosition-----" + pinsLastPosition + "----selectedRecentItem---" + selectedRecentItem);
-                clipboardPinsViewAdapter.setPinsItemToTopAndRefresh(selectedRecentItem, pinsLastPosition);
+                clipboardPinsViewAdapter.setPinsItemToTopAndRefresh(lastPinsItem, pinsLastPosition);
                 clipboardPanelPinsView.scrollToPosition(0);
             }
         }, SHOW_VIEW_DURATION);
@@ -267,8 +267,9 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
             @Override
             public void run() {
                 switchToRecentView();
-                int recentPosition = clipboardRecentViewAdapter.getClipRecentData().indexOf(recentItem);
-                clipboardRecentViewAdapter.notifyItemChangedAndRefresh(recentPosition);
+                int recentPosition = clipboardRecentViewAdapter.getClipRecentData().indexOf(new ClipboardRecentViewAdapter.ClipboardRecentMessage(recentItem.recentClipItemContent,1));
+                HSLog.d(TAG,"onDeletePinAndUnpinRecent  ====  "+"recentItem====="+recentItem+"---------recentPosition===="+recentPosition);
+                clipboardRecentViewAdapter.notifyItemChangedAndRefresh(recentItem,recentPosition);
             }
         }, SHOW_VIEW_DURATION);
     }
