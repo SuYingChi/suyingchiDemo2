@@ -31,7 +31,7 @@ class ClipboardPresenter {
         }
         //recent里点击收藏，收藏里已经有了，则在recent里去除本条，收藏里置顶该条
         if (clipboardSQLiteOperate.isPinItemExists(item)) {
-            boolean isSuccess = clipboardSQLiteOperate.deleteRecentItemAndMoveItemToBottomInPins(item);
+            boolean isSuccess = clipboardSQLiteOperate.deleteRecentItemAndMovePinedItemToBottom(item);
             if (clipboardView == null) {
                 return;
             }
@@ -42,7 +42,7 @@ class ClipboardPresenter {
             }
         }//recent 里点击收藏，收藏里还没有，并且收藏内容小于30条，则添加内容并置顶到收藏，并在recent里删除该条。
         else if (clipboardSQLiteOperate.getPinsAllContentList().size() < ClipboardConstants.PINS_TABLE_SIZE && !clipboardSQLiteOperate.isPinItemExists(item)) {
-            boolean isSuccess = clipboardSQLiteOperate.deleteRecentItemAndAddToBottomPins(item);
+            boolean isSuccess = clipboardSQLiteOperate.deleteRecentItemAndAddPinItemToBottom(item);
             if (clipboardView == null) {
                 return;
             }

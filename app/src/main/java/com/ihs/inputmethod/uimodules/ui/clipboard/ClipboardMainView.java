@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.clipboard;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -239,7 +238,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
                 //为防止数据库数据与adapter维护的list数据不一致，从adapter获取position和数据去更新UI
                // int pinsLastPosition = clipboardPinsViewAdapter.getPinsDataList().indexOf(selectedRecentItem);
                 HSLog.d(TAG, "clipboardMainView  "+"----selectedRecentItem---" + selectedRecentItem);
-                clipboardPinsViewAdapter.setPinsItemToTopAndNotifyDataSetChange(selectedRecentItem);
+                clipboardPinsViewAdapter.movePinsItemToTopAndNotifyDataSetChange(selectedRecentItem);
                 clipboardPanelPinsView.scrollToPosition(0);
             }
         }, ClipboardConstants.SHOW_VIEW_DURATION);

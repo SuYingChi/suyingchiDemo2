@@ -73,7 +73,7 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
         notifyItemInserted(0);
     }
 
-    void setPinsItemToTopAndNotifyDataSetChange(String clipPinsItem) {
+    void movePinsItemToTopAndNotifyDataSetChange(String clipPinsItem) {
         int  previousPinsPosition = pinsDataList.indexOf(clipPinsItem);
         deleteDataAndNotifyDataSetChange(previousPinsPosition);
         insertDataAndNotifyDataSetChange(clipPinsItem);

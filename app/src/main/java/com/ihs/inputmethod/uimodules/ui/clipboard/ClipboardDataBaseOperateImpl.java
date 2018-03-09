@@ -217,25 +217,25 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
     }
 
     @Override
-    public boolean deleteRecentItemAndMoveItemToBottomInPins(String deleteRecentItem) {
+    public boolean deleteRecentItemAndMovePinedItemToBottom(String recentItemString) {
         int isDeleteRECENT = -1;
         int isDeletePins = -1;
         database.beginTransaction();
         try {
-            isDeleteRECENT = database.delete(ClipboardConstants.CLIPBOARD_RECENT_TABLE, ClipboardConstants.CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{deleteRecentItem});
-            HSLog.d(TAG, "   deleteItem  =" + deleteRecentItem + "      InRecentTable" + "  deleteResult   ==== " + isDeleteRECENT);
+            isDeleteRECENT = database.delete(ClipboardConstants.CLIPBOARD_RECENT_TABLE, ClipboardConstants.CLIPBOARD_RECENT_CONTENT_COLUMN_NAME + "=?", new String[]{recentItemString});
+            HSLog.d(TAG, "   deleteItem  =" + recentItemString + "      InRecentTable" + "  deleteResult   ==== " + isDeleteRECENT);
             if (isDeleteRECENT == 0) {
                 return false;
             }
-            isDeletePins = database.delete(ClipboardConstants.CLIPBOARD_PINS_TABLE, ClipboardConstants.CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{deleteRecentItem});
-            HSLog.d(TAG, "   deleteItem   =" + deleteRecentItem + "        InPinsTable" + "       deleteResult   ==== " + isDeletePins);
+            isDeletePins = database.delete(ClipboardConstants.CLIPBOARD_PINS_TABLE, ClipboardConstants.CLIPBOARD_PINS_CONTENT_COLUMN_NAME + "=?", new String[]{recentItemString});
+            HSLog.d(TAG, "   deleteItem   =" + recentItemString + "        InPinsTable" + "       deleteResult   ==== " + isDeletePins);
             if (isDeletePins == 0) {
                 return false;
             }
             ContentValues contentValues = new ContentValues();
-            contentValues.put(ClipboardConstants.CLIPBOARD_PINS_CONTENT_COLUMN_NAME, deleteRecentItem);
+            contentValues.put(ClipboardConstants.CLIPBOARD_PINS_CONTENT_COLUMN_NAME, recentItemString);
             long insertResult = database.insert(ClipboardConstants.CLIPBOARD_PINS_TABLE, null, contentValues);
-            HSLog.d(TAG, "addItem   " + deleteRecentItem + "   to bottom of PinsTable " + "  insertResult  " + insertResult);
+            HSLog.d(TAG, "addItem   " + recentItemString + "   to bottom of PinsTable " + "  insertResult  " + insertResult);
             if (insertResult == -1) {
                 return false;
             }
@@ -250,7 +250,7 @@ public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardS
     }
 
     @Override
-    public boolean deleteRecentItemAndAddToBottomPins(String deleteRecentItem) {
+    public boolean deleteRecentItemAndAddPinItemToBottom(String deleteRecentItem) {
         int isDelete = -1;
         database.beginTransaction();
         try {

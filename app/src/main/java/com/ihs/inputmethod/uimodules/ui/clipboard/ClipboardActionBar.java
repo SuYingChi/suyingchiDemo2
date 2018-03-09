@@ -1,11 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.clipboard;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.Gravity;
 import android.view.View;
@@ -46,15 +42,14 @@ public  class ClipboardActionBar extends LinearLayout implements View.OnClickLis
         final int actionBarTabSize = tabNameList.size();
         for (int i = 0; i < actionBarTabSize; i++) {
             final String tabName = tabNameList.get(i);
-            final LayoutParams params = new LayoutParams(0, ACTION_BAR_HEIGHT, 1.0f);
+            final LayoutParams params = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1.0f);
             TextView clipActionBarBtnView =  new TextView(getContext());
             clipActionBarBtnView.setGravity(Gravity.CENTER);
             clipActionBarBtnView.setText(tabName);
-            clipActionBarBtnView.setOnClickListener(this);
-            clipActionBarBtnView.setTextColor(Color.argb(128, 255, 255, 255));
             clipActionBarBtnView.setTextColor(Color.argb(128, 255, 255, 255));
             clipActionBarBtnView.setBackgroundColor(Color.argb(0, Color.red(DOMINANT_COLOR), Color.green(DOMINANT_COLOR), Color.blue(DOMINANT_COLOR)));
             clipActionBarBtnView.setTag(tabName);
+            clipActionBarBtnView.setOnClickListener(this);
             addView(clipActionBarBtnView, params);
             tabViewsMap.put(tabName,clipActionBarBtnView);
         }

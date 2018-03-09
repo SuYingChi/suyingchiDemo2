@@ -77,36 +77,36 @@ public interface ClipboardContact {
         /**
          * 新增RecentItem到recent表里
          *
-         * @param insertRecentItemString 新增的recentItem的文本
+         * @param recentItemString 新增的recentItem的文本
          * @param isPined                新增的recentItem是否已被收藏的标志变量
          * @param currentRecentSize      当前recent表里的item总数
          * @return 是否新增成功
          */
-        boolean insertRecentItem(String insertRecentItemString, int isPined, int currentRecentSize);
+        boolean insertRecentItem(String recentItemString, int isPined, int currentRecentSize);
 
         /**
          * 当收藏的文本在收藏表里已有了，根据recentItem的文本删除recent表对应的item并在pin表里将对应的内容删除并添加到最底下
          *
-         * @param deleteRecentItem 需要删除的
+         * @param recentItemString 需要删除的recentItem的文本
          * @return 数据操作是否成功
          */
-        boolean deleteRecentItemAndMoveItemToBottomInPins(String deleteRecentItem);
+        boolean deleteRecentItemAndMovePinedItemToBottom(String recentItemString);
 
         /**
-         * 当收藏的文本在收藏表里已有了，根据recentItem的文本删除recent表对应的item并在pin表里将对应的内容删除并添加到最底下
+         * 当收藏的文本在收藏表里已有了，根据recentItem的文本删除recent表对应的item并在pin表里将对应的内容添加到最底下
          *
-         * @param deleteRecentItem 收藏的文本
+         * @param recentItemString 收藏的文本
          * @return 数据操作是否成功
          */
-        boolean deleteRecentItemAndAddToBottomPins(String deleteRecentItem);
+        boolean deleteRecentItemAndAddPinItemToBottom(String recentItemString);
 
         /**
          * 删除收藏里的item时，如果recent表里也有该文本，则在recent表里标明该item已不被收藏
          *
-         * @param deletePinItem 删除收藏里的item
+         * @param pinItemString 删除收藏里的item
          * @return 操作是否成功
          */
-        boolean deletePinItemAndUnpinRecentItem(String deletePinItem);
+        boolean deletePinItemAndUnpinRecentItem(String pinItemString);
 
 
     }
@@ -119,17 +119,17 @@ public interface ClipboardContact {
         /**
          * 收藏里已有recent数据，再次收藏recent数据时，删除recent数据，收藏那边已有数据置顶，数据库操作成功后回调UI刷新显示
          *
-         * @param exitsPinItem 新增收藏已有的pinItem
-         * @param exitsPinItemPosition  收藏已有的pinItem的原有在UI列表的位置
+         * @param pinedItem 新增收藏已有的pinItem
+         * @param pinedItemPosition  收藏已有的pinItem的原有在UI列表的位置
          */
-        void onDeleteRecentAndMovePinToTopSuccess(String exitsPinItem, int exitsPinItemPosition);
+        void onDeleteRecentAndMovePinToTopSuccess(String pinedItem, int pinedItemPosition);
         /**
          * 收藏里已有recent数据，再次收藏recent数据时，删除recent数据，收藏那边已有数据置顶，数据库操作失败后回调
          *
-         * @param exitsPinItem 新增收藏已有的pinItem
-         * @param exitsPinItemPosition  收藏已有的pinItem的原有在UI列表的位置
+         * @param pinedItem 新增收藏已有的pinItem
+         * @param pinedItemPosition  收藏已有的pinItem的原有在UI列表的位置
          */
-        void onDeleteRecentAndMovePinToTopFail(String exitsPinItem,int exitsPinItemPosition);
+        void onDeleteRecentAndMovePinToTopFail(String pinedItem,int pinedItemPosition);
 
         /**
          * 收藏新的recent数据时，删除recent数据，并添加到收藏并置顶，数据库操作成功后回调UI刷新显示
@@ -146,9 +146,9 @@ public interface ClipboardContact {
 
         /**
          * 删除单条收藏
-         * @param selectPinItemPosition 删除的pinItem的在列表里的位置，数据库操作成功后回调UI刷新显示
+         * @param selectedPinItemPosition 删除的pinItem的在列表里的位置，数据库操作成功后回调UI刷新显示
          */
-        void onDeletePinSuccess(int selectPinItemPosition);
+        void onDeletePinSuccess(int selectedPinItemPosition);
         /**
          * 删除单条收藏
          * @param selectPinItemPosition 删除的pinItem的在列表里的位置，数据库操作失败后回调
@@ -159,16 +159,16 @@ public interface ClipboardContact {
          * 删除单条收藏，recent那边如果有同样的数据，标明recent那边的数据未被收藏，数据库操作成功后回调UI刷新显示
          *
          * @param recentItem 需要更新的recent表的item
-         * @param selectPinItemPosition  删除的pinItem在列表的position
+         * @param selectedPinItemPosition  删除的pinItem在列表的position
          */
-        void onDeletePinAndUnpinRecentSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem, int selectPinItemPosition);
+        void onDeletePinAndUnpinRecentSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem, int selectedPinItemPosition);
         /**
          * 删除单条收藏，recent那边如果有同样的数据，标明recent那边的数据未被收藏，数据库操作失败后回调
          *
          * @param recentItem 需要更新的recent表的item
-         * @param selectPinItemPosition  删除的pinItem在列表的position
+         * @param selectedPinItemPosition  删除的pinItem在列表的position
          */
-        void onDeletePinAndUnpinRecentFail(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem,int selectPinItemPosition);
+        void onDeletePinAndUnpinRecentFail(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem,int selectedPinItemPosition);
 
 
     }

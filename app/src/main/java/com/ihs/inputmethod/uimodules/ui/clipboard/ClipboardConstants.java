@@ -10,7 +10,7 @@ import com.ihs.inputmethod.uimodules.R;
  * Created by yingchi.su on 2018/3/9.
  */
 
-public class ClipboardConstants {
+class ClipboardConstants {
     static final String CLIPBOARD_DATABASE_NAME = "clipboard";
     static final int CLIPBOARD_DATABASE_VERSION = 1;
     static final String CLIPBOARD_RECENT_TABLE = "clipboard_recent_table";
