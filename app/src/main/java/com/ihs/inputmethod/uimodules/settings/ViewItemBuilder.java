@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.settings;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -54,6 +53,7 @@ final class ViewItemBuilder {
 
     private final static String SETTINGS_KEY_MORE_SETTING = "ic_settings_key_more_setting";
 
+    private final static  String SETTINGS_KEY_LOCATION = "ic_settings_key_location";
 
     private static final String SETTING_ON = "on";
     private static final String SETTING_OFF = "off";
@@ -67,7 +67,11 @@ final class ViewItemBuilder {
                 getStateListDrawable(SETTINGS_KEY_FONTS, SETTINGS_KEY_FONTS)
                 , viewItemListener, false);
     }
-
+    static ViewItem getLocationItem(ViewItem.ViewItemListener viewItemListener) {
+        return new ViewItem(HSApplication.getContext().getResources().getString(R.string.setting_item_location),
+                getStateListDrawable(SETTINGS_KEY_LOCATION, SETTINGS_KEY_LOCATION)
+                , viewItemListener, false);
+    }
     static ViewItem getThemesItem(ViewItem.ViewItemListener viewItemListener) {
         return new ViewItem(HSApplication.getContext().getResources().getString(R.string.setting_item_themes),
                 getStateListDrawable(SETTINGS_KEY_THEME, SETTINGS_KEY_THEME)
