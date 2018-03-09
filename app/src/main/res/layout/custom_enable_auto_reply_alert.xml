@@ -2,16 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:background="@drawable/round_rectangle_white_bg"
     android:orientation="vertical">
 
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/theme_animated_view"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:scaleType="centerCrop"
+        android:layout_height="wrap_content">
+    <ImageButton
+        android:id="@+id/auto_reply_alert_close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/design_base_padding"
+        android:layout_marginRight="@dimen/design_base_padding"
+        android:src="@drawable/btn_close"
+        android:layout_gravity="right"
         />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/theme_animated_view"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tv_title"
@@ -23,13 +37,17 @@
         android:id="@+id/tv_message"
         style="@style/DesignDialogContentBody"
         android:padding="@dimen/design_dialog_content_area_padding"
+        android:layout_marginTop="0dp"
         android:text="@string/save_time_with_response_suggestion_based_on_your_chat" />
 
 
     <TextView
         android:id="@+id/btn_positive_single"
         style="@style/DesignDialogSingleActionButton"
-        android:layout_marginTop="@dimen/design_base_padding" />
+        android:layout_marginTop="@dimen/design_base_padding"
+        android:text="OK"
+        android:background="@color/blue"
+        />
 
 
 </LinearLayout>
