@@ -27,7 +27,7 @@ public class CustomEnableAutoReplyAlert extends AlertDialog implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.custom_enable_auto_reply_alert);
+        setContentView(R.layout.custom_enable_auto_reply_permission_alert);
 
 
     }

@@ -35,4 +35,6 @@
     <string name="stickers">Stickers</string>
     <string name="enable_response_suggestions">Enable Response Suggestions</string>
     <string name="save_time_with_response_suggestion_based_on_your_chat">Save time with Response Suggestion based on your chat</string>
+    <string name="turn_on_rainbowKey">Find “RainbowKey” and turn it on</string>
+    <string name="trun_on_rainbowKey_btn">got it</string>
 </resources>
