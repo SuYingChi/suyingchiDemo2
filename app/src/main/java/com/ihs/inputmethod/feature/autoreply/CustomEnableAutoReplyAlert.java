@@ -29,38 +29,7 @@ public class CustomEnableAutoReplyAlert extends AlertDialog implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_enable_auto_reply_alert);
 
-        TextView titleTextView = findViewById(R.id.tv_title);
-        titleTextView.setText(title);
 
-        TextView messageTextView = findViewById(R.id.tv_message);
-        messageTextView.setText(message);
-
-        ImageView imageView = findViewById(R.id.iv_image);
-        if (imageResId != 0) {
-            imageView.setVisibility(View.VISIBLE);
-            imageView.setImageResource(imageResId);
-        }
-
-        if (hasSingleButton()) {
-            enableSingleButton();
-        } else {
-            enableButtons();
-        }
-
-        enablePrivacy(enablePrivacy);
-
-        int width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, HSDisplayUtils.getScreenWidthForContent(), HSDisplayUtils.getScreenWidthForContent());
-        findViewById(R.id.root_view).getLayoutParams().width = width;
-
-        findViewById(R.id.iv_image).getLayoutParams().height = width / 2;
-
-        if (!(getContext() instanceof Activity)) {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M && !android.provider.Settings.canDrawOverlays(HSApplication.getContext())) {
-                getWindow().setType(WindowManager.LayoutParams.TYPE_TOAST);
-            } else {
-                getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-            }
-        }
     }
 
     @Override

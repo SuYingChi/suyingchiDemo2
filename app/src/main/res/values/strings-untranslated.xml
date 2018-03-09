@@ -33,4 +33,6 @@
     <string name="home_nav_settings">Settings</string>
     <string name="preview_sticker_hint">Press and hold to preview</string>
     <string name="stickers">Stickers</string>
+    <string name="enable_response_suggestions">Enable Response Suggestions</string>
+    <string name="save_time_with_response_suggestion_based_on_your_chat">Save time with Response Suggestion based on your chat</string>
 </resources>

@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/round_rectangle_white_bg"
+    android:orientation="vertical">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/theme_animated_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        />
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/DesignDialogContentTitle"
+        android:padding="@dimen/design_dialog_content_area_padding"
+        android:text="@string/enable_response_suggestions" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        style="@style/DesignDialogContentBody"
+        android:padding="@dimen/design_dialog_content_area_padding"
+        android:text="@string/save_time_with_response_suggestion_based_on_your_chat" />
+
+
+    <TextView
+        android:id="@+id/btn_positive_single"
+        style="@style/DesignDialogSingleActionButton"
+        android:layout_marginTop="@dimen/design_base_padding" />
+
 
 </LinearLayout>
