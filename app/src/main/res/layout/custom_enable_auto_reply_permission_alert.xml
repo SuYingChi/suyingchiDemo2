@@ -2,15 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
     android:background="@drawable/round_rectangle_white_bg"
     android:orientation="vertical">
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/enable_permission_auto_reply_animated_view"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop" />
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter" />
 
 
     <TextView
