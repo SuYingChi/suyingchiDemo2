@@ -333,10 +333,14 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/EnableAutoReplyAlertActivityStyle"
-            android:taskAffinity="com.ihs.inputmethod.feature.autoReply"
+            android:windowSoftInputMode="stateUnchanged|adjustNothing"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
             android:excludeFromRecents="true"
+            android:taskAffinity=".autoReply"
             />
+
+
         <!--
          Optionally, register AnalyticsReceiver and AnalyticsService to support background
          dispatching on non-Google Play devices

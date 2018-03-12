@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/auto_respone_content_alert"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
     android:background="@drawable/round_rectangle_white_bg"
     android:orientation="vertical"
-    android:layout_marginLeft="@dimen/alert_padding_vertical"
-    android:layout_marginRight="@dimen/alert_padding_vertical"
     >
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <ImageButton
+    <com.ihs.inputmethod.feature.common.RoundCornerImageView
         android:id="@+id/auto_response_alert_close_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/design_base_padding"
         android:layout_marginRight="@dimen/design_base_padding"
         android:src="@drawable/btn_close"
-        android:layout_gravity="right"
+        android:layout_gravity="right|top"
+        app:round_left_bottom_corner_radius="6dp"
+        app:round_left_top_corner_radius="6dp"
+        app:round_right_bottom_corner_radius="6dp"
+        app:round_right_top_corner_radius="6dp"
+        app:round_oval="true"
         />
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/enable_auto_response_gifImageView"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:scaleType="fitCenter" />
     </FrameLayout>
 

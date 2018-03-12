@@ -1,9 +1,15 @@
 package com.ihs.inputmethod.feature.autoReply;
 
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -14,7 +20,10 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
+import com.ihs.inputmethod.feature.common.RoundCornerImageView;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.alerts.HSAlertDialog;
+import com.kc.commons.utils.KCCommonUtils;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -25,48 +34,47 @@ import pl.droidsonroids.gif.GifImageView;
 public class EnableAutoResponseAlertActivity extends HSAppCompatActivity {
 
 
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.custom_enable_auto_response_alert);
-        initView();
-
-    }
-
-    private void initView() {
-        LinearLayout autoResponseContentAlert = (LinearLayout)findViewById(R.id.auto_respone_content_alert);
-        autoResponseContentAlert.setClickable(true);
-        GifImageView autoResponseGifImageView = (GifImageView)findViewById(R.id.enable_auto_response_gifImageView);
+        View alertView = View.inflate(this, R.layout.custom_enable_auto_response_alert, null);
+        GifImageView autoResponseGifImageView = (GifImageView) alertView.findViewById(R.id.enable_auto_response_gifImageView);
         Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.app_theme_new_gif);
         autoResponseGifImageView.setImageURI(uri);
-        ImageButton closeBtn = (ImageButton)findViewById(R.id.auto_response_alert_close_button);
+        RoundCornerImageView closeBtn = (RoundCornerImageView) alertView.findViewById(R.id.auto_response_alert_close_button);
+        dialog = HSAlertDialog.build(this).setView(alertView).setCancelable(true).create();
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                finish();
+            }
+        });
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                KCCommonUtils.dismissDialog(dialog);
             }
         });
-        TextView enableAutoResponseBtn = (TextView)findViewById(R.id.btn_positive_single);
+        TextView enableAutoResponseBtn = (TextView) alertView.findViewById(R.id.btn_positive_single);
         enableAutoResponseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //开启自动回复
+                //开启自动回复
                 enableAutoResponse();
-                finish();
+                KCCommonUtils.dismissDialog(dialog);
+
             }
         });
-
+        KCCommonUtils.showDialog(dialog);
 
     }
 
     private void enableAutoResponse() {
-        Toast.makeText(this,"开启自动回复逻辑",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "开启自动回复逻辑", Toast.LENGTH_SHORT).show();
+        KCCommonUtils.dismissDialog(dialog);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        finish();
-        return true;
-    }
 }

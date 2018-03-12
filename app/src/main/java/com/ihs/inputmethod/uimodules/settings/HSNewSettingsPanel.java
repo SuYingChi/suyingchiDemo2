@@ -19,6 +19,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.feature.headset.HeadsetActivity;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.feature.autoReply.EnableAutoResponseAlertActivity;
@@ -115,6 +116,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 Intent mIntent = new Intent(context, EnableAutoResponseAlertActivity.class);
                 mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(mIntent);
+
             }
         }));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && !BuildConfig.BASS_PRODUCT) {
