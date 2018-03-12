@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.settings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,10 +16,12 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.feature.headset.HeadsetActivity;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
+import com.ihs.inputmethod.feature.autoReply.EnableAutoResponseAlertActivity;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
@@ -104,6 +107,14 @@ public class HSNewSettingsPanel extends BasePanel {
             public void onItemClick(ViewItem item) {
                 getPanelActionListener().showChildPanel(HSFontSelectPanel.class, null);
                 KCAnalytics.logEvent("keyboard_setting_fonts_clicked");
+            }
+        }));
+        items.add(ViewItemBuilder.getFontsItem(new ViewItem.ViewItemListener() {
+            @Override
+            public void onItemClick(ViewItem item) {
+                Intent mIntent = new Intent(context, EnableAutoResponseAlertActivity.class);
+                mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(mIntent);
             }
         }));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && !BuildConfig.BASS_PRODUCT) {

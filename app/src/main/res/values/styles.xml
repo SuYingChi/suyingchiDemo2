@@ -193,5 +193,10 @@
         <item name="android:layout_height">@dimen/camera_capture_view_width</item>
         <item name="android:padding">@dimen/camera_capture_view_padding</item>
     </style>
-
+    <style name="EnableAutoReplyAlertActivityStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/headset_window_background</item>
+        <item name="android:windowAnimationStyle">@style/HeadsetActivityAnimation</item>
+    </style>
 </resources>

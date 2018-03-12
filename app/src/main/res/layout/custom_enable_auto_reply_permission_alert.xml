@@ -24,7 +24,7 @@
     <TextView
         android:id="@+id/btn_positive_single"
         style="@style/DesignDialogSingleActionButton"
-        android:layout_marginTop="@dimen/design_base_padding"
+        android:layout_margin="@dimen/design_base_padding"
         android:text="@string/trun_on_rainbowKey_btn"
         android:background="@color/blue"
         />

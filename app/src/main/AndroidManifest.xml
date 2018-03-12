@@ -328,7 +328,15 @@
             android:launchMode="singleInstance"
             android:taskAffinity=""
             android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
-
+        <activity
+            android:name="com.ihs.inputmethod.feature.autoReply.EnableAutoResponseAlertActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/EnableAutoReplyAlertActivityStyle"
+            android:taskAffinity="com.ihs.inputmethod.feature.autoReply"
+            android:launchMode="singleTop"
+            android:excludeFromRecents="true"
+            />
         <!--
          Optionally, register AnalyticsReceiver and AnalyticsService to support background
          dispatching on non-Google Play devices
