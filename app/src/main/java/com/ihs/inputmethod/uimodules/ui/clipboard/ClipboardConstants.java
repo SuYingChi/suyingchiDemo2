@@ -18,7 +18,7 @@ class ClipboardConstants {
     static final String _ID = "_id";
     static final String CLIPBOARD_RECENT_CONTENT_COLUMN_NAME = "clipboard_recent_content";
     static final String CLIPBOARD_RECENT_ISPINED_COLUMN_NAME = "clipboard_recent_isPined";
-    static final String CLIPBOARD_PINS_CONTENT_COLUMN_NAME = "clipboard_PinS_content";
+    static final String CLIPBOARD_PINS_CONTENT_COLUMN_NAME = "clipboard_pin_content";
     static final String PANEL_RECENT = "Recent";
     static final String PANEL_PIN = "Pins";
     static final int SHOW_VIEW_DURATION = 600;

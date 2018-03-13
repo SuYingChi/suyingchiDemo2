@@ -128,7 +128,7 @@ public class HSNewSettingsPanel extends BasePanel {
             @Override
             public void onItemClick(ViewItem item) {
                 getPanelActionListener().showChildPanel(ClipboardMainPanel.class, null);
-                HSAnalytics.logEvent("keyboard_settings_clipboard_clicked");
+                KCAnalytics.logEvent("keyboard_settings_clipboard_clicked");
             }
         }));
         items.add(ViewItemBuilder.getLanguageItem(new ViewItem.ViewItemListener() {

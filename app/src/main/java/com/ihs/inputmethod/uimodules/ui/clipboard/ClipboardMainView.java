@@ -26,7 +26,7 @@ import java.util.List;
 
 
 
-public final class ClipboardMainView extends LinearLayout implements ClipboardActionBar.onClipboardTabChangeListener, ClipboardContact.ClipboardView, ClipboardRecentViewAdapter.OnRecentItemPinClickedListener, ClipboardPinsViewAdapter.OnPinItemDeletedClickListener, ClipboardMonitor.OnClipboardRecentDataChangeListener {
+public final class ClipboardMainView extends LinearLayout implements ClipboardActionBar.OnClipboardTabChangeListener, ClipboardContact.ClipboardView, ClipboardRecentViewAdapter.OnRecentItemPinClickedListener, ClipboardPinsViewAdapter.OnPinItemDeletedClickListener, ClipboardMonitor.OnClipboardRecentDataChangeListener {
 
     private static final String TAG = ClipboardMainView.class.getSimpleName();
     private ClipboardRecentViewAdapter clipboardRecentViewAdapter;
@@ -57,7 +57,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
         tabNameList.add(ClipboardConstants.PANEL_PIN);
         actionBar.setActionBarTabName(tabNameList);
         //初始的时候recent在显示，相应按钮设为被选中
-        actionBar.setCurrentTab((String) currentView.getTag());
+        actionBar.setCurrentClipboardTab((String) currentView.getTag());
         ClipboardMonitor.getInstance().setOnClipboardRecentDataChangeListener(this);
     }
 
@@ -113,13 +113,13 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     private void switchToPinsView() {
         showPanelView(clipboardPanelPinsView);
         HSLog.d(TAG,"show clipboardPanelPinsView");
-        actionBar.setCurrentTab((String) currentView.getTag());
+        actionBar.setCurrentClipboardTab((String) currentView.getTag());
     }
 
     private void switchToRecentView() {
         showPanelView(clipboardPanelRecentView);
         HSLog.d(TAG,"show clipboardPanelRecentView");
-        actionBar.setCurrentTab((String) currentView.getTag());
+        actionBar.setCurrentClipboardTab((String) currentView.getTag());
     }
 
     private void addRecyclerViewToPanelViewGroup() {
