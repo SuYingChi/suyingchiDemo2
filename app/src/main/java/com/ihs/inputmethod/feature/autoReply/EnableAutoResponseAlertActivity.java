@@ -42,7 +42,7 @@ public class EnableAutoResponseAlertActivity extends HSAppCompatActivity {
         super.onCreate(savedInstanceState);
         View alertView = View.inflate(this, R.layout.custom_enable_auto_response_alert, null);
         GifImageView autoResponseGifImageView = (GifImageView) alertView.findViewById(R.id.enable_auto_response_gifImageView);
-        Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.app_theme_new_gif);
+        Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.enable_auto_response_gif);
         autoResponseGifImageView.setImageURI(uri);
         RoundCornerImageView closeBtn = (RoundCornerImageView) alertView.findViewById(R.id.auto_response_alert_close_button);
         dialog = HSAlertDialog.build(this).setView(alertView).setCancelable(true).create();
@@ -76,7 +76,7 @@ public class EnableAutoResponseAlertActivity extends HSAppCompatActivity {
         startActivityForResult(intent, START_ACCESSIBILITY_SETTINGS_REQUEST_CODE);
         View permissionAlertView = View.inflate(this, R.layout.custom_enable_auto_reply_permission_alert, null);
         GifImageView autoResponseGifImageView = (GifImageView) permissionAlertView.findViewById(R.id.enable_permission_auto_reply_animated_view);
-        Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.app_theme_new_gif);
+        Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.enable_auto_response_permission_gif);
         autoResponseGifImageView.setImageURI(uri);
         TextView btn = (TextView) permissionAlertView.findViewById(R.id.btn_positive_single);
         if (permissionDialog == null) {

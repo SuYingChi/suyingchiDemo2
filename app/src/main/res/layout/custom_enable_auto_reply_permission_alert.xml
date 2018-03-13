@@ -9,7 +9,8 @@
             android:id="@+id/enable_permission_auto_reply_animated_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitXY"
+            />
 
 
     <TextView
