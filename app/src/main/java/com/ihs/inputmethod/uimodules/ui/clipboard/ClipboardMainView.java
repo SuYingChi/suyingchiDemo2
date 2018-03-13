@@ -82,11 +82,8 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
                 currentView = recyclerViewToShow;
             }
     }
-
-    public void showDeletedSuggestionAlert(String selectedPinsItem,int selectPinItemPosition) {
-        //如果不把方法接收的参数存为局部变量的话，在方法匿名内部类的onclick里只能接收到第一次传进来的参数
-        String pinsItem = selectedPinsItem;
-        int pinItemPosition = selectPinItemPosition;
+    //如果不把方法接收的参数设为final变量不可变的话，在方法匿名内部类的onclick里会把接收到的参数变为第一次传进来的参数
+    public void showDeletedSuggestionAlert(final String selectedPinsItem,final int selectPinItemPosition) {
         if (deleteAlert == null) {
             deleteAlert = new KCAlert.Builder(HSApplication.getContext())
                     .setTitle(getResources().getString(R.string.clipboard_delete_title))
@@ -100,7 +97,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
                     .setNegativeButton(getResources().getString(R.string.clipboard_delete_pin_confirm), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            clipboardPresenter.deletePinItem(pinsItem,pinItemPosition);
+                            clipboardPresenter.deletePinItem(selectedPinsItem,selectPinItemPosition);
                             KCAnalytics.logEvent("keyboard_clipboard_pin_delete");
                             deleteAlert.dismiss();
                         }
