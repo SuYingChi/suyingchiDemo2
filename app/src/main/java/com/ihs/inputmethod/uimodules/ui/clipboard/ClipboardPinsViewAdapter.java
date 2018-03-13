@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.clipboard;
 
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -54,7 +53,7 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPinItemDeletedClickListener.onDeletePinsItem(pinsContent, holder.getAdapterPosition());
+                onPinItemDeletedClickListener.onDeletePinsItemBtnClick(pinsContent, holder.getAdapterPosition());
                 HSLog.d(TAG, "  delete pins item  " + pinsContent);
             }
         });
@@ -101,6 +100,6 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
 
 
     public interface OnPinItemDeletedClickListener {
-        void onDeletePinsItem(String pinsContentItem, int position);
+        void onDeletePinsItemBtnClick(String pinsContentItem, int position);
     }
 }

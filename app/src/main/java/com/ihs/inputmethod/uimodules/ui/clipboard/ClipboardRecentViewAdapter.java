@@ -53,7 +53,7 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
         holder.saveToPinsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onRecentItemPinClickedListener.onSaveRecentItemToPins(recentClipItemContent.recentClipItemContent, holder.getAdapterPosition());
+                onRecentItemPinClickedListener.onSaveRecentItemToPinsBtnClick(recentClipItemContent.recentClipItemContent, holder.getAdapterPosition());
                 HSLog.d(TAG, "save recentItem content to pins  " + recentClipItemContent.recentClipItemContent);
             }
         });
@@ -110,7 +110,7 @@ public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRe
     }
 
     public interface OnRecentItemPinClickedListener {
-        void onSaveRecentItemToPins(String itemRecentContent, int position);
+        void onSaveRecentItemToPinsBtnClick(String itemRecentContent, int position);
     }
 
     void insertDataAndNotifyDataSetChange(ClipboardRecentMessage clipRecentMessage) {

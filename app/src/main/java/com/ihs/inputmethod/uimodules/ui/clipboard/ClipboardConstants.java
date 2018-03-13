@@ -1,11 +1,5 @@
 package com.ihs.inputmethod.uimodules.ui.clipboard;
 
-import android.content.res.Resources;
-
-import com.ihs.app.framework.HSApplication;
-import com.ihs.inputmethod.api.utils.HSResourceUtils;
-import com.ihs.inputmethod.uimodules.R;
-
 /**
  * Created by yingchi.su on 2018/3/9.
  */

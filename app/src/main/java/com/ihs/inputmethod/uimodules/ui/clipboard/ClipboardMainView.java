@@ -12,7 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -26,7 +25,7 @@ import java.util.List;
 
 
 
-public final class ClipboardMainView extends LinearLayout implements ClipboardActionBar.OnClipboardTabChangeListener, ClipboardContact.ClipboardView, ClipboardRecentViewAdapter.OnRecentItemPinClickedListener, ClipboardPinsViewAdapter.OnPinItemDeletedClickListener, ClipboardMonitor.OnClipboardRecentDataChangeListener {
+public final class ClipboardMainView extends LinearLayout implements ClipboardActionBar.OnClipboardTabChangeListener, ClipboardContract.ClipboardView, ClipboardRecentViewAdapter.OnRecentItemPinClickedListener, ClipboardPinsViewAdapter.OnPinItemDeletedClickListener, ClipboardMonitor.OnClipboardRecentDataChangeListener {
 
     private static final String TAG = ClipboardMainView.class.getSimpleName();
     private ClipboardRecentViewAdapter clipboardRecentViewAdapter;
@@ -85,6 +84,7 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
     }
 
     public void showDeletedSuggestionAlert(String selectedPinsItem,int selectPinItemPosition) {
+        //如果不把方法接收的参数存为局部变量的话，在方法匿名内部类的onclick里只能接收到第一次传进来的参数
         String pinsItem = selectedPinsItem;
         int pinItemPosition = selectPinItemPosition;
         if (deleteAlert == null) {
@@ -170,9 +170,9 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
      * @param position 在UI列表的position
      */
     @Override
-    public void onSaveRecentItemToPins(String item, int position) {
+    public void onSaveRecentItemToPinsBtnClick(String item, int position) {
         clipboardPresenter.saveRecentItemToPins(item,position);
-        HSAnalytics.logEvent("keyboard_clipboard_save_recent_to_pins_clicked");
+        KCAnalytics.logEvent("keyboard_clipboard_save_recent_to_pins_clicked");
 
     }
 
@@ -182,9 +182,9 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
      * @param position 在UI列表的position
      */
     @Override
-    public void onDeletePinsItem(String pinsContentItem, int position) {
+    public void onDeletePinsItemBtnClick(String pinsContentItem, int position) {
         showDeletedSuggestionAlert(pinsContentItem,position);
-        HSAnalytics.logEvent("keyboard_clipboard_delete_pin_item_clicked");
+        KCAnalytics.logEvent("keyboard_clipboard_delete_pin_item_clicked");
     }
 
 

@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class ClipboardDataBaseOperateImpl implements ClipboardContact.ClipboardSQLiteOperate {
+public class ClipboardDataBaseOperateImpl implements ClipboardContract.ClipboardSQLiteOperate {
 
 
     private static volatile ClipboardDataBaseOperateImpl clipboardDataBaseOperateImpl;

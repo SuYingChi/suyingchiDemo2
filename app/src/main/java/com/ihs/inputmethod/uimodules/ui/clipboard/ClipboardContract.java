@@ -6,7 +6,7 @@ import java.util.List;
  * Created by yingchi.su on 2018/3/7.
  */
 
-public interface ClipboardContact {
+public interface ClipboardContract {
 
     /**
      * 由于数据操作都是同步操作，中间层可直接拿到数据层的数据处理结果，暂时不需要中间层接口回调通知处理结果
@@ -77,9 +77,9 @@ public interface ClipboardContact {
         /**
          * 新增RecentItem到recent表里
          *
-         * @param recentItemString 新增的recentItem的文本
-         * @param isPined                新增的recentItem是否已被收藏的标志变量
-         * @param currentRecentSize      当前recent表里的item总数
+         * @param recentItemString  新增的recentItem的文本
+         * @param isPined           新增的recentItem是否已被收藏的标志变量
+         * @param currentRecentSize 当前recent表里的item总数
          * @return 是否新增成功
          */
         boolean insertRecentItem(String recentItemString, int isPined, int currentRecentSize);
@@ -119,38 +119,45 @@ public interface ClipboardContact {
         /**
          * 收藏里已有recent数据，再次收藏recent数据时，删除recent数据，收藏那边已有数据置顶，数据库操作成功后回调UI刷新显示
          *
-         * @param pinedItem 新增收藏已有的pinItem
-         * @param pinedItemPosition  收藏已有的pinItem的原有在UI列表的位置
+         * @param pinedItem         新增收藏已有的pinItem
+         * @param pinedItemPosition 收藏已有的pinItem的原有在UI列表的位置
          */
         void onDeleteRecentAndMovePinToTopSuccess(String pinedItem, int pinedItemPosition);
+
         /**
          * 收藏里已有recent数据，再次收藏recent数据时，删除recent数据，收藏那边已有数据置顶，数据库操作失败后回调
          *
-         * @param pinedItem 新增收藏已有的pinItem
-         * @param pinedItemPosition  收藏已有的pinItem的原有在UI列表的位置
+         * @param pinedItem         新增收藏已有的pinItem
+         * @param pinedItemPosition 收藏已有的pinItem的原有在UI列表的位置
          */
-        void onDeleteRecentAndMovePinToTopFail(String pinedItem,int pinedItemPosition);
+        void onDeleteRecentAndMovePinToTopFail(String pinedItem, int pinedItemPosition);
 
         /**
          * 收藏新的recent数据时，删除recent数据，并添加到收藏并置顶，数据库操作成功后回调UI刷新显示
-         * @param selectedRecentItem  收藏的recent数据
-         * @param selectedRecentItemPosition  收藏的recent数据在UI列表里的位置
+         *
+         * @param selectedRecentItem         收藏的recent数据
+         * @param selectedRecentItemPosition 收藏的recent数据在UI列表里的位置
          */
         void onDeleteRecentAndAddPinSuccess(String selectedRecentItem, int selectedRecentItemPosition);
+
         /**
          * 收藏新的recent数据时，删除recent数据，并添加到收藏并置顶，数据库操作失败后回调
-         * @param selectedRecentItem  收藏的recent数据
-         * @param selectedRecentItemPosition  收藏的recent数据在UI列表里的位置
+         *
+         * @param selectedRecentItem         收藏的recent数据
+         * @param selectedRecentItemPosition 收藏的recent数据在UI列表里的位置
          */
-        void onDeleteRecentAndAddPinFail(String selectedRecentItem,int selectedRecentItemPosition);
+        void onDeleteRecentAndAddPinFail(String selectedRecentItem, int selectedRecentItemPosition);
 
         /**
          * 删除单条收藏
+         *
          * @param selectedPinItemPosition 删除的pinItem的在列表里的位置，数据库操作成功后回调UI刷新显示
          */
         void onDeletePinSuccess(int selectedPinItemPosition);
+
         /**
          * 删除单条收藏
+         *
          * @param selectPinItemPosition 删除的pinItem的在列表里的位置，数据库操作失败后回调
          */
         void onDeletePinFail(int selectPinItemPosition);
@@ -158,19 +165,27 @@ public interface ClipboardContact {
         /**
          * 删除单条收藏，recent那边如果有同样的数据，标明recent那边的数据未被收藏，数据库操作成功后回调UI刷新显示
          *
-         * @param recentItem 需要更新的recent表的item
-         * @param selectedPinItemPosition  删除的pinItem在列表的position
+         * @param recentItem              需要更新的recent表的item
+         * @param selectedPinItemPosition 删除的pinItem在列表的position
          */
         void onDeletePinAndUnpinRecentSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem, int selectedPinItemPosition);
+
         /**
          * 删除单条收藏，recent那边如果有同样的数据，标明recent那边的数据未被收藏，数据库操作失败后回调
          *
-         * @param recentItem 需要更新的recent表的item
-         * @param selectedPinItemPosition  删除的pinItem在列表的position
+         * @param recentItem              需要更新的recent表的item
+         * @param selectedPinItemPosition 删除的pinItem在列表的position
          */
-        void onDeletePinAndUnpinRecentFail(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem,int selectedPinItemPosition);
+        void onDeletePinAndUnpinRecentFail(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem, int selectedPinItemPosition);
 
 
     }
+
+    interface Presenter {
+        void saveRecentItemToPins(String item, int position);
+
+        void deletePinItem(String pinsContentItem, int position);
+    }
+
 
 }
