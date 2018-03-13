@@ -247,6 +247,8 @@ public final class ClipboardMainView extends LinearLayout implements ClipboardAc
         clipboardPinsViewAdapter.deleteDataAndNotifyDataSetChange(selectRecentPinItemPosition);
     }
 
+
+
     @Override
     public void onDeletePinAndUnpinRecentSuccess(ClipboardRecentViewAdapter.ClipboardRecentMessage recentItem, int selectPinItemPosition) {
         switchToPinsView();

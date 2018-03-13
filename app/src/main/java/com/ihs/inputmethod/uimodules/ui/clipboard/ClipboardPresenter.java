@@ -79,6 +79,8 @@ class ClipboardPresenter implements ClipboardContract.Presenter {
             if (isSuccess) {
                 HSLog.d(TAG, "onDeletePinAndUnpinRecentSuccess  ============== " + recentItem);
                 clipboardView.onDeletePinAndUnpinRecentSuccess(recentItem, position);
+                /*clipboardView.DeletePin();
+                clipboardView.UnpinRecent();*/
             } else {
                 clipboardView.onDeletePinAndUnpinRecentFail(recentItem, position);
             }

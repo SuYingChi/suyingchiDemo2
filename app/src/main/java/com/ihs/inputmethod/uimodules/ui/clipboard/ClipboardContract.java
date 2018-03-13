@@ -117,7 +117,7 @@ public interface ClipboardContract {
     interface ClipboardView {
 
         /**
-         * 收藏里已有recent数据，再次收藏recent数据时，删除recent数据，收藏那边已有数据置顶，数据库操作成功后回调UI刷新显示
+         * 收藏里已有recent数据，再次收藏recent数据时，删除recent数据，收藏那边已有数据置顶
          *
          * @param pinedItem         新增收藏已有的pinItem
          * @param pinedItemPosition 收藏已有的pinItem的原有在UI列表的位置
@@ -125,7 +125,7 @@ public interface ClipboardContract {
         void onDeleteRecentAndMovePinToTopSuccess(String pinedItem, int pinedItemPosition);
 
         /**
-         * 收藏里已有recent数据，再次收藏recent数据时，删除recent数据，收藏那边已有数据置顶，数据库操作失败后回调
+         * 收藏里已有recent数据，再次收藏recent数据时，删除recent数据，收藏那边已有数据置顶
          *
          * @param pinedItem         新增收藏已有的pinItem
          * @param pinedItemPosition 收藏已有的pinItem的原有在UI列表的位置
@@ -133,7 +133,7 @@ public interface ClipboardContract {
         void onDeleteRecentAndMovePinToTopFail(String pinedItem, int pinedItemPosition);
 
         /**
-         * 收藏新的recent数据时，删除recent数据，并添加到收藏并置顶，数据库操作成功后回调UI刷新显示
+         * 收藏新的recent数据时，删除recent数据，并添加到收藏并置顶
          *
          * @param selectedRecentItem         收藏的recent数据
          * @param selectedRecentItemPosition 收藏的recent数据在UI列表里的位置
@@ -141,7 +141,7 @@ public interface ClipboardContract {
         void onDeleteRecentAndAddPinSuccess(String selectedRecentItem, int selectedRecentItemPosition);
 
         /**
-         * 收藏新的recent数据时，删除recent数据，并添加到收藏并置顶，数据库操作失败后回调
+         * 收藏新的recent数据时，删除recent数据，并添加到收藏并置顶
          *
          * @param selectedRecentItem         收藏的recent数据
          * @param selectedRecentItemPosition 收藏的recent数据在UI列表里的位置
@@ -151,19 +151,19 @@ public interface ClipboardContract {
         /**
          * 删除单条收藏
          *
-         * @param selectedPinItemPosition 删除的pinItem的在列表里的位置，数据库操作成功后回调UI刷新显示
+         * @param selectedPinItemPosition 删除的pinItem的在列表里的位置
          */
         void onDeletePinSuccess(int selectedPinItemPosition);
 
         /**
          * 删除单条收藏
          *
-         * @param selectPinItemPosition 删除的pinItem的在列表里的位置，数据库操作失败后回调
+         * @param selectPinItemPosition 删除的pinItem的在列表里的位置
          */
         void onDeletePinFail(int selectPinItemPosition);
 
         /**
-         * 删除单条收藏，recent那边如果有同样的数据，标明recent那边的数据未被收藏，数据库操作成功后回调UI刷新显示
+         * 删除单条收藏，recent那边如果有同样的数据，标明recent那边的数据未被收藏
          *
          * @param recentItem              需要更新的recent表的item
          * @param selectedPinItemPosition 删除的pinItem在列表的position
